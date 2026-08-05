@@ -1,0 +1,2100 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فورتيكلس — أرشيف بثوث يوتيوب المباشر</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 'main': ['Tajawal', 'sans-serif'] },
+                    colors: {
+                        gold: { 400: '#f0b84a', 500: '#e8a838', 600: '#d4952e', 700: '#b87a1f' },
+                        dark: { 800: '#0e0e16', 900: '#08080e', 950: '#050508' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --bg: #08080e; --card: rgba(255,255,255,0.035); --card-hover: rgba(255,255,255,0.06);
+            --border: rgba(255,255,255,0.07); --border-focus: #e8a838; --accent: #e8a838;
+            --accent-glow: rgba(232,168,56,0.12); --text: #e8e8ec; --text-muted: #6b6b7e;
+            --success: #34d399; --error: #f87171;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Tajawal', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+ 
+        .bg-scene { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+        .bg-orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.12; will-change: transform; }
+        .bg-orb-1 { width: 500px; height: 500px; top: -15%; right: -10%; background: radial-gradient(circle, #e8a838, transparent 70%); animation: orbFloat1 25s ease-in-out infinite; }
+        .bg-orb-2 { width: 400px; height: 400px; bottom: -10%; left: -8%; background: radial-gradient(circle, #d4592e, transparent 70%); animation: orbFloat2 30s ease-in-out infinite; }
+        @keyframes orbFloat1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-60px,40px)} }
+        @keyframes orbFloat2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(50px,-30px)} }
+ 
+        .screen { position: fixed; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 20px; }
+        .screen.active { opacity: 1; pointer-events: all; }
+        .screen-comments, .screen-list { justify-content: flex-start; padding: 0; }
+ 
+        .glass-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .glass-card-hover { transition: all 0.3s ease; cursor: pointer; }
+        .glass-card-hover:hover { background: var(--card-hover); border-color: rgba(232,168,56,0.2); transform: translateY(-4px); }
+ 
+        .input-field { width: 100%; padding: 14px 18px; background: rgba(255,255,255,0.05); border: 1.5px solid var(--border); border-radius: 14px; color: var(--text); font-family: 'Tajawal', sans-serif; font-size: 15px; outline: none; transition: all 0.3s ease; direction: ltr; text-align: right; }
+        .input-field::placeholder { color: var(--text-muted); }
+        .input-field:focus { border-color: var(--border-focus); box-shadow: 0 0 0 3px var(--accent-glow); }
+ 
+        .btn-primary { width: 100%; padding: 15px; background: linear-gradient(135deg, #e8a838, #d4952e); color: #0a0a0f; font-family: 'Tajawal', sans-serif; font-size: 16px; font-weight: 700; border: none; border-radius: 14px; cursor: pointer; transition: all 0.3s ease; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(232,168,56,0.3); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        .btn-danger { width: 100%; padding: 15px; background: linear-gradient(135deg, #ef4444, #b91c1c); color: #fff; font-family: 'Tajawal', sans-serif; font-size: 16px; font-weight: 700; border: none; border-radius: 14px; cursor: pointer; transition: all 0.3s ease; }
+        .btn-danger:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(239,68,68,0.3); }
+ 
+        .btn-ghost { padding: 10px 20px; background: transparent; border: 1.5px solid var(--border); border-radius: 12px; color: var(--text-muted); font-family: 'Tajawal', sans-serif; font-size: 14px; cursor: pointer; transition: all 0.3s ease; }
+        .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+        
+        .btn-admin { padding: 10px 20px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 12px; color: #f87171; font-family: 'Tajawal', sans-serif; font-size: 14px; cursor: pointer; transition: all 0.3s ease; }
+        .btn-admin:hover { background: rgba(239, 68, 68, 0.2); }
+ 
+        .comments-container { flex: 1; overflow-y: auto; padding: 16px; scroll-behavior: smooth; width: 100%; max-width: 800px; margin: 0 auto; }
+        .comments-container::-webkit-scrollbar { width: 5px; }
+        .comments-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+ 
+        .comment-card { display: flex; gap: 12px; padding: 12px 14px; border-radius: 14px; background: rgba(255,255,255,0.025); border-right: 3px solid var(--c-accent, #e8a838); margin-bottom: 8px; animation: commentSlide 0.35s ease; transition: background 0.2s ease; }
+        .comment-card:hover { background: rgba(255,255,255,0.04); }
+        .comment-card.archived { background: rgba(255,255,255,0.015); border-right-color: #4a4a5e; }
+        
+        @keyframes commentSlide { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+ 
+        .comment-avatar { min-width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; color: #0a0a0f; }
+        .comment-username { font-weight: 700; font-size: 14px; color: var(--c-accent, #e8a838); }
+        .comment-text { font-size: 14px; color: rgba(232,232,236,0.85); line-height: 1.6; margin-top: 2px; word-break: break-word; }
+        .comment-time { font-size: 11px; color: var(--text-muted); margin-right: 8px; }
+ 
+        .live-dot { width: 8px; height: 8px; border-radius: 50%; background: #ef4444; display: inline-block; animation: livePulse 1.5s ease-in-out infinite; }
+        @keyframes livePulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+ 
+        #toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; width: 90%; max-width: 400px; }
+        .toast { padding: 14px 20px; border-radius: 14px; display: flex; align-items: center; gap: 10px; font-size: 14px; backdrop-filter: blur(16px); opacity: 0; transform: translateY(-20px); transition: all 0.35s ease; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast-success { background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.25); color: #34d399; }
+        .toast-error { background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.25); color: #f87171; }
+        .toast-info { background: rgba(232,168,56,0.15); border: 1px solid rgba(232,168,56,0.25); color: #f0b84a; }
+ 
+        .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; text-align: center; }
+        .empty-state i { font-size: 48px; color: var(--text-muted); opacity: 0.3; margin-bottom: 16px; }
+ 
+        .modal-overlay { position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,0.7); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        .modal-overlay.show { opacity: 1; pointer-events: all; }
+        .modal-content { max-width: 500px; width: 100%; border-radius: 20px; padding: 28px; background: #12121a; border: 1px solid var(--border); }
+ 
+        .back-btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: transparent; border: none; color: var(--text-muted); font-size: 14px; cursor: pointer; border-radius: 10px; }
+        .back-btn:hover { color: var(--accent); background: var(--accent-glow); }
+ 
+        .header-btn { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 12px; background: var(--card); border: 1px solid var(--border); color: var(--text-muted); font-size: 13px; cursor: pointer; transition: all 0.3s ease; }
+        .header-btn:hover { border-color: var(--accent); color: var(--accent); }
+        
+        /* أيقونات الهيدر — رمادية، نظيفة، بدون نص */
+        .icon-btn {
+            width: 38px; height: 38px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            background: transparent;
+            border: 1px solid var(--hx-border);
+            color: var(--hx-fg-dim);
+            cursor: pointer;
+            position: relative;
+            transition: all .2s ease;
+            padding: 0;
+        }
+        .icon-btn i { font-size: 14px; }
+        .icon-btn:hover {
+            background: var(--hx-bg-soft);
+            color: var(--hx-fg);
+            border-color: var(--hx-accent);
+        }
+        .icon-btn:active { transform: scale(0.94); }
+        
+        .user-icon-btn {
+            border-radius: 50%;
+            background: var(--hx-bg-soft);
+        }
+        .user-icon-btn:hover { background: var(--hx-bg-soft); }
+        
+        /* نقطة الإشعار الحمراء على الجرس */
+        .notif-badge {
+            position: absolute;
+            top: 6px; right: 6px;
+            width: 9px; height: 9px;
+            background: #ef4444;
+            border-radius: 50%;
+            border: 2px solid var(--hx-bg);
+            box-shadow: 0 0 0 2px rgba(239,68,68,0.3);
+            display: none;
+            z-index: 2;
+        }
+        .notif-badge.show {
+            display: block;
+            animation: notifPulse 1.6s ease-in-out infinite;
+        }
+        @keyframes notifPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 2px rgba(239,68,68,0.3); }
+            50%      { transform: scale(1.18); box-shadow: 0 0 0 5px rgba(239,68,68,0.12); }
+        }
+        
+        .user-circle { width: 40px; height: 40px; border-radius: 50%; background: var(--accent); color: #0a0a0f; display: flex; align-items: center; justify-content: center; font-weight: 700; cursor: pointer; border: 2px solid rgba(255,255,255,0.1); transition: all 0.3s ease; }
+        .user-circle:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(232,168,56,0.3); }
+ 
+        .status-bar { display: flex; align-items: center; gap: 12px; padding: 12px 16px; font-size: 13px; color: var(--text-muted); background: rgba(255,255,255,0.02); border-top: 1px solid var(--border); }
+        
+        .auth-tab { flex: 1; padding: 10px; text-align: center; cursor: pointer; border-radius: 10px; font-size: 14px; transition: all 0.3s ease; }
+        .auth-tab.active { background: var(--accent); color: #0a0a0f; font-weight: 700; }
+ 
+        /* === تخصيص شريط التمرير (Scrollbar) - ثيم رمادي أنيق === */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { 
+            background: rgba(255,255,255,0.08); 
+            border-radius: 8px; 
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+        ::-webkit-scrollbar-thumb:hover { 
+            background: rgba(232,168,56,0.35); 
+            background-clip: padding-box;
+            border: 2px solid transparent;
+        }
+        ::-webkit-scrollbar-corner { background: transparent; }
+        
+        /* Firefox */
+        * { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.15) transparent; }
+        
+        /* شريط تمرير خاص بشاشة الأرشيف */
+        #archive-container::-webkit-scrollbar { width: 10px; }
+        #archive-container::-webkit-scrollbar-thumb { background: rgba(232,168,56,0.2); background-clip: padding-box; border: 2px solid transparent; border-radius: 10px; }
+        #archive-container::-webkit-scrollbar-thumb:hover { background: rgba(232,168,56,0.5); background-clip: padding-box; }
+        
+        /* شريط تمرير شاشة المحادثة */
+        #chat-container::-webkit-scrollbar { width: 8px; }
+        #chat-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); background-clip: padding-box; border: 2px solid transparent; border-radius: 8px; }
+        #chat-container::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); background-clip: padding-box; }
+ 
+        /* === أنماط المحادثة (Chat) - تصميم محسّن === */
+        .chat-wrapper { 
+            display: flex; 
+            width: 100%; 
+            margin-bottom: 10px; 
+            animation: chatFadeIn 0.3s ease;
+        }
+        .chat-wrapper.me { justify-content: flex-start; padding-left: 40px; }  /* اليسار في RTL */
+        .chat-wrapper.other { justify-content: flex-end; padding-right: 40px; }  /* اليمين في RTL */
+        
+        @keyframes chatFadeIn { 
+            from { opacity: 0; transform: translateY(8px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        
+        .chat-card { 
+            max-width: 78%; 
+            padding: 12px 16px; 
+            border-radius: 18px; 
+            animation: commentSlide 0.35s ease;
+            position: relative;
+            word-break: break-word;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: transform 0.15s ease;
+        }
+        .chat-card:hover { transform: translateY(-1px); }
+        
+        /* فقاعة رسائلي - ذهبية دافئة */
+        .chat-card.me { 
+            background: linear-gradient(135deg, rgba(232,168,56,0.15), rgba(212,149,46,0.08)); 
+            border: 1px solid rgba(232,168,56,0.2); 
+            border-bottom-left-radius: 4px;
+            backdrop-filter: blur(6px);
+        }
+        
+        /* فقاعة رسائل الآخرين - أزرق دافئ زجاجي */
+        .chat-card.other { 
+            background: rgba(80,100,180,0.06); 
+            border: 1px solid rgba(80,100,180,0.12); 
+            border-bottom-right-radius: 4px;
+            backdrop-filter: blur(6px);
+        }
+        
+        /* صورة المستخدم الدائرية الصغيرة داخل الفقاعة */
+        .chat-avatar {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 11px;
+            color: #0a0a0f;
+            flex-shrink: 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .chat-card-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+        
+        .chat-card.me .chat-username { color: var(--accent); font-weight: 700; font-size: 12px; }
+        .chat-card.other .chat-username { color: var(--text); font-weight: 700; font-size: 12px; }
+        .chat-time { font-size: 10px; color: var(--text-muted); opacity: 0.7; }
+        
+        .chat-text {
+            font-size: 14px;
+            color: var(--text);
+            line-height: 1.5;
+            word-break: break-word;
+        }
+        .chat-card.me .chat-text { color: rgba(255,255,255,0.95); }
+ 
+        /* زر الإشعارات */
+        .notif-btn { position: relative; }
+        .notif-dot { position: absolute; top: 0; right: 0; width: 10px; height: 10px; background: #ef4444; border-radius: 50%; border: 2px solid var(--bg); display: none; }
+        .notif-dot.show { display: block; animation: livePulse 1.5s ease-in-out infinite; }
+        .keyword-highlight { background: rgba(239, 68, 68, 0.2); color: #f87171; padding: 0 4px; border-radius: 4px; font-weight: bold; }
+ 
+        /* === تبويبات شاشة الأرشيف (الأرشيف / المراقب الذكي) === */
+        .archive-tabs { display: flex; gap: 8px; padding: 12px 16px; max-width: 768px; margin: 0 auto; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+        .archive-tab { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 16px; border-radius: 10px; background: transparent; border: 1px solid var(--border); color: var(--text-muted); font-size: 13px; font-weight: 700; cursor: pointer; transition: all .2s ease; font-family: 'Tajawal', sans-serif; }
+        .archive-tab:hover { background: var(--card-hover); color: var(--text); }
+        .archive-tab.active { background: var(--accent-glow); border-color: var(--accent); color: var(--accent); }
+        .archive-tab i { font-size: 14px; }
+        .archive-pane { display: none; }
+        .archive-pane.active { display: flex; flex-direction: column; flex: 1 1 0; min-height: 0; overflow: hidden; }
+ 
+        /* === واجهة داكنة دافئة مريحة للعين — تُطبّق على البث والمحادثة والأرشيف === */
+        .screen-comments {
+            --hx-bg: #10111a;
+            --hx-bg-soft: #181924;
+            --hx-fg: #d4d5dc;
+            --hx-fg-dim: #8a8d9a;
+            --hx-fg-mute: #565a68;
+            --hx-border: #2a2d3a;
+            --hx-border-soft: #1f2230;
+            --hx-accent: #a8b0c0;
+            --hx-warn: #c99530;
+            --hx-err: #b55050;
+            --hx-live: #d04545;
+            --hx-mono: 'Tajawal', ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+ 
+            background: var(--hx-bg) !important;
+            font-family: var(--hx-mono) !important;
+            color: var(--hx-fg) !important;
+        }
+        #screen-comments header,
+        #screen-chat header,
+        #screen-archive header {
+            background: var(--hx-bg) !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border-bottom: 1px solid var(--hx-border) !important;
+        }
+        .screen-comments .live-dot {
+            background: var(--hx-live) !important;
+            box-shadow: none !important;
+            width: 6px !important;
+            height: 6px !important;
+        }
+        .screen-comments .header-btn,
+        .screen-comments .back-btn {
+            background: transparent !important;
+            border: 1px solid var(--hx-border) !important;
+            color: var(--hx-fg-dim) !important;
+            font-family: 'Tajawal', sans-serif !important;
+            border-radius: 8px !important;
+            padding: 6px 14px !important;
+            font-size: 13px !important;
+            transition: color .15s ease, border-color .15s ease, background .15s ease !important;
+        }
+        .screen-comments .header-btn:hover,
+        .screen-comments .back-btn:hover {
+            background: var(--hx-bg-soft) !important;
+            color: var(--hx-fg) !important;
+            border-color: var(--hx-accent) !important;
+        }
+        .screen-comments .user-circle {
+            background: var(--hx-bg-soft) !important;
+            border: 1px solid var(--hx-border) !important;
+            color: var(--hx-fg-dim) !important;
+            font-family: 'Tajawal', sans-serif !important;
+            border-radius: 50% !important;
+            width: 28px !important;
+            height: 28px !important;
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            transition: color .15s ease, border-color .15s ease !important;
+        }
+        .screen-comments .user-circle:hover {
+            background: var(--hx-bg-soft) !important;
+            color: var(--hx-fg) !important;
+            border-color: var(--hx-accent) !important;
+        }
+        .screen-comments .comments-container { background: var(--hx-bg) !important; }
+        .screen-comments .comments-container::-webkit-scrollbar-thumb { background: var(--hx-border) !important; border-radius: 6px !important; }
+        .screen-comments .comment-card {
+            background: transparent !important;
+            border: none !important;
+            border-right: 1px solid var(--hx-border-soft) !important;
+            border-radius: 6px !important;
+            padding: 6px 14px !important;
+            margin: 2px 0 !important;
+            box-shadow: none !important;
+            display: block !important;
+            transition: background .15s ease;
+        }
+        .screen-comments .comment-card:hover { background: var(--hx-bg-soft) !important; }
+        .screen-comments .comment-card.archived { border-right-color: var(--hx-fg-mute) !important; opacity: 0.75; }
+        .screen-comments .comment-avatar { display: none !important; }
+        .screen-comments .comment-username {
+            color: var(--hx-fg) !important;
+            font-weight: 600 !important;
+            font-family: 'Tajawal', sans-serif !important;
+            font-size: 13px !important;
+        }
+        .screen-comments .comment-time {
+            color: var(--hx-fg-mute) !important;
+            font-family: 'Tajawal', sans-serif !important;
+            font-size: 11px !important;
+        }
+        .screen-comments .comment-text {
+            color: var(--hx-fg) !important;
+            font-family: 'Tajawal', sans-serif !important;
+            font-size: 14px !important;
+            margin-top: 3px !important;
+            line-height: 1.6 !important;
+        }
+        .screen-comments .status-bar {
+            background: var(--hx-bg) !important;
+            border-top: 1px solid var(--hx-border) !important;
+            color: var(--hx-fg-dim) !important;
+            font-family: 'Tajawal', sans-serif !important;
+            font-size: 12.5px !important;
+        }
+        #screen-comments #stream-warning {
+            background: var(--hx-bg) !important;
+            border: 1px solid var(--hx-warn) !important;
+            color: var(--hx-warn) !important;
+            font-family: 'Tajawal', sans-serif !important;
+            border-radius: 8px !important;
+        }
+        .screen-comments .empty-state {
+            color: var(--hx-fg-dim) !important;
+            font-family: 'Tajawal', sans-serif !important;
+        }
+        .screen-comments .empty-state p { color: var(--hx-fg-mute) !important; font-family: 'Tajawal', sans-serif !important; }
+        .screen-comments .notif-dot { background: var(--hx-live) !important; border-color: var(--hx-bg) !important; }
+        .screen-comments .hacker-blink {
+            color: var(--hx-fg) !important;
+            font-family: 'Tajawal', sans-serif !important;
+            animation: hackerBlink 1.5s ease-in-out infinite;
+            font-size: 13px !important;
+        }
+        @keyframes hackerBlink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0.4; } }
+        .screen-comments .btn-ghost {
+            background: transparent !important;
+            border: 1px solid var(--hx-border) !important;
+            color: var(--hx-fg-dim) !important;
+            font-family: 'Tajawal', sans-serif !important;
+            border-radius: 8px !important;
+            transition: color .15s ease, border-color .15s ease, background .15s ease !important;
+        }
+        .screen-comments .btn-ghost:hover {
+            background: var(--hx-bg-soft) !important;
+            color: var(--hx-fg) !important;
+            border-color: var(--hx-accent) !important;
+        }
+        .screen-comments .keyword-highlight {
+            background: rgba(181, 69, 69, 0.14) !important;
+            color: var(--hx-live) !important;
+            border-radius: 1px !important;
+        }
+ 
+        /* === تبويبات الأرشيف وحقل البحث — نفس الثيم الرمادي === */
+        .screen-comments .archive-tabs {
+            background: var(--hx-bg);
+            border-bottom: 1px solid var(--hx-border);
+        }
+        .screen-comments .archive-tab {
+            background: transparent;
+            border: 1px solid var(--hx-border);
+            color: var(--hx-fg-dim);
+            font-family: 'Tajawal', sans-serif;
+            border-radius: 10px;
+            font-size: 12.5px;
+        }
+        .screen-comments .archive-tab:hover {
+            background: var(--hx-bg-soft);
+            color: var(--hx-fg);
+        }
+        .screen-comments .archive-tab.active {
+            background: var(--hx-bg-soft);
+            border-color: var(--hx-accent);
+            color: var(--hx-fg);
+        }
+        .screen-comments .input-field {
+            background: var(--hx-bg-soft) !important;
+            border: 1px solid var(--hx-border) !important;
+            color: var(--hx-fg) !important;
+            font-family: 'Tajawal', sans-serif !important;
+            border-radius: 10px !important;
+            padding: 12px 16px !important;
+            font-size: 14px !important;
+        }
+        .screen-comments .input-field:focus {
+            border-color: var(--hx-accent) !important;
+            box-shadow: 0 0 0 3px rgba(168,176,192,0.1) !important;
+        }
+        .screen-comments .input-field::placeholder { color: var(--hx-fg-mute) !important; }
+        .screen-comments .btn-primary {
+            background: linear-gradient(135deg, rgba(80,100,180,0.2), rgba(60,80,160,0.1)) !important;
+            color: #c0c8e0 !important;
+            border: 1px solid rgba(100,120,200,0.3) !important;
+            font-family: 'Tajawal', sans-serif !important;
+            font-size: 14px !important;
+            border-radius: 10px !important;
+        }
+        .screen-comments .btn-primary:hover {
+            background: linear-gradient(135deg, rgba(80,100,180,0.3), rgba(60,80,160,0.15)) !important;
+            box-shadow: 0 4px 16px rgba(80,100,180,0.15) !important;
+        }
+        .screen-comments #archive-status {
+            color: var(--hx-fg-mute) !important;
+            font-family: 'Tajawal', sans-serif !important;
+            font-size: 12px !important;
+        }
+ 
+        /* === فقاعات المحادثة — تصميم رمادي مريح === */
+        .screen-comments .chat-wrapper {
+            margin-bottom: 14px;
+        }
+        .screen-comments .chat-wrapper.me { padding-left: 48px; }
+        .screen-comments .chat-wrapper.other { padding-right: 48px; }
+        .screen-comments .chat-card {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: transform .12s ease;
+            border: 1px solid;
+        }
+        .screen-comments .chat-card:hover { transform: none; }
+        /* فقاعة رسائلي — تدرج أزرق دافئ */
+        .screen-comments .chat-card.me {
+            background: linear-gradient(135deg, rgba(80,100,180,0.12), rgba(60,80,160,0.06)) !important;
+            border-color: rgba(100,120,200,0.25) !important;
+            border-bottom-right-radius: 4px;
+            border-bottom-left-radius: 14px;
+        }
+        /* فقاعة رسائل الآخرين — رمادي مزرق دافئ */
+        .screen-comments .chat-card.other {
+            background: rgba(255,255,255,0.04) !important;
+            border-color: var(--hx-border) !important;
+            border-bottom-right-radius: 14px;
+            border-bottom-left-radius: 4px;
+        }
+        .screen-comments .chat-avatar {
+            width: 30px;
+            height: 30px;
+            font-size: 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+            font-family: 'Tajawal', sans-serif;
+        }
+        .screen-comments .chat-card.me .chat-username {
+            color: #b0bce8 !important;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 12.5px;
+        }
+        .screen-comments .chat-card.other .chat-username {
+            color: var(--hx-fg) !important;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 12.5px;
+        }
+        .screen-comments .chat-time {
+            color: var(--hx-fg-mute) !important;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 10.5px;
+            opacity: 0.8;
+        }
+        .screen-comments .chat-text {
+            color: var(--hx-fg) !important;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 14.5px;
+            line-height: 1.65;
+            margin-top: 5px;
+        }
+        .screen-comments .chat-card.me .chat-text { color: #e8eaf2 !important; }
+        .screen-comments .empty-state {
+            color: var(--hx-fg-dim) !important;
+        }
+        .screen-comments .empty-state i { color: var(--hx-fg-mute) !important; }
+ 
+        /* === Entry Overlay (شاشة الدخول للبث) === */
+        #entry-overlay {
+            position: fixed; inset: 0; z-index: 200;
+            background: rgba(5, 5, 8, 0.96);
+            backdrop-filter: blur(20px);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.4s ease;
+            padding: 20px;
+        }
+        #entry-overlay.show { opacity: 1; pointer-events: all; }
+        .entry-content {
+            max-width: 420px; width: 100%; text-align: center;
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 24px; padding: 40px 28px;
+        }
+        .entry-icon-wrap {
+            width: 72px; height: 72px; border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex; align-items: center; justify-content: center;
+            background: var(--accent-glow);
+            border: 2px solid rgba(232,168,56,0.2);
+            transition: all 0.4s ease;
+        }
+        .entry-icon-wrap.success { background: rgba(52,211,153,0.15); border-color: rgba(52,211,153,0.3); }
+        .entry-icon-wrap.error { background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.3); }
+        .entry-icon-wrap i { font-size: 28px; color: var(--accent); transition: color 0.3s; }
+        .entry-icon-wrap.success i { color: var(--success); }
+        .entry-icon-wrap.error i { color: var(--error); }
+        .entry-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+        .entry-subtitle { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
+        .entry-steps { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+        .entry-step {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 14px; border-radius: 12px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            font-size: 13px; color: var(--text-muted);
+            transition: all 0.3s ease;
+            text-align: right; direction: rtl;
+        }
+        .entry-step.active {
+            border-color: rgba(232,168,56,0.3);
+            background: rgba(232,168,56,0.06);
+            color: var(--text);
+        }
+        .entry-step.done { color: var(--success); border-color: rgba(52,211,153,0.2); }
+        .entry-step .step-icon {
+            width: 22px; height: 22px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; flex-shrink: 0;
+            background: rgba(255,255,255,0.05);
+        }
+        .entry-step.active .step-icon { background: var(--accent); color: #0a0a0f; }
+        .entry-step.done .step-icon { background: var(--success); color: #0a0a0f; }
+        .entry-spinner {
+            width: 28px; height: 28px;
+            border: 3px solid rgba(232,168,56,0.15);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: entrySpin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+        @keyframes entrySpin { to { transform: rotate(360deg); } }
+        .entry-actions { display: flex; gap: 10px; margin-top: 16px; }
+        .entry-actions button { flex: 1; }
+    </style>
+</head>
+<body>
+ 
+    <div class="bg-scene">
+        <div class="bg-orb bg-orb-1"></div>
+        <div class="bg-orb bg-orb-2"></div>
+    </div>
+ 
+    <!-- شاشة الترحيب -->
+    <div id="screen-welcome" class="screen active">
+        <div class="w-full max-w-md text-center">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl mb-6" style="background: var(--accent-glow); border: 1px solid rgba(232,168,56,0.15);">
+                <i class="fas fa-comments text-3xl" style="color: var(--accent);"></i>
+            </div>
+            <h1 class="text-4xl font-black mb-3 text-gray-400">فورتيكلس</h1>
+            <p class="text-base mb-10" style="color: var(--text-muted);">أرشيف مباشر لتعليقات يوتيوب — بحث سريع، حفظ دائم، ومزامنة لعدة بثوث في آنٍ واحد.</p>
+ 
+            <div class="flex flex-col sm:flex-row gap-4">
+                <div class="flex-1 glass-card glass-card-hover p-6 text-center" onclick="showScreen('screen-new')">
+                    <div class="inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4" style="background: var(--accent-glow);">
+                        <i class="fas fa-plus text-xl" style="color: var(--accent);"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">بثٌ جديد</h3>
+                </div>
+                <div class="flex-1 glass-card glass-card-hover p-6 text-center" onclick="showStreamList()">
+                    <div class="inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4" style="background: rgba(52,211,153,0.1);">
+                        <i class="fas fa-list text-xl" style="color: var(--success);"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">البثوث المحفوظة</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- شاشة التسجيل الجديد -->
+    <div id="screen-new" class="screen">
+        <div class="w-full max-w-md">
+            <button class="back-btn mb-6" onclick="showScreen('screen-welcome')"><i class="fas fa-arrow-right"></i> رجوع</button>
+            <div class="glass-card p-8">
+                <h2 class="text-2xl font-black mb-1">إضافة بثٍ جديد</h2>
+                <p class="text-sm mb-7" style="color: var(--text-muted);">بيانات البث · حتى 15 بثاً نشطاً · أرشيف التعليقات بلا حدود.</p>
+                <div class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-medium mb-2" style="color: var(--text-muted);"><i class="fas fa-link ml-1" style="color: var(--accent);"></i> رابط البث</label>
+                        <input id="new-url" type="url" class="input-field" placeholder="https://youtube.com/watch?v=..." dir="ltr">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2" style="color: var(--text-muted);"><i class="fas fa-user ml-1" style="color: var(--accent);"></i> اسم المستخدم للبث</label>
+                        <input id="new-user" type="text" class="input-field" placeholder="اكتب اسم المستخدم للبث">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2" style="color: var(--text-muted);"><i class="fas fa-lock ml-1" style="color: var(--accent);"></i> كلمة المرور</label>
+                        <input id="new-pass" type="password" class="input-field" placeholder="اكتب كلمة المرور">
+                    </div>
+                    <button id="btn-new-register" class="btn-primary" onclick="handleNewRegister()">حفظ ودخول</button>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- شاشة قائمة البثوث -->
+    <div id="screen-list" class="screen screen-list">
+        <header class="w-full flex items-center justify-between px-4 py-3" style="background: rgba(8,8,14,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);">
+            <button class="back-btn" onclick="showScreen('screen-welcome')"><i class="fas fa-arrow-right"></i> رجوع</button>
+            <div class="text-sm font-bold">البثوث المحفوظة</div>
+            <div class="w-8"></div>
+        </header>
+        <div class="w-full max-w-2xl p-4 mx-auto" style="flex: 1; overflow-y: auto;">
+            <div id="streams-list-container"></div>
+            <div class="mt-6 text-center">
+                <button class="btn-admin" id="admin-panel-btn" onclick="openAdminModal()" style="display:none;"><i class="fas fa-shield-alt ml-1"></i> لوحة التحكم</button>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- شاشة التعليقات الحية (واجهة تيرمينال رمادية — بدون موارد شبكة) -->
+    <div id="screen-comments" class="screen screen-comments">
+        <header class="w-full flex items-center justify-between px-4 py-3" style="background: var(--hx-bg); border-bottom: 1px solid var(--hx-border);">
+            <button class="back-btn" onclick="handleExit()" title="خروج"><i class="fas fa-arrow-right"></i></button>
+            <div class="flex items-center gap-2">
+                <span class="live-dot"></span>
+                <span class="text-xs font-bold" style="color: var(--hx-live); letter-spacing: 0.5px;">مباشر</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+                <button class="icon-btn notif-btn" onclick="openNotificationsModal()" title="الإشعارات">
+                    <i class="fas fa-bell"></i>
+                    <span class="notif-badge" id="notif-dot"></span>
+                </button>
+                <button class="icon-btn" onclick="openArchiveScreen()" title="الأرشيف">
+                    <i class="fas fa-folder-open"></i>
+                </button>
+                <button class="icon-btn" onclick="openChatScreen()" title="المحادثة">
+                    <i class="fas fa-comment-dots"></i>
+                </button>
+                <button id="user-circle-btn" class="icon-btn user-icon-btn" onclick="handleUserCircleClick()" title="الحساب">
+                    <i class="fas fa-user" id="user-circle-icon"></i>
+                </button>
+            </div>
+        </header>
+        <div id="comments-container" class="comments-container">
+            <div id="stream-warning" style="display:none; margin-bottom:12px; padding:10px 14px; border-radius:2px; background:var(--hx-bg); border:1px solid var(--hx-warn); color:var(--hx-warn); font-size:12px; align-items:center; gap:10px; font-family: var(--hx-mono);">
+                <i class="fas fa-info-circle"></i>
+                <span id="stream-warning-text" style="flex:1;">جارٍ الاتصال بيوتيوب في الخلفية...</span>
+                <button class="btn-ghost" style="padding:4px 12px; font-size:12px;" onclick="retryYouTubeConnection()">إعادة المحاولة</button>
+            </div>
+            <div id="comments-loading" class="empty-state"><span class="hacker-blink">جارٍ التحميل...</span></div>
+            <div id="comments-empty" class="empty-state" style="display: none;"><i class="fas fa-inbox" style="font-size:28px; color: var(--hx-fg-mute);"></i><p class="font-bold mb-1" style="margin-top:8px; color: var(--hx-fg-dim);">لا تعليقات بعد</p></div>
+            <div id="comments-error" class="empty-state" style="display: none;"><i class="fas fa-exclamation-triangle" style="font-size:28px; color: var(--hx-err);"></i><p class="font-bold mb-1" id="error-title" style="margin-top:8px; color: var(--hx-err);">خطأ</p><p class="text-sm mb-4" id="error-message"></p><button class="btn-ghost" onclick="retryFetchComments()">إعادة المحاولة</button></div>
+            <div id="comments-list"></div>
+        </div>
+        <div class="status-bar w-full">
+            <span id="status-text">جارٍ الاتصال...</span>
+            <span style="margin-right: auto;" id="comments-count">0 تعليق</span>
+        </div>
+    </div>
+ 
+    <!-- شاشة المحادثة (Chat) — نفس ثيم البث الرمادي -->
+    <div id="screen-chat" class="screen screen-comments" style="z-index: 50;">
+        <header class="w-full flex items-center justify-between px-4 py-3" style="background: var(--hx-bg); border-bottom: 1px solid var(--hx-border);">
+            <button class="icon-btn" onclick="showScreen('screen-comments')" title="العودة للبث"><i class="fas fa-arrow-right"></i></button>
+            <div class="flex items-center gap-2">
+                <i class="fas fa-comment-dots" style="color: var(--hx-fg-dim); font-size: 14px;"></i>
+                <span class="text-xs font-bold" style="color: var(--hx-fg); letter-spacing: 0.4px;">محادثة البث</span>
+            </div>
+            <div style="width: 38px;"></div>
+        </header>
+        <div id="chat-container" class="comments-container">
+            <div id="chat-list"></div>
+        </div>
+        <div class="status-bar w-full" style="flex-direction: column; align-items: stretch; gap: 10px;">
+            <div class="flex gap-2">
+                <input id="chat-input" type="text" class="input-field" placeholder="اكتب رسالة..." style="text-align: right;">
+                <button class="btn-primary" style="width: auto; padding: 10px 20px;" onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- شاشة الأرشيف (الأرشيف فقط + تبويب المراقب الذكي كأحد الخيارات) -->
+    <div id="screen-archive" class="screen screen-comments" style="z-index: 50;">
+        <header class="w-full flex items-center justify-between px-4 py-3" style="background: var(--hx-bg); border-bottom: 1px solid var(--hx-border);">
+            <button class="icon-btn" onclick="showScreen('screen-comments')" title="العودة للبث"><i class="fas fa-arrow-right"></i></button>
+            <div class="flex items-center gap-2">
+                <i class="fas fa-folder-open" style="color: var(--hx-fg-dim); font-size: 14px;"></i>
+                <span class="text-xs font-bold" style="color: var(--hx-fg); letter-spacing: 0.4px;">الأرشيف والمراقب</span>
+            </div>
+            <div style="width: 38px;"></div>
+        </header>
+ 
+        <!-- تبويبات الأرشيف: الأرشيف / المراقب الذكي -->
+        <div class="archive-tabs">
+            <button id="archive-tab-btn" class="archive-tab active" onclick="switchArchiveTab('archive')">
+                <i class="fas fa-archive"></i> الأرشيف
+            </button>
+            <button id="monitor-tab-btn" class="archive-tab" onclick="switchArchiveTab('monitor')">
+                <i class="fas fa-eye"></i> المراقب الذكي
+            </button>
+        </div>
+ 
+        <!-- لوح الأرشيف: بحث + قائمة التعليقات المؤرشفة -->
+        <div id="archive-pane" class="archive-pane active">
+            <div class="w-full p-4 max-w-2xl mx-auto" style="flex-shrink: 0;">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <input id="search-archive-input" type="text" class="input-field" placeholder="ابحث في نص التعليق..." oninput="searchArchivedComments()">
+                    <input id="search-archive-user" type="text" class="input-field" placeholder="تصفية باسم المستخدم..." oninput="searchArchivedComments()">
+                </div>
+                <div id="archive-status" class="text-xs mt-2" style="color: var(--text-muted);">جارٍ تحميل الأرشيف...</div>
+            </div>
+            <div id="archive-container" class="comments-container"><div id="archive-list"></div></div>
+        </div>
+ 
+        <!-- لوح المراقب الذكي: إدارة الكلمات المفتاحية -->
+        <div id="monitor-pane" class="archive-pane">
+            <div class="w-full p-4 max-w-2xl mx-auto">
+                <div class="mb-4 p-4 rounded-xl" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border);">
+                    <h4 class="text-sm font-bold mb-3"><i class="fas fa-eye ml-1" style="color: var(--accent);"></i> كلمات المراقبة (للبث الحالي)</h4>
+                    <div class="flex gap-2 mb-3">
+                        <input id="keyword-input" type="text" class="input-field" placeholder="مثال: سؤال، هدية، تحدٍّ..." style="text-align: right;">
+                        <button class="btn-primary" style="width: auto; padding: 10px 20px;" onclick="addKeyword()"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <div id="keywords-list" class="flex flex-wrap gap-2"></div>
+                    <p class="text-xs mt-3" style="color: var(--text-muted);">عند تطابق أي كلمة مع تعليق في البث، ستظهر لك إشارة على أيقونة الجرس <i class="fas fa-bell" style="color: var(--accent);"></i> في الأعلى.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- مودال تسجيل الدخول/الحساب -->
+    <div id="auth-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex gap-2 mb-5 p-1 rounded-xl" style="background: rgba(0,0,0,0.3);">
+                <div class="auth-tab active" onclick="switchAuthTab('signin', event)">تسجيل الدخول</div>
+                <div class="auth-tab" onclick="switchAuthTab('signup', event)">حساب جديد</div>
+                <div class="auth-tab" onclick="switchAuthTab('quick', event)">دخول سريع</div>
+            </div>
+            <div id="auth-fields"></div>
+            <button id="auth-submit-btn" class="btn-primary mt-4" onclick="handleAuthAction()">متابعة</button>
+            <button class="btn-ghost mt-2" onclick="closeAuthModal()">إلغاء</button>
+        </div>
+    </div>
+ 
+    <!-- مودال الملف الشخصي (Profile) -->
+    <div id="profile-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 class="text-lg font-bold mb-1">الملف الشخصي</h3>
+            <p class="text-sm mb-5" style="color: var(--text-muted);">إدارة بيانات حسابك.</p>
+            
+            <div id="profile-view">
+                <div class="space-y-3 mb-6">
+                    <div class="input-field" id="profile-name-display" style="cursor: default; background: rgba(255,255,255,0.02);"></div>
+                    <div class="input-field" id="profile-user-display" style="cursor: default; background: rgba(255,255,255,0.02);"></div>
+                    <div class="flex items-center gap-2">
+                        <input type="password" id="profile-pass-display" class="input-field" style="cursor: default; background: rgba(255,255,255,0.02);" disabled>
+                        <button class="btn-ghost" onclick="togglePassVisibility()"><i class="fas fa-eye"></i></button>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <button class="btn-ghost flex-1" onclick="closeProfileModal()">إغلاق</button>
+                    <button class="btn-primary flex-1" style="width: auto; background: transparent; border: 1px solid var(--accent); color: var(--accent);" onclick="toggleEditMode(true)">تعديل</button>
+                    <button class="btn-danger flex-1" style="width: auto;" onclick="handleLogout()">تسجيل الخروج</button>
+                </div>
+            </div>
+ 
+            <div id="profile-edit" style="display: none;">
+                <div class="space-y-3 mb-6">
+                    <input type="text" id="edit-name" class="input-field" placeholder="الاسم الجديد">
+                    <input type="text" id="edit-user" class="input-field" placeholder="اسم المستخدم الجديد">
+                    <p class="text-xs" style="color: var(--text-muted);">* لا يمكن تغيير كلمة المرور من هنا.</p>
+                </div>
+                <div class="flex gap-3">
+                    <button class="btn-ghost flex-1" onclick="toggleEditMode(false)">إلغاء</button>
+                    <button class="btn-primary flex-1" style="width: auto;" onclick="saveProfileChanges()">حفظ التغييرات</button>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- مودال الإشعارات (يعرض سجل إشعارات الكلمات المفتاحية فقط) -->
+    <div id="notifications-modal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="flex items-center justify-between mb-5">
+                <h3 class="text-lg font-bold"><i class="fas fa-bell ml-1"></i> الإشعارات</h3>
+                <button onclick="closeNotificationsModal()" style="background:none;border:none;color:var(--text-muted);font-size:20px;"><i class="fas fa-times"></i></button>
+            </div>
+            <p class="text-xs mb-4" style="color: var(--text-muted);">تظهر هنا التعليقات التي تطابق كلمات مراقبتك. يمكنك إدارة الكلمات من شاشة <i class="fas fa-archive"></i> الأرشيف ← تبويب <i class="fas fa-eye"></i> المراقب الذكي.</p>
+            <h4 class="text-sm font-bold mb-3">سجل الإشعارات</h4>
+            <div id="notifications-list" style="max-height: 400px; overflow-y: auto;">
+                <div class="empty-state" style="padding: 20px;"><i class="fas fa-bell-slash"></i><p style="color: var(--text-muted);">لا توجد إشعارات بعد.</p></div>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- مودال كلمة المرور للبث المحفوظ -->
+    <div id="password-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 class="text-lg font-bold mb-1">دخول البث</h3>
+            <p class="text-sm mb-5" style="color: var(--text-muted);">أدخل كلمة المرور للمتابعة</p>
+            <input id="modal-pass-input" type="password" class="input-field mb-4" placeholder="كلمة المرور">
+            <div class="flex gap-3">
+                <button class="btn-ghost flex-1" onclick="closePasswordModal()">إلغاء</button>
+                <button id="confirm-login-btn" class="btn-primary flex-1" style="width: auto;" onclick="confirmLoginFromList()">تأكيد</button>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- مودال لوحة تحكم الأدمن -->
+    <div id="admin-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 class="text-lg font-bold mb-1 text-red-400"><i class="fas fa-shield-alt ml-1"></i> لوحة التحكم</h3>
+            <p class="text-sm mb-5" style="color: var(--text-muted);">أدخل اسم مستخدم البث وكلمة مرور التحكم لحذف البث وكل البيانات المرتبطة به نهائياً.</p>
+            <input id="admin-user-input" type="text" class="input-field mb-3" placeholder="اسم المستخدم للبث المراد حذفه">
+            <input id="admin-pass-input" type="password" class="input-field mb-4" placeholder="كلمة مرور التحكم">
+            <div class="flex gap-3">
+                <button class="btn-ghost flex-1" onclick="closeAdminModal()">إلغاء</button>
+                <button class="btn-danger flex-1" style="width: auto;" onclick="handleAdminDelete()"><i class="fas fa-trash ml-1"></i> حذف البث نهائياً</button>
+            </div>
+        </div>
+    </div>
+ 
+    <div id="toast-container"></div>
+ 
+    <!-- شاشة الدخول للبث (Entry Overlay) -->
+    <div id="entry-overlay">
+        <div class="entry-content">
+            <div id="entry-icon" class="entry-icon-wrap">
+                <i class="fas fa-video"></i>
+            </div>
+            <div id="entry-title" class="entry-title">جارٍ الدخول للبث</div>
+            <div id="entry-subtitle" class="entry-subtitle">يرجى الانتظار...</div>
+            <div id="entry-spinner" class="entry-spinner"></div>
+            <div id="entry-steps" class="entry-steps"></div>
+            <div id="entry-actions" class="entry-actions" style="display:none;">
+                <button class="btn-ghost" onclick="cancelEntry()">إلغاء</button>
+                <button class="btn-primary" style="width:auto;" onclick="retryEntry()">إعادة المحاولة</button>
+            </div>
+        </div>
+    </div>
+ 
+<script>
+    const SUPABASE_URL = 'https://xfxjnevvgxwqrdqmixvi.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_Dldoa1XJCrlvmP24ra3AHQ_61HJJSZ9';
+    
+    const YOUTUBE_API_KEYS = [
+  'AIzaSyCGI4VMJvCnoHBNafvcV7F78_Q89zKp-sU', 'AIzaSyAGlgZQYCqH1G444RIGukYkAMAJ1v0q3_w',
+  'AIzaSyAxwIl9DH1QddmcUMHTZyhECw2uax5si-k', 'AIzaSyCUJ6GTpUWolRui1lLI5k3SjK_VU5A-2D8',
+  'AIzaSyBsw1AoUisoR4lZBtGOXToR_pZCZYXqeDs', 'AIzaSyBMR1BaijCNXV_x_pihYgQCjExdKQDUh7Q',
+  'AIzaSyCzX3_-OPo7oiDpBNmUS5mLBdzBBSFDsfc', 'AIzaSyAwr2ZbhttD4ULqw42PaBJumTTgAaFJKgU',
+  'AIzaSyC24ppt2DAqw_I1CBqK41naR0MbdQiXZkA', 'AIzaSyBwFvUqBawzQpORTPnPvlRvDg1PJcEDu6g',
+  'AIzaSyCbM4KBisBwOeXsNwCCIYhfJQqDtv8gmbM', 'AIzaSyCeehXFLZJ3CcgReTbd3V5qrqgyJOiMpc0',
+  'AIzaSyDkbMN-4Xu8HOKHgMzW6QzJFkemkOvBEJw', 'AIzaSyBBZt22Mo1aUAfATmz6r6ZBoxemWxLZBFk',
+  'AIzaSyDvDeRtB-LopQ5WhiMIrLy1UITNunJ5t3M', 'AIzaSyDlFf8toYcLG3nEIsWgmLirg7ALZLN6SF4',
+  'AIzaSyAqtG1TUBToZz_Wv-COtEGU-zf4jBKVryU', 'AIzaSyAq4dwYebVqiQGRkGaEjuGSX6vLaDtL_0w',
+  'AIzaSyB2cJs59JAjb-9aPvU2iJJZ5_YQvuBiUAA', 'AIzaSyDL0Pysw8xbrt4RsC4VChTbrRLa0EcoXd4',
+  'AIzaSyAvVkHWkHktYO_8BCYpRZ-mHBcd0quECTU', 'AIzaSyCR91s-QU1qoW4WhGkPrK13YfM37vkGon8',
+  'AIzaSyDiT6xru-D7qigGIZedLhize1NkvoHZzoU', 'AIzaSyBtaw-wKdp_M4NCfStuuU5Yv2vyyXVwWPo',
+  'AIzaSyCi1_7OyRBqkVXHPQ85QmJkEhEgSepacfY', 'AIzaSyDIG3FhSoh5KdSUG5e1iwurz9lSJy1mFBU',
+  'AIzaSyB1bqvtt2wW3lh1sZiM4zkGVZgc3A8BAxo', 'AIzaSyAfbfCrJGPNzGc5qEhp5gzFR8pIKhMHFKg',
+  'AIzaSyCmIn_MqhFRzhSXOy49nNTiDKOi4UI6pew', 'AIzaSyDWE3x7a-v5hJFKfrRzUXITpEHp7unOG8A',
+  'AIzaSyDGxiGVJMz8kP-d2zKaeSP4IH32B3fnl54', 'AIzaSyB3RzG0txVtmSldwmvLO5XuqoSUCZEMi_A',
+  'AIzaSyBUiFJ45xjzCuSrKSoTOM6z2yQYpnzQDSs', 'AIzaSyDKIvjAn-7FDHPvMKSVBrxDYOy7l24E7_w',
+  'AIzaSyB73eC1eMqnU9mv3kkKnWheuRkONrg3LB0', 'AIzaSyA6-nYOOcNBvPjJ4CSueWYkuiFayTY2M8I',
+  'AIzaSyBjwhSfL7dgAnB_19VMEd-RRSiBQRpANxA', 'AIzaSyAKSOVM9FtTlgYTfOCiM1Ydq7kNOIKzLw8',
+  'AIzaSyCKiwiLZpzptvxGZvTbDCx4KGd2hcikoiQ', 'AIzaSyD24XfFbwWZYuzhFeTD9cOn2on7CLjPYTk',
+  'AIzaSyCnKUv79SkgtAtHfmeyNBh9R8FPX4bgmic', 'AIzaSyDYAjKF7rd58ap2Pbh6wm5Z_a7GSGrwUY4',
+  'AIzaSyBSag1jDBGC_8D1SmZwbMedy1hk1EIbwtM', 'AIzaSyArqLUE6Z4bcwzRwAm9IYiwPfUsXJRyef4',
+  'AIzaSyCMe_CHwtM00ZFRfn5lZtR6OZF1umywL1w', 'AIzaSyDSyQ9LedGSGDJtbXmLr5H7vMo6iTjhS1I',
+  'AIzaSyBEyPTV5ze4OBWP8XOFU3UcRDQJR2bBVaE', 'AIzaSyDUMAPA3II3RPwIsdbXawX_DFZeahYBGi8',
+  'AIzaSyCj5eaRy4_IBj7UyhzWZ915cc_IJq0qdyo', 'AIzaSyB8X5oaEKzkN7452-4oRMLsFHWjKuZWXx8',
+  'AIzaSyBDd-Q9_jxKrvaBua1PnlJXdGB7e4ljGpI', 'AIzaSyAWhzU8PnQSctAoprp_h385kxaNoslx6Ek',
+  'AIzaSyBPpZ8OHnQ4co8-pZUyAdBGflYClrJSHJ0', 'AIzaSyDMjufpiZLlf_DAXKfo3So_6JciaSeUAc8',
+  'AIzaSyBLV8gPAwtYMU88Mm_qzvN19bkq4mrTgOk', 'AIzaSyB9P3-3fCwNF-3ggGRxLVw1He1DekcYVk0',
+  'AIzaSyBhE-diJ84NoKyTdC2_o1nqSDBEl4YtnAM', 'AIzaSyBysAagECO2K-EXMPEcFKhQlOPBlaEu0dM',
+  'AIzaSyCxFkiQZxTWZ-jD_Q3W_dm1EtAR7xlTCrE', 'AIzaSyDfMwr_-zSXVZ9DXB68BfaZC5IDFnt-H3U',
+  'AIzaSyCdi3AN6sZKf5Q2xdlHAf9vIW9YfqyGRbg', 'AIzaSyBkoIKZnZZw4AFc6mEPjQJtir3yV1pPWes',
+  'AIzaSyBGiaEzqQfJdQSJFx1oMpveGjGz-3LX5Yo', 'AIzaSyBLvXiR3Ql327dlrUtLMsL-O1lAbPF4tHA',
+  'AIzaSyDIArpZVjYkUZGa9nomntGQ2gL353cVil8', 'AIzaSyAj4uOP0nw908soxurzmNTSN5lnJb1rRXE',
+  'AIzaSyDDUR7kUkSM7zGpkEBN1b1et3nqiKncZzM', 'AIzaSyCvwzmPUF_zrRhN4Iv8823slIJkxLNscbc',
+  'AIzaSyBfqrd-64JM_Y0GyZXApkYr_C46kZHQ3oQ', 'AIzaSyD4Bzow6c2ppB4Dc39aYItz3_Vzk9uBc7A',
+  'AIzaSyDZguIJ05Ldyxh5VHEAv09y4sj5GZ8ua5c', 'AIzaSyBYisyKCMh7GDAllya6j5T0_7kl8M5ttwo',
+  'AIzaSyCGD0gVOkvvm7qG72sR_pr-8cD_QDAssHk', 'AIzaSyCB6h_6QLH3JkBmciTbfWnFrxkH2xHwg0E',
+  'AIzaSyBUKJMkOt4xjDulSqkXDzN0PBPIyqIMZDc', 'AIzaSyCmjyg8RzHp8oW89BkDqcY-zmu4Jxolqrk',
+  'AIzaSyDJ0BZJcgNOI9_d1SiXQnj6KmAdzK-FfBw', 'AIzaSyCK7KfLmTtpGY43xf31QXlNTpPWpuOtRuw',
+  'AIzaSyCpf2ZfS0ZgG3O9pEOhTvxKa4pResRrOUw', 'AIzaSyDEoYKmawouLpngTYCzQ5MUICO9zPjXrXA',
+  'AIzaSyAKZZrAZMsmeybb0IxcRei9yJcCWs3uYFU', 'AIzaSyBYzktJRBTu3d6uDJfl-hY-a43UVRhLS9Q',
+  'AIzaSyCsFgwgpEC3UvjI4KpKK5Rmg6Y9xenQSzU', 'AIzaSyCN0ukK7jOfd1SWE497Cd-Ywaoa2Vf87s0',
+  'AIzaSyDVeMJNZBSJjswrD8hpiWvZKOdDXfRU9yk', 'AIzaSyD4jIe8ewkff9JQojH-_ccLIQBjWNF2bIU',
+  'AIzaSyCHRtX-axPpQhQ9axprstM4QAzGraL4U7g', 'AIzaSyC-pOtGR2tX-6HCfVWvh1kj_Qi5wUWFzvM',
+  'AIzaSyA1DKMQC5zN8e09V72SOaMIjq4P6n9RDko', 'AIzaSyA6GOeltEMKpwW5ktCbU_AhwrIg-dAYvSU',
+  'AIzaSyB57PXoErpx3n6S-iJZM219s_MRqC1RvGE', 'AIzaSyD0H-Jjpw8oAQBbPjoIZ7fusP-dvnQJDKo',
+  'AIzaSyDL3r-zSEy0ggg4ZydtpEliIIXMTSMmPxw', 'AIzaSyBybxlaIwe_UHK6zawj947CgiCJrvr74EA',
+  'AIzaSyCPRYJW_C9gT78dOMSlNHsvOsgrPlciQIY', 'AIzaSyCfA4kazMVRRMq-f2Foojeony-0JsnRdXE',
+  'AIzaSyCvBQbIipKAilx6s1tcM3kFaMWlhD6-g5o', 'AIzaSyA9IQVA7zjieBH7_hywnCBja1PaS32tdLY',
+  'AIzaSyBMNkYdqOvqnFehKz5S-1yvCb0a-v3xbnI', 'AIzaSyDux05kgQCTGi51-1V4z8w8-FERVj0v_GE',
+  'AIzaSyAAKbWOaFtb5gABTGBmmBV5TeDSKWi05Po', 'AIzaSyCpCKAH4hkEIXkCgaLODQUlCdskBSECr38',
+  'AIzaSyDc2iaxAN5qlohnR7b9bojtgrS5cm-pfgw', 'AIzaSyDK7-9nZotyFceW8Wq1OMPYGtJrMYlH504',
+  'AIzaSyCZxr0-rq_j_5GLdLe3UqA8wxZU7SchyA8', 'AIzaSyCABynq_z95ZTKrTHSwtxluULCIkUCNQF0',
+  'AIzaSyBWmIX0LpxqpVj-rh6QgTeeaIteCFIBvu8', 'AIzaSyDN8tpiLCnIhJ8KsGX_p2kI8lOyo2X0q2I',
+  'AIzaSyByUxF09_6D759V-pVRt_NpYJCwQG4LmCE', 'AIzaSyDIuWz3VezxOIvFfdalO-3uwHEzFEoKFzs',
+  'AIzaSyDhI6hsG0l_kLAfGHsZq3kRDdLix1FJx18', 'AIzaSyCQWAUX7-ATSZPY6jxyHligGCGqqqgebXM',
+  'AIzaSyCW5mu3TkEjFuSlAo9akc_BbM3b5xCRASg', 'AIzaSyCLRC1YEN3lvd1YJWyHWsPOr2EWG76sCW8',
+  'AIzaSyBR_JoNis5QOzhutGKmEkgHVQWAuE4HD4k', 'AIzaSyAVNx1WUCnclzqOqpIM5VYA96H6qp2j5bY',
+  'AIzaSyDdtHvWxuscU2miukF4KlMxn0W__2VUZI4', 'AIzaSyB4_z6CdYM0KVhx7ATbPJH1DXwNhc1YpEg',
+  'AIzaSyDcXdCnP8FNl2ESLM1E7IoLP5VlvjxLHz4', 'AIzaSyDqzt5Rt6syKg1tWu8me-Jq1HD6dX27_UE',
+  'AIzaSyApBINm-_grcHuCvzh6wGB-aMYSWWK0ORc', 'AIzaSyCWp3DmBRJ4EwDGvjRf-mcS87fS8fZiLd4',
+  'AIzaSyCTjNPp4c8JPrT7tElu7_muPGUYKWQzUdc', 'AIzaSyCbY0donzc3VD8D4WYHMNwifiKEdhumHwk',
+  'AIzaSyDm5jqtcnsihaQPjRdYqI3lekGmSl0gks4', 'AIzaSyA7sihOm52Yn2EBJCjUVSs-BOgUGNnc478',
+  'AIzaSyAo_rtJl_SqbH9isP2x8pqOCKf1Jx70P90', 'AIzaSyBZPJs4Gir5emKJQTGOTajW2M2Gehcb7iA',
+  'AIzaSyA4ILLM_Hljta7X8iYvg9sX-nHjDmYV-V8', 'AIzaSyAXngXiliXhPbjKMgjKOxMAYNFSHXllm38',
+  'AIzaSyDxF3J7QHRmVja7c701SJEezysbDUP30g8', 'AIzaSyBiNsOzBRNE0_nHeLWNDSqKDznHMSlEi-s',
+  'AIzaSyDixPHIQmvO746hkaWjl2bSxZqriafAn74', 'AIzaSyDLd8O4zDhEuCbh4FFqmv98vJ2gnuK5wh8',
+  'AIzaSyAGUlCTVEgzQgJzzi_CQ_iMBABEnY61K1c', 'AIzaSyBZwpGIVa-T0FoFaIBNIgftvloZMurAHRs',
+  'AIzaSyBGr7hpch8eeoa5AhRko_cyoWnO-hPh5Lo', 'AIzaSyBF6jXbsOdGKHAQIxEh8wPi5JzsceK6EEM',
+  'AIzaSyAUZomrWTB7tLMkwTQB2Onm64QZYJS5JCI', 'AIzaSyA5likqWJ4ZVjP2-KV8IcOjnUBhQSECwgk',
+  'AIzaSyBX3RrCcgGk0_rocyoQpBusmls4wGwrt8s', 'AIzaSyAZ5T8TZk3sz7waE6rVmG9uX9_ojc9h-Ho',
+  'AIzaSyBH8jxicvK8kmdC3x9CMyKghcHs7Y0gFmo', 'AIzaSyDAiQ6cRCrFnsPCwhFtO9GU3r5ydGWcALM',
+  'AIzaSyCWwX3xYFLei8dzCPod93cMwwYVEx0m7RQ', 'AIzaSyDw07QnJK-yUfHXaHI4nMDhcVhuEqyrmWI',
+  'AIzaSyCyJ7n8aGsLmWJ-lDCIjfD9UESLYpstNU0', 'AIzaSyCWoS-oZoM-xhkvrKA-GPwKnq01jnTM0Xs',
+  'AIzaSyC9FkWeAXLmStd9sqF-2IHIGawe41lEAJc', 'AIzaSyAJDP2SyKYF97SGRfIXyTzrH9ReY-2Pj9E',
+  'AIzaSyCPCQMSlgzd0RWQ0dxEoYSLC-YUAE9j9oE', 'AIzaSyCLFqCRy7efVwhoGHBeEZ_7zWjYwoipf6g',
+  'AIzaSyCexsWBL-CVEQLhf4lfk0gV_uU5s-vU0z8', 'AIzaSyALvYACPGwULe3qXOPZymGaU2jlnfg0e0s',
+  'AIzaSyA3yiEIxKWaYBH9airJ5nUKEXS0jIhOuz0', 'AIzaSyAC3Zf_rf8QjnKYquYRlleV-WYGW8olBOg',
+  'AIzaSyBqvlZ1PiS6lxkWZiRAseTAUPaCkoD3GVg', 'AIzaSyDtD5jDP0p8as8WpTVtLmYW80PJP4CF35c',
+  'AIzaSyAe9GDsx0HqX-M7hCw9PBrmOeHY6kYEU5A', 'AIzaSyD-QD9Oo8mHgyLx-UG98bHHwO0zWgWXzug',
+  'AIzaSyDKemhsQfy25xwwi2k313219IqfINWvOco', 'AIzaSyCgpPayEgPW-DRTNfrB1tF6HQ1cZ64eYlM',
+  'AIzaSyBz5QrvVA3FZBdcbfl38NmB6tAEdm7utbc', 'AIzaSyAgchho2SMMXZeZBwelaO1lTth2oLH-VfE',
+  'AIzaSyAGPUCIW5rOyzLQGqpBf_1hHFfPfNTRBb0', 'AIzaSyD-nJPJ7tgNRRae9fyhUngzRSnqD7wbbNM',
+  'AIzaSyCidvnqx5BIkvtXOm-twFlcQK0yt1Wmbw8', 'AIzaSyCiTDC1badlDoPLSYkk38GI9J1e6iWxChQ',
+  'AIzaSyDU6VcOCQCC8sjoyAc7F8DqXSzk4sSf7bA', 'AIzaSyDmDAjzqQRl6tHXL0ifSQdO8cvHh8SpR_M',
+  'AIzaSyAMONoHxmtz6XOMDL6WaI4YR5-VqRLK4p8', 'AIzaSyAsd1M44SnHk2KpLDyfVkO3ygLMoNtHCR0',
+  'AIzaSyDif0Q1gvmlZDYZ3MpSIaPqYyWI5YqoVYE', 'AIzaSyCjF0R-1qF-9UhC4WCE2exAkIytNi8KQcQ',
+  'AIzaSyADFr08Y2RwCiEy9zubLW3AVEX3KP-XH6U', 'AIzaSyCS_q0SQmw_cYBJ0KhBB3If2fA6OAWLo_M',
+  'AIzaSyDXNgO-ZE95GYRBxBdItatCTLJ6tUGiumI', 'AIzaSyCdEM_nFSl7wpMA0oDbwGei4MM2om2-9qc',
+  'AIzaSyCFOF5ZjrZpJpuMM04XhYZFx7YFaKL_lZ8', 'AIzaSyCLibgakkmEFsTwO7bFqDK4gJF5MA7WbwQ',
+  'AIzaSyBiKyjMX3gT8KjNEpiLmYm_QxCJfYd5IZY', 'AIzaSyD_IbU4mtEcNEdEaGMeNyBVA1qMqnLT15k',
+  'AIzaSyCNDfUyfBlusBY9cEZd_s2v1wW9UwnWiTc', 'AIzaSyBKuvvqboItysYv1aIeWD_ihHz_ntjbUTE',
+  'AIzaSyAtUDwA-Tum-bLYNdRsF8JH3qfpfa68zOs', 'AIzaSyBbDEpW55sG4agPOutIxOulqhJnXieUN50',
+  'AIzaSyBA-CQTf5m-UEqWCZlwrOy4o860PhuhCZo', 'AIzaSyARlkXEzHu66kdX4IItZwpHhplW26XQ39g',
+  'AIzaSyA5fRdrH0OrjFlSTIVPiDzgL6gL457E_D8', 'AIzaSyDs6I020y1V22wI4Pk3xVdRuFXKgMwsSgM',
+  'AIzaSyCbpAYOqJMryvFJxvlQQUuZeb7k536AFr0', 'AIzaSyCsr_McDQdSeOYGM53GSrZhSGabB8MGM9Y',
+  'AIzaSyBIrrJt1Q2rs9QnOotXkW-xuAd_ZIJla8o', 'AIzaSyDLQkYsrKgKIQUiIqVI8wN-v3cxUk_RwJo',
+  'AIzaSyCmpcmn97LB54sBzQKCwIvkUFynx4qFfg0', 'AIzaSyBkRENJRnnZoqUEVtyiw7e2Xw5UAa6N0t0',
+  'AIzaSyDHxiInxgmBmANnPAMROnvVNuM7_h8AEbo', 'AIzaSyAdWpxqZBHmcrDDUAuLb2QZ6quGsGdxoCU',
+  'AIzaSyDJBtY7DZ31BoNOrPUWz3_C8vgtrPviK0o', 'AIzaSyAyvk0ohA1MM_P3dHPoIFr5vZVO5ntWwCg',
+  'AIzaSyDGUPbluPaU19Lpj_RuI09aS9LxL-XDHIU', 'AIzaSyCdEnBicuEm04p-UHHgi5PcxV-1CJ5G4Zk',
+  'AIzaSyDoe4hft1tlJatsMkZCc5XVW9Tm4DJm-qc', 'AIzaSyB0FaDhWfReFRWegci_ddBQJq4JtmK5MZk',
+  'AIzaSyAksfl6uhMGqJEnR4CykACF57W0KPypvd0', 'AIzaSyA1hrk91VkMeEgleoCx_mfwtrzAyKjH7pM',
+  'AIzaSyDD49SmYg5eH3i5ky_lYLY5zVeh3xNe-yQ', 'AIzaSyAGyXQAokJ9gvzA_sAETfgviTug4mkfcvw',
+  'AIzaSyBwRucveIKa7ZvbPVFg-TdoguDs0O5UrpA', 'AIzaSyAi7h6OOEoea6avxfhZR887QaLBSIjavD4',
+  'AIzaSyCw1_5vZMoRoRKiZ-UC5GyGghdygbNI4Tg', 'AIzaSyCCYz6jpI7x1B-6NT8BlDjXg9L6c7at_Tk',
+  'AIzaSyCmQxNwRzixgKbjuT_-PoF49RPPaq0botA', 'AIzaSyCNpUASI7x1iHK-tb-5hRqdPoe_r5cSqyM',
+  'AIzaSyBvASbJBcPhkQS6aRml9HUT06yQLFHjY3I', 'AIzaSyAKqkj1T1gMKd41LuC7imRCVEKQdhwQ9Do',
+  'AIzaSyAWtfTmUuEzhf0s4aFQKEkOpYYsm8vH02c'
+];
+    let currentKeyIndex = 0;
+ 
+    let supabaseClient = null;
+    try { supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { realtime: { params: { eventsPerSecond: 10 } } }); } catch(e) { console.error('Supabase Error:', e); }
+ 
+    // === حالة التطبيق ===
+    let currentVideoId = null;
+    let liveChatId = null;
+    let nextPageToken = '';
+    let youtubePollTimer = null;
+    let leaderCheckTimer = null;
+    let realtimeChannel = null;
+    let chatChannel = null;
+    let notifChannel = null;
+    let isLeader = false;
+    let clientId = Math.random().toString(36).substring(2, 15);
+    let commentsTotal = 0;
+    let isAtBottom = true;
+    let searchDebounce = null;
+    let tempLoginData = null;
+    let currentUser = JSON.parse(localStorage.getItem('vrtx_user')) || null;
+    let currentAuthMode = 'signin';
+    let renderedComments = new Set();
+    let renderedChats = new Set();
+ 
+    // لوحة ألوان رمادية مُهدّئة (للتوافق مع الثيم الرمادي للبث والمحادثة والأرشيف)
+    // كل الألوان في نفس العائلة الرمادية، فقط بدرجات إضاءة مختلفة لتمييز المستخدمين
+    const AVATAR_COLORS = ['#7a7d83', '#8a8d93', '#9a9da3', '#6a6d73', '#a5a8ae', '#888b91', '#979aa0', '#7d8086', '#8f9298', '#73767c'];
+    function getAvatarColor(name) { let hash = 0; for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash); return AVATAR_COLORS[Math.abs(hash) % AVATAR_COLORS.length]; }
+    function getVideoId(url) { if (!url) return null; const patterns = [/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/live\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/, /^([a-zA-Z0-9_-]{11})$/]; for (const pattern of patterns) { const match = url.match(pattern); if (match) return match[1]; } return null; }
+ 
+    function showScreen(screenId) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); const target = document.getElementById(screenId); if (target) target.classList.add('active'); }
+    function showToast(message, type = 'info') { const container = document.getElementById('toast-container'); const toast = document.createElement('div'); const icons = { success: 'check-circle', error: 'exclamation-circle', info: 'info-circle' }; toast.className = `toast toast-${type}`; toast.innerHTML = `<i class="fas fa-${icons[type] || 'info-circle'}"></i><span>${message}</span>`; container.appendChild(toast); requestAnimationFrame(() => toast.classList.add('show')); setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 350); }, 3500); }
+ 
+    // === نظام الملف الشخصي وتسجيل الدخول ===
+    function updateUserCircle() {
+        const btn = document.getElementById('user-circle-btn');
+        if (!btn) return;
+        if (currentUser) {
+            // عرض الحرف الأول من اسم المستخدم داخل زر الأيقونة
+            btn.innerHTML = `<span style="font-weight:700; font-size:14px;">${escapeHtml(currentUser.display_name.charAt(0).toUpperCase())}</span>`;
+            btn.style.background = 'var(--hx-bg-soft)';
+            btn.style.borderColor = 'var(--hx-accent)';
+            btn.style.color = 'var(--hx-fg)';
+            btn.title = `مرحباً ${currentUser.display_name} — اضغط لإدارة حسابك`;
+        } else {
+            // عرض أيقونة user فقط عند عدم تسجيل الدخول
+            btn.innerHTML = '<i class="fas fa-user"></i>';
+            btn.style.background = 'transparent';
+            btn.style.borderColor = 'var(--hx-border)';
+            btn.style.color = 'var(--hx-fg-dim)';
+            btn.title = 'تسجيل الدخول';
+        }
+    }
+ 
+    function handleUserCircleClick() {
+        if (currentUser) {
+            document.getElementById('profile-name-display').value = currentUser.display_name;
+            document.getElementById('profile-user-display').value = currentUser.username;
+            document.getElementById('profile-pass-display').value = currentUser.password;
+            toggleEditMode(false);
+            document.getElementById('profile-modal').classList.add('show');
+        } else {
+            openAuthModal();
+        }
+    }
+    function closeProfileModal() { document.getElementById('profile-modal').classList.remove('show'); }
+ 
+    function toggleEditMode(enable) {
+        document.getElementById('profile-view').style.display = enable ? 'none' : 'block';
+        document.getElementById('profile-edit').style.display = enable ? 'block' : 'none';
+        if (enable) {
+            document.getElementById('edit-name').value = currentUser.display_name;
+            document.getElementById('edit-user').value = currentUser.username;
+        }
+    }
+ 
+    function togglePassVisibility() {
+        const passInput = document.getElementById('profile-pass-display');
+        passInput.type = passInput.type === 'password' ? 'text' : 'password';
+    }
+ 
+    async function saveProfileChanges() {
+        const newName = document.getElementById('edit-name').value.trim();
+        const newUser = document.getElementById('edit-user').value.trim();
+        if (!newName || !newUser) { showToast('يرجى تعبئة جميع الحقول', 'error'); return; }
+ 
+        try {
+            const { data, error } = await supabaseClient.from('users').update({ display_name: newName, username: newUser }).eq('id', currentUser.id).select().single();
+            if (error) { showToast('اسم المستخدم مستخدم مسبقاً', 'error'); return; }
+            
+            currentUser = data;
+            localStorage.setItem('vrtx_user', JSON.stringify(data));
+            updateUserCircle();
+            handleUserCircleClick(); // Refresh modal
+            showToast('تم تحديث الملف الشخصي', 'success');
+        } catch(e) { showToast('فشل التحديث', 'error'); }
+    }
+ 
+    function handleLogout() {
+        localStorage.removeItem('vrtx_user');
+        currentUser = null;
+        updateUserCircle();
+        closeProfileModal();
+        showToast('تم تسجيل الخروج', 'info');
+    }
+ 
+    function openAuthModal() { document.getElementById('auth-modal').classList.add('show'); switchAuthTab('signin'); }
+    function closeAuthModal() { document.getElementById('auth-modal').classList.remove('show'); }
+ 
+    function switchAuthTab(mode, evt) {
+        currentAuthMode = mode;
+        document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+        if (evt && evt.target) evt.target.classList.add('active');
+        else {
+            const idx = mode === 'signin' ? 0 : (mode === 'signup' ? 1 : 2);
+            const tabs = document.querySelectorAll('.auth-tab');
+            if (tabs[idx]) tabs[idx].classList.add('active');
+        }
+        const fieldsDiv = document.getElementById('auth-fields');
+        const submitBtn = document.getElementById('auth-submit-btn');
+        if (mode === 'signin') {
+            fieldsDiv.innerHTML = `<input id="auth-username" type="text" class="input-field mb-3" placeholder="اسم المستخدم"><input id="auth-password" type="password" class="input-field mb-3" placeholder="كلمة المرور">`;
+            submitBtn.innerText = 'دخول';
+        } else if (mode === 'signup') {
+            fieldsDiv.innerHTML = `<input id="auth-display" type="text" class="input-field mb-3" placeholder="الاسم المعروض (أي اسم)"><input id="auth-username" type="text" class="input-field mb-3" placeholder="اسم المستخدم (فريد)"><input id="auth-password" type="password" class="input-field mb-3" placeholder="كلمة المرور">`;
+            submitBtn.innerText = 'إنشاء';
+        } else if (mode === 'quick') {
+            fieldsDiv.innerHTML = `<input id="auth-display" type="text" class="input-field mb-3" placeholder="الاسم المعروض فقط"><p class="text-xs text-center" style="color: var(--text-muted);">سيتم توليد اسم المستخدم وكلمة المرور تلقائياً وحفظهما.</p>`;
+            submitBtn.innerText = 'إنشاء سريع';
+        }
+    }
+ 
+    async function handleAuthAction() {
+        if (currentAuthMode === 'signin') {
+            const username = document.getElementById('auth-username').value.trim();
+            const password = document.getElementById('auth-password').value.trim();
+            if (!username || !password) { showToast('يرجى تعبئة جميع الحقول', 'error'); return; }
+            const { data, error } = await supabaseClient.from('users').select('*').eq('username', username).eq('password', password).single();
+            if (error || !data) { showToast('بيانات الدخول غير صحيحة', 'error'); return; }
+            currentUser = data; localStorage.setItem('vrtx_user', JSON.stringify(data)); updateUserCircle(); closeAuthModal(); showToast('تم تسجيل الدخول', 'success');
+        } else if (currentAuthMode === 'signup') {
+            const display = document.getElementById('auth-display').value.trim(); const username = document.getElementById('auth-username').value.trim(); const password = document.getElementById('auth-password').value.trim();
+            if (!display || !username || !password) { showToast('يرجى تعبئة جميع الحقول', 'error'); return; }
+            const { data, error } = await supabaseClient.from('users').insert([{ display_name: display, username: username, password: password }]).select().single();
+            if (error) { showToast('اسم المستخدم مستخدم مسبقاً', 'error'); return; }
+            currentUser = data; localStorage.setItem('vrtx_user', JSON.stringify(data)); updateUserCircle(); closeAuthModal(); showToast('تم إنشاء الحساب', 'success');
+        } else if (currentAuthMode === 'quick') {
+            const display = document.getElementById('auth-display').value.trim();
+            if (!display) { showToast('الاسم المعروض مطلوب', 'error'); return; }
+            const randomUser = 'user_' + Math.random().toString(36).substring(2, 8); const randomPass = Math.random().toString(36).substring(2, 10);
+            const { data, error } = await supabaseClient.from('users').insert([{ display_name: display, username: randomUser, password: randomPass }]).select().single();
+            if (error) { showToast('فشل الإنشاء السريع، حاول مرة أخرى', 'error'); return; }
+            currentUser = data; localStorage.setItem('vrtx_user', JSON.stringify(data)); updateUserCircle(); closeAuthModal(); showToast(`تم الإنشاء بنجاح · اسم المستخدم: ${randomUser}`, 'success');
+        }
+    }
+ 
+    // === التسجيل الجديد للبث ===
+    // 🔒 حد أقصى 15 بث نشط (مطابق لـ SQL constraint في قاعدة البيانات)
+    const MAX_ACTIVE_STREAMS = 15;
+ 
+    async function handleNewRegister() {
+        const url = document.getElementById('new-url').value.trim(); const user = document.getElementById('new-user').value.trim(); const pass = document.getElementById('new-pass').value.trim();
+        if (!url || !user || !pass) { showToast('يرجى تعبئة جميع الحقول', 'error'); return; }
+        const videoId = getVideoId(url); if (!videoId) { showToast('رابط يوتيوب غير صالح', 'error'); return; }
+        try {
+            // Layer 1: pre-count check
+            const { count, error: countError } = await supabaseClient.from('saved_streams').select('*', { count: 'exact', head: true }).eq('is_active', true);
+            if (countError) throw countError;
+            if (count >= MAX_ACTIVE_STREAMS) {
+                showToast(`وصلت للحد الأقصى (${MAX_ACTIVE_STREAMS} بث نشط). احذف أحد البثوث القديمة لإضافة بث جديد.`, 'error');
+                return;
+            }
+            const { data: existingStreams } = await supabaseClient.from('saved_streams').select('stream_url').ilike('stream_url', `%${videoId}%`);
+            if (existingStreams && existingStreams.length > 0) { showToast('هذا البث مُسجّل مسبقاً', 'error'); return; }
+            const { error } = await supabaseClient.from('saved_streams').insert([{ username: user, password: pass, stream_url: url, is_active: true }]);
+            if (error) {
+                // Layer 2: DB trigger rejects on overflow
+                if (error.message && error.message.includes('MAX_STREAMS_REACHED')) {
+                    showToast(`وصلت للحد الأقصى (${MAX_ACTIVE_STREAMS} بث نشط)`, 'error');
+                } else {
+                    throw error;
+                }
+                return;
+            }
+            showToast(`تم الحفظ (${(count || 0) + 1}/${MAX_ACTIVE_STREAMS} بث نشط)`, 'success');
+            startLiveStream(videoId);
+        } catch(e) { showToast('فشل الحفظ: ' + (e.message || ''), 'error'); }
+    }
+ 
+    async function showStreamList() {
+        showScreen('screen-list'); const container = document.getElementById('streams-list-container');
+        container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p style="color: var(--text-muted);">جارٍ التحميل...</p></div>';
+        try {
+            const { data, error } = await supabaseClient.from('saved_streams').select('username, stream_url').order('created_at', { ascending: false });
+            if (error) throw error; if (!data || data.length === 0) { container.innerHTML = '<div class="empty-state"><i class="fas fa-folder-open"></i><p class="font-bold mt-4">لا توجد بثوث محفوظة بعد</p></div>'; return; }
+            container.innerHTML = '<div class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>'; const grid = container.firstChild;
+            data.forEach(stream => {
+                const videoId = getVideoId(stream.stream_url); const card = document.createElement('div');
+                card.className = 'glass-card p-4 flex items-center justify-between';
+                const left = document.createElement('div'); left.className = 'flex items-center gap-3';
+                left.innerHTML = `<div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background: var(--accent-glow);"><i class="fas fa-video text-sm" style="color: var(--accent);"></i></div><div><h3 class="font-bold text-sm"></h3><p class="text-xs" style="color: var(--text-muted);"></p></div>`;
+                left.querySelector('h3').textContent = stream.username;
+                left.querySelector('p').textContent = videoId || '—';
+                const btn = document.createElement('button');
+                btn.className = 'btn-ghost text-xs'; btn.textContent = 'دخول';
+                btn.addEventListener('click', () => openPasswordModal(stream.username, stream.stream_url));
+                card.appendChild(left); card.appendChild(btn); grid.appendChild(card);
+            });
+        } catch(e) {
+            const detail = e?.message || e?.error_description || (typeof e === 'string' ? e : JSON.stringify(e));
+            console.error('فشل تحميل قائمة البثوث:', detail, e);
+            container.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p class="mt-4">فشل التحميل</p><p class="text-xs mt-2" style="color: var(--text-muted);">${escapeHtml(detail || 'خطأ غير معروف')}</p><button class="btn-ghost mt-4" onclick="showStreamList()"><i class="fas fa-redo ml-1"></i> إعادة المحاولة</button></div>`;
+        }
+    }
+ 
+    function openAdminModal() { document.getElementById('admin-user-input').value = ''; document.getElementById('admin-pass-input').value = ''; document.getElementById('admin-modal').classList.add('show'); }
+    function closeAdminModal() { document.getElementById('admin-modal').classList.remove('show'); }
+ 
+    async function handleAdminDelete() {
+        const streamUser = document.getElementById('admin-user-input').value.trim(); const adminPass = document.getElementById('admin-pass-input').value.trim();
+        if (!streamUser || !adminPass) { showToast('يرجى تعبئة جميع الحقول', 'error'); return; }
+        
+        // Double-confirm before permanent delete
+        if (!confirm(`⚠️ سيتم حذف البث "${streamUser}" وكل البيانات المرتبطة به نهائياً:\n\n• التعليقات المؤرشفة\n• رسائل المحادثة\n• كلمات المراقبة\n• الإشعارات\n• أقفال الانتخاب\n\nهل أنت متأكد؟`)) return;
+        
+        try {
+            // 1) Verify admin password
+            const { data: settings, error: settingsError } = await supabaseClient.from('app_settings').select('admin_password').eq('id', 1).single();
+            if (settingsError || !settings || settings.admin_password !== adminPass) { showToast('كلمة مرور التحكم غير صحيحة', 'error'); return; }
+            
+            // 2) Fetch stream record
+            const { data: stream, error: streamError } = await supabaseClient.from('saved_streams').select('id, stream_url').eq('username', streamUser).single();
+            if (streamError || !stream) { showToast('اسم مستخدم البث غير موجود', 'error'); return; }
+            
+            const videoId = getVideoId(stream.stream_url);
+            const streamId = stream.id;
+            
+            // 3) إذا المستخدم الحالي داخل في نفس البث، اطلع من الجلسة قبل الحذف
+            if (currentVideoId === videoId) {
+                cleanupPreviousSession();
+                showScreen('screen-list');
+            }
+            
+            // 4) حذف كل البيانات المرتبطة بالـ videoId بالتوازي (أسرع 5 أضعاف)
+            if (videoId) {
+                showToast('جارٍ حذف بيانات البث...', 'info');
+                
+                const deleteResults = await Promise.allSettled([
+                    supabaseClient.from('archived_comments').delete().eq('stream_id', videoId),
+                    supabaseClient.from('stream_messages').delete().eq('stream_id', videoId),
+                    supabaseClient.from('monitor_keywords').delete().eq('stream_id', videoId),
+                    supabaseClient.from('monitor_notifications').delete().eq('stream_id', videoId),
+                    supabaseClient.from('stream_locks').delete().eq('stream_id', videoId),
+                ]);
+                
+                // Log failures (non-blocking)
+                const tables = ['archived_comments', 'stream_messages', 'monitor_keywords', 'monitor_notifications', 'stream_locks'];
+                const failedTables = deleteResults
+                    .map((r, i) => r.status === 'rejected' ? tables[i] : null)
+                    .filter(Boolean);
+                
+                if (failedTables.length > 0) {
+                    console.warn('Failed to delete tables:', failedTables);
+                }
+            }
+            
+            // 5) Finally: delete the stream itself from saved_streams
+            const { error: deleteError } = await supabaseClient.from('saved_streams').delete().eq('id', streamId);
+            if (deleteError) throw deleteError;
+            
+            showToast(`تم حذف البث "${streamUser}" نهائياً`, 'success');
+            closeAdminModal();
+            showStreamList();
+        } catch(e) { showToast('فشل الحذف: ' + (e.message || ''), 'error'); }
+    }
+ 
+    function openPasswordModal(username, streamUrl) {
+        if (isEnteringSession) { showToast('جارٍ الدخول لبث آخر، يرجى الانتظار...', 'info'); return; }
+        tempLoginData = { username, streamUrl };
+        document.getElementById('modal-pass-input').value = '';
+        document.getElementById('password-modal').classList.add('show');
+        setTimeout(() => document.getElementById('modal-pass-input').focus(), 100);
+    }
+    function closePasswordModal() {
+        document.getElementById('password-modal').classList.remove('show');
+        tempLoginData = null;
+    }
+ 
+    // === المرحلة 1: التحقق من كلمة المرور فقط ===
+    // بعد نجاح التحقق، نعتمد على streamData كمصدر وحيد للحقيقة ولا نعود إلى tempLoginData.
+    async function confirmLoginFromList() {
+        if (isEnteringSession) { showToast('جارٍ الدخول لبث آخر، يرجى الانتظار...', 'info'); return; }
+        if (!tempLoginData) return;
+        const pass = document.getElementById('modal-pass-input').value.trim();
+        if (!pass) { showToast('أدخل كلمة المرور', 'error'); return; }
+ 
+        const btn = document.getElementById('confirm-login-btn');
+        const originalText = btn ? btn.innerHTML : '';
+        if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جارٍ الدخول...'; }
+ 
+        // Capture username before clearing tempLoginData
+        const targetUsername = tempLoginData.username;
+ 
+        let streamData = null;
+        try {
+            const { data, error } = await supabaseClient
+                .from('saved_streams')
+                .select('*')
+                .eq('username', targetUsername)
+                .eq('password', pass)
+                .single();
+            if (error || !data) {
+                showToast('كلمة المرور غير صحيحة أو البث غير موجود', 'error');
+                if (btn) { btn.disabled = false; btn.innerHTML = originalText; }
+                return;
+            }
+            streamData = data;
+        } catch(e) {
+            showToast('خطأ في المصادقة: ' + (e.message || ''), 'error');
+            if (btn) { btn.disabled = false; btn.innerHTML = originalText; }
+            return;
+        }
+ 
+        // Extract videoId from streamData.stream_url (not from tempLoginData)
+        const videoId = getVideoId(streamData.stream_url);
+        if (!videoId) {
+            showToast('رابط البث في السجل غير صالح', 'error');
+            if (btn) { btn.disabled = false; btn.innerHTML = originalText; }
+            return;
+        }
+ 
+        // إغلاق المودال وتنظيف tempLoginData فوراً — streamData هو المصدر الوحيد الآن
+        closePasswordModal();
+        if (btn) { btn.disabled = false; btn.innerHTML = originalText; }
+ 
+        // المرحلة 2: فتح الجلسة فوراً + تشغيل الخدمات في الخلفية
+        await startLiveStreamWithOverlay(videoId, streamData);
+    }
+ 
+    // === البث الحي والمراقب الذكي ===
+    // متغيرات إضافية لمتانة الجلسة
+    let youTubeConnectAttempt = 0;
+    let youTubeReconnectTimer = null;
+    let youTubeConnectionOk = false;
+    let entryOverlayActive = false;
+    let entryTargetVideoId = null;
+    // منع تكرار الدخول وحماية من race conditions
+    let isEnteringSession = false;
+    let sessionToken = 0;                // يُزاد عند كل جلسة جديدة لإبطال العمليات القديمة
+    let entryTargetStreamData = null;    // يحفظ streamData الكامل لإعادة المحاولة
+ 
+    function showStreamWarning(msg) {
+        const w = document.getElementById('stream-warning'); const t = document.getElementById('stream-warning-text');
+        if (w && t) { t.textContent = msg; w.style.display = 'flex'; }
+    }
+    function hideStreamWarning() {
+        const w = document.getElementById('stream-warning'); if (w) w.style.display = 'none';
+    }
+ 
+    // === Entry Overlay Helpers ===
+    function showEntryOverlay(title, subtitle) {
+        const overlay = document.getElementById('entry-overlay');
+        const titleEl = document.getElementById('entry-title');
+        const subEl = document.getElementById('entry-subtitle');
+        const iconWrap = document.getElementById('entry-icon');
+        const spinner = document.getElementById('entry-spinner');
+        const actions = document.getElementById('entry-actions');
+        if (titleEl) titleEl.textContent = title || 'جارٍ الدخول للبث';
+        if (subEl) subEl.textContent = subtitle || 'يرجى الانتظار...';
+        if (iconWrap) { iconWrap.className = 'entry-icon-wrap'; iconWrap.innerHTML = '<i class="fas fa-video"></i>'; }
+        if (spinner) spinner.style.display = 'block';
+        if (actions) actions.style.display = 'none';
+        if (overlay) overlay.classList.add('show');
+        entryOverlayActive = true;
+    }
+    function setEntryStep(stepIndex, state) {
+        const steps = document.querySelectorAll('#entry-steps .entry-step');
+        if (!steps[stepIndex]) return;
+        steps[stepIndex].classList.remove('active', 'done');
+        if (state) steps[stepIndex].classList.add(state);
+        const icon = steps[stepIndex].querySelector('.step-icon');
+        if (icon) {
+            if (state === 'done') icon.innerHTML = '<i class="fas fa-check"></i>';
+            else if (state === 'active') icon.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            else icon.textContent = (stepIndex + 1);
+        }
+    }
+    function renderEntrySteps(stepsList) {
+        const container = document.getElementById('entry-steps');
+        if (!container) return;
+        container.innerHTML = '';
+        stepsList.forEach((text, i) => {
+            const step = document.createElement('div');
+            step.className = 'entry-step';
+            step.innerHTML = `<div class="step-icon">${i + 1}</div><span style="flex:1;">${escapeHtml(text)}</span>`;
+            container.appendChild(step);
+        });
+    }
+    function setEntryError(title, subtitle) {
+        const titleEl = document.getElementById('entry-title');
+        const subEl = document.getElementById('entry-subtitle');
+        const iconWrap = document.getElementById('entry-icon');
+        const spinner = document.getElementById('entry-spinner');
+        const actions = document.getElementById('entry-actions');
+        if (titleEl) titleEl.textContent = title || 'فشل الدخول';
+        if (subEl) subEl.textContent = subtitle || 'خطأ غير متوقع';
+        if (iconWrap) { iconWrap.className = 'entry-icon-wrap error'; iconWrap.innerHTML = '<i class="fas fa-exclamation-triangle"></i>'; }
+        if (spinner) spinner.style.display = 'none';
+        if (actions) actions.style.display = 'flex';
+    }
+    function hideEntryOverlay() {
+        const overlay = document.getElementById('entry-overlay');
+        if (overlay) overlay.classList.remove('show');
+        entryOverlayActive = false;
+    }
+    function cancelEntry() {
+        sessionToken++;                   // إبطال أي عملية خلفية معلّقة
+        hideEntryOverlay();
+        isEnteringSession = false;
+        tempLoginData = null;
+        if (currentVideoId) handleExit();
+    }
+    function retryEntry() {
+        if (entryTargetStreamData) {
+            const vid = getVideoId(entryTargetStreamData.stream_url);
+            if (vid) {
+                startLiveStreamWithOverlay(vid, entryTargetStreamData);
+            } else {
+                hideEntryOverlay();
+            }
+        } else {
+            hideEntryOverlay();
+        }
+    }
+ 
+    // === التدفق الجديد للدخول للبث (مبسّط وغير حظر) ===
+    // الترتيب الصحيح:
+    //   1) التحقق من streamData
+    //   2) استخراج videoId من streamData.stream_url
+    //   3) تنظيف أي جلسة قديمة (لمنع التضارب وتكرار القنوات)
+    //   4) إنشاء حالة الجلسة الجديدة
+    //   5) إظهار شاشة البث فوراً + إخفاء overlay الدخول
+    //   6) تحميل الأرشيف في الخلفية
+    //   7) تشغيل Realtime في الخلفية
+    //   8) تشغيل Leader Election في الخلفية
+    //   9) محاولة الاتصال بيوتيوب في الخلفية
+    // فشل أي خدمة خلفية لا يمنع فتح الجلسة، فقط يُظهر تنبيه للخدمة الفاشلة.
+    async function startLiveStreamWithOverlay(videoId, streamData) {
+        if (isEnteringSession) {
+            showToast('جارٍ الدخول لبث آخر، يرجى الانتظار...', 'info');
+            return;
+        }
+ 
+        // === Verify streamData (single source of truth) ===
+        if (!streamData || !streamData.stream_url) {
+            renderEntrySteps(['إعداد الجلسة']);
+            showEntryOverlay('فشل الدخول', 'بيانات البث غير مكتملة.');
+            setEntryError('بيانات البث غير مكتملة', 'لا يوجد رابط للبث في السجل. قد يكون البث قد حُذف أو أنه غير صالح.');
+            return;
+        }
+ 
+        const verifiedVideoId = getVideoId(streamData.stream_url);
+        if (!verifiedVideoId) {
+            renderEntrySteps(['إعداد الجلسة']);
+            showEntryOverlay('فشل الدخول', 'رابط البث غير صالح.');
+            setEntryError('رابط البث غير صالح', 'تعذّر استخراج معرّف الفيديو من رابط البث: ' + (streamData.stream_url || '(فارغ)'));
+            return;
+        }
+        // استخدام videoId المُتحقق منه من streamData (وليس من أي مصدر آخر)
+        const effectiveVideoId = verifiedVideoId;
+ 
+        isEnteringSession = true;
+        // إصدار token جديد لإبطال أي عملية خلفية من جلسة سابقة
+        const myToken = ++sessionToken;
+        entryTargetVideoId = effectiveVideoId;
+        entryTargetStreamData = streamData;
+ 
+        // === تنظيف أي جلسة سابقة (منع تكرار القنوات والمؤقتات) ===
+        cleanupPreviousSession();
+ 
+        // === تهيئة متغيرات الجلسة الجديدة قبل أي async ===
+        currentVideoId = effectiveVideoId;
+        localStorage.setItem('vrtx_last_stream', effectiveVideoId);
+        commentsTotal = 0;
+        nextPageToken = streamData.next_page_token || '';
+        liveChatId = streamData.live_chat_id || null;
+        isLeader = false;
+        renderedComments.clear();
+        youTubeConnectAttempt = 0;
+        youTubeConnectionOk = false;
+        if (youTubeReconnectTimer) { clearTimeout(youTubeReconnectTimer); youTubeReconnectTimer = null; }
+ 
+        // === إعادة تعيين واجهة التعليقات ===
+        document.getElementById('comments-list').innerHTML = '';
+        document.getElementById('comments-loading').style.display = 'flex';
+        document.getElementById('comments-empty').style.display = 'none';
+        document.getElementById('comments-error').style.display = 'none';
+        document.getElementById('comments-count').textContent = '0 تعليق';
+        document.getElementById('status-text').textContent = 'جارٍ فتح الجلسة...';
+        hideStreamWarning();
+ 
+        // === Show comments screen immediately + entry overlay ===
+        showScreen('screen-comments');
+        const steps = [
+            'إعداد الجلسة',
+            'تحميل الأرشيف (في الخلفية)',
+            'الاتصال اللحظي (في الخلفية)',
+            'الاتصال بيوتيوب (في الخلفية)'
+        ];
+        renderEntrySteps(steps);
+        showEntryOverlay('جارٍ الدخول للبث', 'معرّف البث: ' + effectiveVideoId);
+        setEntryStep(0, 'active');
+ 
+        // === المرحلة 1: إعداد الجلسة (تم بالفعل أعلاه) ===
+        setEntryStep(0, 'done');
+ 
+        // === المرحلة 2: إظهار الجلسة فوراً وإخفاء overlay الدخول ===
+        // فاصل بصري قصير فقط، لا ننتظر أي خدمة خلفية
+        await sleep(200);
+        if (myToken !== sessionToken) { isEnteringSession = false; return; } // race condition guard
+ 
+        hideEntryOverlay();
+        isEnteringSession = false;
+        showToast('جلسة البث مفعّلة', 'success');
+        document.getElementById('status-text').textContent = 'تم الاتصال — جارٍ تحميل الخدمات...';
+ 
+        // === المرحلة 3: الخدمات الخلفية (غير حظرية) — فشل أي منها لا يغلق الجلسة ===
+ 
+        // 3أ: تحميل الأرشيف في الخلفية
+        setEntryStep(1, 'active');
+        loadExistingComments(effectiveVideoId)
+            .then(count => {
+                if (myToken !== sessionToken) return;
+                setEntryStep(1, 'done');
+                updateSessionStatus();
+            })
+            .catch(e => {
+                console.error('Archive load error:', e);
+                if (myToken === sessionToken) {
+                    setEntryStep(1, 'done');
+                    showStreamWarning('تعذّر تحميل الأرشيف من Supabase. تحقق من الاتصال وأعد المحاولة.');
+                }
+            });
+ 
+        // 3ب: إعداد قنوات Realtime في الخلفية
+        setEntryStep(2, 'active');
+        setupRealtimeChannels(effectiveVideoId, myToken)
+            .then(() => {
+                if (myToken !== sessionToken) return;
+                setEntryStep(2, 'done');
+            })
+            .catch(e => {
+                console.error('Realtime setup error:', e);
+                if (myToken === sessionToken) {
+                    setEntryStep(2, 'done');
+                    showStreamWarning('Realtime connect failed — live comments may be delayed.');
+                }
+            });
+ 
+        // 3ج: انتخاب القائد في الخلفية
+        try { startLeaderElection(); } catch(e) { console.error('Leader election start error:', e); }
+ 
+        // 3د: محاولة الاتصال بيوتيوب في الخلفية (مع إعادة المحاولة التلقائية)
+        setEntryStep(3, 'active');
+        attemptYouTubeConnect(effectiveVideoId)
+            .then(() => {
+                if (myToken !== sessionToken) return;
+                if (youTubeConnectionOk) {
+                    setEntryStep(3, 'done');
+                } else {
+                    const step = document.querySelectorAll('#entry-steps .entry-step')[3];
+                    if (step) { step.classList.remove('active'); step.classList.add('done'); step.style.opacity = '0.6'; }
+                }
+                updateSessionStatus();
+            })
+            .catch(e => {
+                console.error('YouTube connect error:', e);
+                if (myToken === sessionToken) {
+                    const step = document.querySelectorAll('#entry-steps .entry-step')[3];
+                    if (step) { step.classList.remove('active'); step.classList.add('done'); step.style.opacity = '0.6'; }
+                }
+            });
+    }
+ 
+    // تحديث نص الحالة بناءً على الحالة الفعلية للخدمات
+    function updateSessionStatus() {
+        if (!currentVideoId) return;
+        const statusEl = document.getElementById('status-text');
+        if (youTubeConnectionOk && isLeader) {
+            statusEl.textContent = 'قائد — جلب مباشر من يوتيوب';
+        } else if (youTubeConnectionOk && !isLeader) {
+            statusEl.textContent = 'متابع — بث مباشر';
+        } else if (commentsTotal > 0) {
+            statusEl.textContent = 'وضع الأرشيف (يوتيوب يعاود المحاولة)';
+        } else {
+            statusEl.textContent = 'تم الاتصال — بانتظار التعليقات';
+            document.getElementById('comments-loading').style.display = 'none';
+            document.getElementById('comments-empty').style.display = 'flex';
+        }
+    }
+ 
+    // === تنظيف الجلسة السابقة — يجب استدعاؤها قبل فتح جلسة جديدة ===
+    function cleanupPreviousSession() {
+        // إيقاف polling يوتيوب
+        stopYouTubePolling();
+        // إيقاف انتخاب القائد
+        if (leaderCheckTimer) { clearInterval(leaderCheckTimer); leaderCheckTimer = null; }
+        // إيقاف مؤقت إعادة اتصال يوتيوب
+        if (youTubeReconnectTimer) { clearTimeout(youTubeReconnectTimer); youTubeReconnectTimer = null; }
+        // إزالة قنوات Supabase Realtime لمنع التكرار
+        if (realtimeChannel) { try { supabaseClient.removeChannel(realtimeChannel); } catch(e) {} realtimeChannel = null; }
+        if (chatChannel) { try { supabaseClient.removeChannel(chatChannel); } catch(e) {} chatChannel = null; }
+        if (notifChannel) { try { supabaseClient.removeChannel(notifChannel); } catch(e) {} notifChannel = null; }
+        // تصفير الحالة
+        currentVideoId = null;
+        liveChatId = null;
+        isLeader = false;
+        youTubeConnectionOk = false;
+        youTubeConnectAttempt = 0;
+        nextPageToken = '';
+        commentsTotal = 0;
+        renderedComments.clear();
+    }
+ 
+    // === إعداد قنوات Realtime كدالة مستقلة (للاستخدام غير الحظري) ===
+    async function setupRealtimeChannels(videoId, myToken) {
+        if (!supabaseClient || !videoId) return;
+        // إزالة القنوات القديمة أولاً لمنع التكرار
+        if (realtimeChannel) { try { supabaseClient.removeChannel(realtimeChannel); } catch(e) {} realtimeChannel = null; }
+        if (notifChannel) { try { supabaseClient.removeChannel(notifChannel); } catch(e) {} notifChannel = null; }
+ 
+        realtimeChannel = supabaseClient.channel('public:archived_comments')
+            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'archived_comments', filter: `stream_id=eq.${videoId}` }, payload => {
+                if (myToken !== sessionToken) return; // تجاهل الرسائل من جلسة قديمة
+                addCommentToUI(payload.new, true);
+            }).subscribe();
+ 
+        notifChannel = supabaseClient.channel('public:monitor_notifications')
+            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'monitor_notifications', filter: `stream_id=eq.${videoId}` }, payload => {
+                if (myToken !== sessionToken) return;
+                const notif = payload.new;
+                document.getElementById('notif-dot').classList.add('show');
+                showToast(`مراقبة: الكلمة "${notif.keyword}" في تعليق من ${notif.author_name}`, 'info');
+                if (document.getElementById('notifications-modal').classList.contains('show')) renderNotifications();
+            }).subscribe();
+    }
+ 
+    function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+ 
+    // === تحميل التعليقات المحفوظة (بدون حد — يجلب كل التعليقات) ===
+    async function loadExistingComments(videoId) {
+        if (!videoId) return 0;
+        try {
+            const { data, error } = await supabaseClient
+                .from('archived_comments')
+                .select('*')
+                .eq('stream_id', videoId)
+                .order('published_at', { ascending: true });
+            if (error) throw error;
+            if (!data || data.length === 0) return 0;
+            document.getElementById('comments-loading').style.display = 'none';
+            document.getElementById('comments-empty').style.display = 'none';
+            data.forEach(item => addCommentToUI(item, true));
+            return data.length;
+        } catch(e) {
+            console.error('Load existing error:', e);
+            return 0;
+        }
+    }
+ 
+    // نقطة دخول موحّدة — لا مسارين متداخلين
+    // عند استدعائها بدون streamData (مثل handleNewRegister أو DOMContentLoaded)،
+    // نحاول جلب السجل من saved_streams باستخدام videoId.
+    async function startLiveStream(videoId) {
+        if (!videoId) { showToast('معرّف البث غير صالح', 'error'); return; }
+        if (isEnteringSession) { showToast('جارٍ الدخول لبث آخر، يرجى الانتظار...', 'info'); return; }
+ 
+        // محاولة جلب streamData من saved_streams (إن وُجد السجل)
+        let streamData = null;
+        try {
+            const { data } = await supabaseClient
+                .from('saved_streams')
+                .select('*')
+                .ilike('stream_url', `%${videoId}%`)
+                .limit(1)
+                .maybeSingle();
+            if (data) streamData = data;
+        } catch(e) { console.warn('Could not fetch streamData for videoId:', e); }
+ 
+        // fallback: بناء streamData أدنى إذا لم يوجد السجل
+        if (!streamData) streamData = { stream_url: videoId, live_chat_id: null, next_page_token: '' };
+        return startLiveStreamWithOverlay(videoId, streamData);
+    }
+ 
+    // محاولة اتصال YouTube مع إعادة المحاولة التلقائية بدون حظر الجلسة
+    async function attemptYouTubeConnect(videoId) {
+        if (!currentVideoId || currentVideoId !== videoId) return;
+        youTubeConnectAttempt++;
+        try {
+            let vidData = null;
+            for (let i = 0; i < YOUTUBE_API_KEYS.length; i++) {
+                const keyIndex = (currentKeyIndex + i) % YOUTUBE_API_KEYS.length;
+                const resp = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=liveStreamingDetails&id=${videoId}&key=${YOUTUBE_API_KEYS[keyIndex]}`);
+                const data = await resp.json();
+                if (!data.error) { vidData = data; currentKeyIndex = keyIndex; break; }
+            }
+            if (!vidData) throw new Error('فشل في جلب بيانات الفيديو');
+            if (!vidData.items || vidData.items.length === 0) throw new Error('الفيديو غير موجود');
+            const liveDetails = vidData.items[0].liveStreamingDetails;
+            if (!liveDetails) throw new Error('هذا الفيديو ليس بثاً مباشراً');
+            const newChatId = liveDetails.activeLiveChatId || liveDetails.liveChatId;
+            if (!newChatId) throw new Error('لا يوجد معرّف محادثة مباشرة لهذا البث');
+            // success — update liveChatId and start direct fetch if leader
+            liveChatId = newChatId; youTubeConnectionOk = true; hideStreamWarning();
+            if (isLeader) { startYouTubePolling(); document.getElementById('status-text').textContent = 'قائد — جلب مباشر من يوتيوب'; }
+            else { document.getElementById('status-text').textContent = 'متابع — بث مباشر'; }
+        } catch(e) {
+            youTubeConnectionOk = false;
+            // No error screen — only a soft warning banner; session stays active via Realtime
+            showStreamWarning('تعذّر الاتصال المباشر بيوتيوب — ستصل التعليقات عبر الأرشيف. ستتم إعادة المحاولة تلقائياً خلال 30 ثانية.');
+            document.getElementById('status-text').textContent = 'وضع الأرشيف (يوتيوب غير متاح)';
+            // إخفاء الـ loading إذا لم تكن هناك تعليقات بعد
+            if (commentsTotal === 0) {
+                document.getElementById('comments-loading').style.display = 'none';
+                document.getElementById('comments-empty').style.display = 'flex';
+            }
+            // إعادة المحاولة تلقائياً بعد 30 ثانية
+            if (youTubeReconnectTimer) clearTimeout(youTubeReconnectTimer);
+            youTubeReconnectTimer = setTimeout(() => { if (currentVideoId === videoId) attemptYouTubeConnect(videoId); }, 30000);
+        }
+    }
+ 
+    function retryYouTubeConnection() {
+        if (!currentVideoId) return;
+        showStreamWarning('جارٍ إعادة الاتصال بيوتيوب...');
+        attemptYouTubeConnect(currentVideoId);
+    }
+ 
+    // (تم توحيد loadExistingComments أعلاه — لا تكرار)
+ 
+    function startLeaderElection() { if (leaderCheckTimer) clearInterval(leaderCheckTimer); checkLeadership(); leaderCheckTimer = setInterval(checkLeadership, 5000); }
+    async function checkLeadership() {
+        if (!currentVideoId) return;
+        try {
+            const { data, error } = await supabaseClient.rpc('try_acquire_lock', { p_stream_id: currentVideoId, p_client_id: clientId });
+            if (error) throw error;
+            const gotLeadership = data === true;
+            if (gotLeadership && !isLeader) {
+                isLeader = true;
+                if (liveChatId && youTubeConnectionOk) {
+                    startYouTubePolling();
+                    document.getElementById('status-text').textContent = 'قائد — جلب مباشر من يوتيوب';
+                } else {
+                    document.getElementById('status-text').textContent = 'قائد — بانتظار يوتيوب...';
+                }
+            } else if (!gotLeadership && isLeader) {
+                isLeader = false; stopYouTubePolling();
+                document.getElementById('status-text').textContent = 'متابع — بث مباشر';
+            } else if (!gotLeadership && !isLeader) {
+                document.getElementById('status-text').textContent = 'متابع — بث مباشر';
+                if (commentsTotal === 0 && !youTubeConnectionOk) {
+                    document.getElementById('comments-loading').style.display = 'none';
+                    document.getElementById('comments-empty').style.display = 'flex';
+                }
+            }
+        } catch(e) {
+            console.error('Lock error:', e);
+            // If lock failed, keep session active and rely on Realtime
+            document.getElementById('status-text').textContent = 'وضع الأرشيف';
+            if (commentsTotal === 0) {
+                document.getElementById('comments-loading').style.display = 'none';
+                document.getElementById('comments-empty').style.display = 'flex';
+            }
+        }
+    }
+ 
+    function startYouTubePolling() { if (youtubePollTimer) clearInterval(youtubePollTimer); fetchComments(); youtubePollTimer = setInterval(fetchComments, 2000); }
+    function stopYouTubePolling() { if (youtubePollTimer) { clearInterval(youtubePollTimer); youtubePollTimer = null; } }
+ 
+    async function fetchComments() {
+        if (!liveChatId || !isLeader) return;
+        try { const currentApiKey = YOUTUBE_API_KEYS[currentKeyIndex]; let apiUrl = `https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId=${liveChatId}&part=snippet,authorDetails&maxResults=200&key=${currentApiKey}`; if (nextPageToken) apiUrl += `&pageToken=${nextPageToken}`; const resp = await fetch(apiUrl); const data = await resp.json(); if (data.error && (data.error.code === 403 || data.error.errors?.[0]?.reason === 'quotaExceeded')) { currentKeyIndex = (currentKeyIndex + 1) % YOUTUBE_API_KEYS.length; return fetchComments(); } if (data.error) throw new Error(data.error.message); if (data.nextPageToken) nextPageToken = data.nextPageToken; if (data.items && data.items.length > 0) { document.getElementById('comments-loading').style.display = 'none'; document.getElementById('comments-empty').style.display = 'none'; const sorted = [...data.items].sort((a, b) => new Date(a.snippet.publishedAt) - new Date(b.snippet.publishedAt)); await archiveCommentsToSupabase(sorted); sorted.forEach(item => { const newItem = { stream_id: currentVideoId, author_name: item.authorDetails?.displayName || 'مجهول', comment_text: item.snippet?.displayMessage || '', published_at: item.snippet?.publishedAt || new Date().toISOString() }; addCommentToUI(newItem, true); }); } } catch(e) { console.error('Fetch error:', e); }
+    }
+ 
+    async function archiveCommentsToSupabase(comments) {
+        if (!supabaseClient || !currentVideoId) return;
+        const batchData = comments.map(item => ({
+            stream_id: currentVideoId,
+            author_name: item.authorDetails?.displayName || 'مجهول',
+            comment_text: item.snippet?.displayMessage || '',
+            published_at: item.snippet?.publishedAt || new Date().toISOString()
+        })).filter(c => c.comment_text !== '');
+        if (batchData.length === 0) return;
+        try {
+            const { error } = await supabaseClient.from('archived_comments')
+                .upsert(batchData, { onConflict: 'stream_id,author_name,published_at,comment_text', ignoreDuplicates: true });
+            if (error) console.error('Archive upsert error:', error);
+        } catch (e) { console.error('Archive upsert exception:', e); }
+    }
+ 
+    function addCommentToUI(item, countIncrement = false) {
+        const uniqueId = item.stream_id + item.author_name + item.published_at + item.comment_text; if (renderedComments.has(uniqueId)) return; renderedComments.add(uniqueId);
+        const list = document.getElementById('comments-list'); const displayName = item.author_name || 'مجهول'; const message = item.comment_text || ''; const color = getAvatarColor(displayName);
+        const card = document.createElement('div'); card.className = 'comment-card'; card.style.setProperty('--c-accent', color);
+        card.innerHTML = `<div class="comment-avatar" style="background: ${color};">${escapeHtml(displayName.charAt(0).toUpperCase())}</div><div style="flex:1; min-width:0;"><div class="flex items-center" style="margin-bottom:2px;"><span class="comment-username" style="color:${color};">${escapeHtml(displayName)}</span><span class="comment-time">${formatTime(item.published_at)}</span></div><div class="comment-text">${escapeHtml(message)}</div></div>`;
+        list.appendChild(card); if (countIncrement) { commentsTotal++; document.getElementById('comments-count').textContent = `${commentsTotal} تعليق`; }
+        // إخفاء حالات الـ loading/empty/error فور وصول أي تعليق
+        document.getElementById('comments-loading').style.display = 'none';
+        document.getElementById('comments-empty').style.display = 'none';
+        document.getElementById('comments-error').style.display = 'none';
+        if (isAtBottom) list.parentElement.scrollTop = list.parentElement.scrollHeight;
+    }
+ 
+    // === نظام المراقب الذكي (Synced with Supabase) ===
+    // مودال الإشعارات يعرض السجل فقط. إدارة الكلمات أصبحت داخل شاشة الأرشيف (تبويب المراقب الذكي).
+    function openNotificationsModal() {
+        document.getElementById('notif-dot').classList.remove('show');
+        document.getElementById('notifications-modal').classList.add('show');
+        renderNotifications();
+    }
+    function closeNotificationsModal() { document.getElementById('notifications-modal').classList.remove('show'); }
+ 
+    // تبديل تبويبات شاشة الأرشيف: 'archive' (الأرشيف) أو 'monitor' (المراقب الذكي)
+    function switchArchiveTab(tabName) {
+        const tabBtns = document.querySelectorAll('.archive-tab');
+        const panes = document.querySelectorAll('.archive-pane');
+        tabBtns.forEach(b => b.classList.remove('active'));
+        panes.forEach(p => p.classList.remove('active'));
+        if (tabName === 'monitor') {
+            document.getElementById('monitor-tab-btn').classList.add('active');
+            document.getElementById('monitor-pane').classList.add('active');
+            renderKeywords();
+        } else {
+            // default: archive
+            document.getElementById('archive-tab-btn').classList.add('active');
+            document.getElementById('archive-pane').classList.add('active');
+            // إن لم يكن الأرشيف محمّلاً بعد، حمّله
+            if (!document.getElementById('archive-list').children.length) {
+                loadArchivedComments('', '');
+            }
+        }
+    }
+ 
+    async function addKeyword() {
+        const input = document.getElementById('keyword-input');
+        const kw = input.value.trim();
+        if (!kw || !currentVideoId) return;
+        try {
+            await supabaseClient.from('monitor_keywords').insert([{ stream_id: currentVideoId, keyword: kw }]);
+            input.value = '';
+            renderKeywords();
+        } catch(e) { showToast('فشل إضافة الكلمة', 'error'); }
+    }
+ 
+    async function removeKeyword(kw) {
+        if (!currentVideoId) return;
+        try {
+            await supabaseClient.from('monitor_keywords').delete().eq('stream_id', currentVideoId).eq('keyword', kw);
+            renderKeywords();
+        } catch(e) { showToast('فشل الحذف', 'error'); }
+    }
+ 
+    async function renderKeywords() {
+        const container = document.getElementById('keywords-list');
+        container.innerHTML = '<p class="text-xs" style="color: var(--text-muted);">جارٍ التحميل...</p>';
+        if (!currentVideoId) return;
+        const { data } = await supabaseClient.from('monitor_keywords').select('keyword').eq('stream_id', currentVideoId);
+        container.innerHTML = '';
+        if (!data || data.length === 0) { container.innerHTML = '<p class="text-xs" style="color: var(--text-muted);">لا توجد كلمات مراقبة بعد.</p>'; return; }
+        data.forEach(k => {
+            const tag = document.createElement('div');
+            tag.className = 'flex items-center gap-2 px-3 py-1 rounded-full text-xs';
+            tag.style.background = 'rgba(239, 68, 68, 0.1)'; tag.style.border = '1px solid rgba(239, 68, 68, 0.2)'; tag.style.color = '#f87171';
+            tag.innerHTML = `<span>${escapeHtml(k.keyword)}</span><button onclick="removeKeyword('${k.keyword.replace(/'/g, "")}')" style="background:none;border:none;color:#f87171;cursor:pointer;font-size:14px;">&times;</button>`;
+            container.appendChild(tag);
+        });
+    }
+ 
+    async function renderNotifications() {
+        const list = document.getElementById('notifications-list');
+        list.innerHTML = '<div class="empty-state" style="padding: 20px;"><i class="fas fa-spinner fa-spin"></i></div>';
+        if (!currentVideoId) return;
+        const { data } = await supabaseClient.from('monitor_notifications').select('*').eq('stream_id', currentVideoId).order('created_at', { ascending: false }).limit(50);
+        if (!data || data.length === 0) {
+            list.innerHTML = '<div class="empty-state" style="padding: 20px;"><i class="fas fa-bell-slash"></i><p style="color: var(--text-muted);">لا توجد إشعارات بعد.</p></div>';
+            return;
+        }
+        list.innerHTML = '';
+        data.forEach(notif => {
+            const color = getAvatarColor(notif.author_name);
+            const highlightedMsg = escapeHtml(notif.comment_text).replace(new RegExp(escapeHtml(notif.keyword), 'gi'), `<span class="keyword-highlight">$&</span>`);
+            const card = document.createElement('div');
+            card.className = 'comment-card';
+            card.style.setProperty('--c-accent', color);
+            card.innerHTML = `<div class="comment-avatar" style="background: ${color};">${notif.author_name.charAt(0).toUpperCase()}</div><div style="flex:1; min-width:0;"><div class="flex items-center"><span class="comment-username" style="color:${color};">${escapeHtml(notif.author_name)}</span><span class="comment-time">${formatTime(notif.created_at)}</span></div><div class="comment-text">${highlightedMsg}</div></div>`;
+            list.appendChild(card);
+        });
+    }
+ 
+    // === نظام المحادثة (Chat) ===
+    function openChatScreen() {
+        if (!currentUser) { showToast('يجب تسجيل الدخول لاستخدام المحادثة', 'error'); openAuthModal(); return; }
+        showScreen('screen-chat'); loadChatMessages();
+        if (chatChannel) supabaseClient.removeChannel(chatChannel);
+        chatChannel = supabaseClient.channel('public:stream_messages').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'stream_messages', filter: `stream_id=eq.${currentVideoId}` }, payload => { addChatMessageToUI(payload.new); }).subscribe();
+    }
+ 
+    async function loadChatMessages() {
+        const list = document.getElementById('chat-list'); list.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i></div>'; renderedChats.clear();
+        try {
+            // تحميل كل الرسائل بدون حد — Supabase يرجع حتى 1000 صف بالصفحة الواحدة تلقائياً
+            let allMessages = [];
+            let page = 0;
+            let hasMore = true;
+            while (hasMore) {
+                const from = page * 1000;
+                const to = from + 999;
+                const { data, error } = await supabaseClient.from('stream_messages').select('*').eq('stream_id', currentVideoId).order('created_at', { ascending: true }).range(from, to);
+                if (error) throw error;
+                if (!data || data.length === 0) break;
+                allMessages = allMessages.concat(data);
+                if (data.length < 1000) hasMore = false;
+                page++;
+            }
+            list.innerHTML = '';
+            if (allMessages.length === 0) { list.innerHTML = '<div class="empty-state"><i class="fas fa-comment-slash"></i><p style="color: var(--text-muted);">لا توجد رسائل بعد. كن أول من يبدأ الحديث!</p></div>'; return; }
+            allMessages.forEach(msg => addChatMessageToUI(msg));
+        } catch(e) { console.error('Chat load error:', e); list.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>تعذّر تحميل المحادثة</p></div>'; }
+    }
+ 
+    function addChatMessageToUI(msg) {
+        const uniqueId = `chat_${msg.id}`; if (renderedChats.has(uniqueId)) return; renderedChats.add(uniqueId);
+        const list = document.getElementById('chat-list'); 
+        // إزالة empty-state إن وُجد عند وصول أول رسالة
+        const emptyState = list.querySelector('.empty-state');
+        if (emptyState) emptyState.remove();
+        const isMe = currentUser && msg.user_id === currentUser.id; 
+        const color = getAvatarColor(msg.display_name);
+        const initial = msg.display_name.charAt(0).toUpperCase();
+        const wrapper = document.createElement('div'); 
+        wrapper.className = `chat-wrapper ${isMe ? 'me' : 'other'}`;
+        const card = document.createElement('div'); 
+        card.className = `chat-card ${isMe ? 'me' : 'other'}`; 
+        card.style.setProperty('--c-accent', color);
+        card.innerHTML = `
+            <div class="chat-card-header">
+                <div class="chat-avatar" style="background: ${color};">${initial}</div>
+                <span class="chat-username">${escapeHtml(msg.display_name)}</span>
+                <span class="chat-time">${formatTime(msg.created_at)}</span>
+            </div>
+            <div class="chat-text">${escapeHtml(msg.message_text)}</div>
+        `;
+        wrapper.appendChild(card); 
+        list.appendChild(wrapper); 
+        list.parentElement.scrollTop = list.parentElement.scrollHeight;
+    }
+ 
+    async function sendChatMessage() {
+        const input = document.getElementById('chat-input'); const text = input.value.trim();
+        if (!text) return;
+        if (!currentUser) { showToast('يجب تسجيل الدخول', 'error'); openAuthModal(); return; }
+        if (!currentVideoId) { showToast('لا يوجد بث نشط', 'error'); return; }
+        input.value = '';
+        try {
+            const { error } = await supabaseClient.from('stream_messages').insert([{
+                stream_id: currentVideoId,
+                user_id: currentUser.id,
+                display_name: currentUser.display_name,
+                username: currentUser.username,
+                message_text: text
+            }]);
+            if (error) {
+                console.error('Chat insert error:', error);
+                showToast('فشل الإرسال: ' + (error.message || 'خطأ غير معروف'), 'error');
+                input.value = text;
+            }
+        } catch(e) {
+            console.error('Chat send exception:', e);
+            showToast('فشل الإرسال: ' + (e.message || ''), 'error');
+            input.value = text;
+        }
+    }
+ 
+    // === الأرشيف والبحث ===
+    function openArchiveScreen() { showScreen('screen-archive'); switchArchiveTab('archive'); }
+    async function loadArchivedComments(searchTerm = '', searchUser = '') {
+        const list = document.getElementById('archive-list'); const status = document.getElementById('archive-status'); list.innerHTML = ''; status.textContent = 'جاري التحميل...';
+        try {
+            let query = supabaseClient.from('archived_comments').select('*').eq('stream_id', currentVideoId);
+            if (searchTerm) query = query.ilike('comment_text', `%${searchTerm}%`); if (searchUser) query = query.ilike('author_name', `%${searchUser}%`);
+            query = query.order('published_at', { ascending: true }); const { data, error } = await query; if (error) throw error;
+            if (data.length === 0) { 
+                status.innerHTML = '<i class="fas fa-inbox ml-1"></i> لا توجد نتائج مطابقة'; 
+                list.innerHTML = '<div class="empty-state"><i class="fas fa-folder-open" style="font-size:32px; opacity:0.3;"></i><p class="mt-3" style="color: var(--text-muted);">لا توجد تعليقات مؤرشفة تطابق بحثك</p></div>';
+                return; 
+            }
+            status.innerHTML = `<i class="fas fa-list ml-1" style="color: var(--accent);"></i> ${data.length} تعليق مؤرشف`;
+            data.forEach(item => { 
+                const color = getAvatarColor(item.author_name); 
+                const card = document.createElement('div'); 
+                card.className = 'comment-card archived'; 
+                card.style.setProperty('--c-accent', color); 
+                card.innerHTML = `
+                    <div class="comment-avatar" style="background: ${color};">${item.author_name.charAt(0).toUpperCase()}</div>
+                    <div style="flex:1; min-width:0;">
+                        <div class="flex items-center" style="gap: 6px;">
+                            <span class="comment-username" style="color:${color};">${escapeHtml(item.author_name)}</span>
+                            <span class="comment-time"><i class="far fa-clock ml-1" style="opacity:0.5;"></i>${new Date(item.published_at).toLocaleTimeString('ar-EG', {hour:'2-digit',minute:'2-digit'})}</span>
+                        </div>
+                        <div class="comment-text" style="margin-top:3px;">${escapeHtml(item.comment_text)}</div>
+                    </div>
+                `; 
+                list.appendChild(card); 
+            });
+        } catch(e) { status.innerHTML = '<i class="fas fa-exclamation-triangle ml-1" style="color:#f87171;"></i> فشل التحميل'; }
+    }
+    function searchArchivedComments() { clearTimeout(searchDebounce); const term = document.getElementById('search-archive-input').value.trim(); const user = document.getElementById('search-archive-user').value.trim(); searchDebounce = setTimeout(() => loadArchivedComments(term, user), 300); }
+ 
+    function handleExit() {
+        // إبطال أي عملية خلفية معلّقة ومنع التداخل مع جلسة جديدة
+        sessionToken++;
+        isEnteringSession = false;
+        tempLoginData = null;
+        entryTargetStreamData = null;
+        // تنظيف كامل للموارد
+        cleanupPreviousSession();
+        if (youTubeReconnectTimer) { clearTimeout(youTubeReconnectTimer); youTubeReconnectTimer = null; }
+        localStorage.removeItem('vrtx_last_stream');
+        document.getElementById('comments-list').innerHTML = '';
+        document.getElementById('archive-list').innerHTML = '';
+        document.getElementById('chat-list').innerHTML = '';
+        hideStreamWarning();
+        hideEntryOverlay();
+        showScreen('screen-welcome');
+    }
+ 
+    function formatTime(iso) { if(!iso) return ''; const d = Math.floor((Date.now() - new Date(iso).getTime())/1000); if(d<10) return 'الآن'; if(d<60) return `منذ ${d} ث`; if(d<3600) return `منذ ${Math.floor(d/60)} د`; return `منذ ${Math.floor(d/3600)} س`; }
+    function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
+    function retryFetchComments() { if (currentVideoId) startLiveStream(currentVideoId); }
+ 
+    // Toggle Admin Panel visibility based on app_settings.admin_panel_visible (default: hidden)
+    async function syncAdminPanelVisibility() {
+        try {
+            const { data, error } = await supabaseClient
+                .from('app_settings')
+                .select('admin_panel_visible')
+                .eq('id', 1)
+                .maybeSingle();
+            const btn = document.getElementById('admin-panel-btn');
+            if (error || !data) { if (btn) btn.style.display = 'none'; return; }
+            if (btn) btn.style.display = data.admin_panel_visible === true ? 'inline-flex' : 'none';
+        } catch (e) {
+            const btn = document.getElementById('admin-panel-btn');
+            if (btn) btn.style.display = 'none';
+        }
+    }
+ 
+    document.addEventListener('DOMContentLoaded', () => {
+        updateUserCircle(); const lastStream = localStorage.getItem('vrtx_last_stream'); if (lastStream) { startLiveStream(lastStream); }
+        syncAdminPanelVisibility();
+        document.getElementById('new-pass').addEventListener('keydown', e => { if (e.key === 'Enter') handleNewRegister(); });
+        document.getElementById('modal-pass-input').addEventListener('keydown', e => { if (e.key === 'Enter') confirmLoginFromList(); });
+        document.getElementById('admin-pass-input').addEventListener('keydown', e => { if (e.key === 'Enter') handleAdminDelete(); });
+        document.getElementById('chat-input').addEventListener('keydown', e => { if (e.key === 'Enter') sendChatMessage(); });
+        document.getElementById('keyword-input').addEventListener('keydown', e => { if (e.key === 'Enter') addKeyword(); });
+        const container = document.getElementById('comments-container'); container.addEventListener('scroll', () => { isAtBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 100; });
+    });
+</script>
+</body>
+</html>
+ 
