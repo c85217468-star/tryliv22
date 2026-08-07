@@ -795,6 +795,7 @@
                         <button id="mod-status-btn" class="btn-ghost" style="padding:6px 14px; font-size:12px; white-space:nowrap;" onclick="requestOrCheckModeratorStatus()"><i class="fas fa-sync ml-1"></i> تحقق الآن</button>
                     </div>
                     <p class="text-xs mt-2" style="color: var(--text-muted);">عند عدم وجود صلاحية إشراف، سيرسل الحساب الرسمي رسالة فعلية بالشات تطلب من صاحب البث منحه صلاحية "مشرف" من يوتيوب ستوديو. بعد المنح اضغط "تحقق الآن" مجدداً.</p>
+                    <p id="mod-debug-line" class="text-xs mt-2" style="color: var(--accent); display:none; word-break: break-word;"></p>
                 </div>
                 <div class="mb-4 p-4 rounded-xl" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border);">
                     <h4 class="text-sm font-bold mb-3"><i class="fas fa-eye ml-1" style="color: var(--accent);"></i> كلمات المراقبة (للبث الحالي)</h4>
@@ -1840,6 +1841,14 @@
         } catch(e) { currentKeywordsCache = []; }
     }
 
+    // === سطر سجل مرئي يعرض تفاصيل آخر عملية إرسال/تحقق بدون الحاجة لأدوات المطوّر ===
+    function setModDebugLine(msg) {
+        const el = document.getElementById('mod-debug-line');
+        if (!el) return;
+        el.textContent = msg;
+        el.style.display = msg ? 'block' : 'none';
+    }
+
     // === عرض حالة الإشراف داخل لوح المراقب الذكي ===
     function renderModStatusUI() {
         const textEl = document.getElementById('mod-status-text');
@@ -1875,24 +1884,53 @@
                 effectiveLiveChatId = data?.live_chat_id || null;
             } catch(e) { /* تجاهل */ }
         }
-        if (!effectiveLiveChatId) { showToast('لم يتم العثور على شات مباشر لهذا البث بعد — تأكد أن البث نشط حالياً', 'error'); return; }
+        if (!effectiveLiveChatId) {
+            showToast('لم يتم العثور على شات مباشر لهذا البث بعد — تأكد أن البث نشط حالياً', 'error');
+            setModDebugLine('❌ لا يوجد live_chat_id مسجّل بقاعدة البيانات لهذا البث بعد.');
+            return;
+        }
 
         modCheckInProgress = true; lastModCheckAt = now;
         const btnEl = document.getElementById('mod-status-btn');
         if (btnEl) { btnEl.disabled = true; btnEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; }
+        setModDebugLine('⏳ جارٍ إرسال طلب للدالة...');
         try {
             const { data, error } = await supabaseClient.functions.invoke('archive-comments', {
                 body: { action: 'check-status', stream_id: currentVideoId, live_chat_id: effectiveLiveChatId }
             });
-            if (error || !data) { showToast('تعذّر التحقق من حالة الإشراف', 'error'); return; }
-            if (data.error === 'no_bot_linked') { showToast('لم يتم ربط حساب المراقب الذكي بعد — راجع لوحة التحكم', 'error'); return; }
-            if (data.error) { showToast('تعذّر إرسال رسالة الطلب لشات يوتيوب', 'error'); return; }
+            console.log('[mod-check] raw response:', { data, error });
+
+            if (error) {
+                // FunctionsHttpError من supabase-js يحمل غالباً نص الرد الفعلي بـ error.context
+                let detail = error.message || 'unknown';
+                try { if (error.context) { const t = await error.context.text(); detail = t || detail; } } catch(_) {}
+                showToast('فشل الاتصال بالدالة — راجع السجل بالأسفل', 'error');
+                setModDebugLine(`❌ خطأ اتصال: ${detail}`);
+                return;
+            }
+            if (!data) {
+                showToast('لم يرجع أي رد من الدالة', 'error');
+                setModDebugLine('❌ الرد فارغ تماماً من الدالة (تحقق من اسم الدالة والنشر).');
+                return;
+            }
+            if (data.error === 'no_bot_linked') {
+                showToast('لم يتم ربط حساب المراقب الذكي — افتح "حساب المراقب الذكي" وسجّل الدخول', 'error');
+                setModDebugLine('❌ no_bot_linked — جدول bot_account فارغ أو refresh_token مفقود.');
+                return;
+            }
+            if (data.error) {
+                showToast('تعذّر إرسال الرسالة لشات يوتيوب — راجع السجل بالأسفل', 'error');
+                setModDebugLine(`❌ ${data.error}${data.detail ? ' — ' + data.detail : ''}`);
+                return;
+            }
             currentIsModerator = data.is_moderator === true;
             renderModStatusUI();
+            setModDebugLine(currentIsModerator ? '✅ تم التأكد: الحساب مشرف الآن.' : '📨 تم إرسال رسالة الطلب فعلياً بالشات — الحساب ليس مشرفاً بعد.');
             showToast(currentIsModerator ? 'الحساب مشرف الآن — الحماية الذكية مفعّلة ✅' : 'تم إرسال طلب الإشراف بالشات — بانتظار موافقة صاحب البث', currentIsModerator ? 'success' : 'info');
         } catch(e) {
             console.error('mod check error:', e);
             showToast('حدث خطأ أثناء التحقق', 'error');
+            setModDebugLine(`❌ استثناء بالمتصفح: ${e.message}`);
         } finally {
             modCheckInProgress = false;
             if (btnEl) { btnEl.disabled = false; renderModStatusUI(); }
@@ -2054,7 +2092,12 @@
                 comment_text: item.snippet?.displayMessage || ''
             }
         }).then(({ data, error }) => {
-            if (error || !data?.deleted) { console.warn('لم يتم حذف الرسالة المخالفة:', error || data); return; }
+            if (error || !data?.deleted) {
+                console.warn('لم يتم حذف الرسالة المخالفة:', error || data);
+                setModDebugLine(`⚠️ فشل حذف رسالة مخالفة: ${data?.error || error?.message || 'غير معروف'}`);
+                return;
+            }
+            setModDebugLine(`🗑️ تم حذف رسالة مخالفة من ${item.authorDetails?.displayName || 'مجهول'} (كلمة: ${data.matched_keyword || ''})`);
             showToast(`تم حذف رسالة مخالفة من ${item.authorDetails?.displayName || 'مجهول'}`, 'success');
         }).catch(e => console.error('delete invoke error:', e));
     }
