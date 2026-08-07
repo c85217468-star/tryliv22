@@ -1854,22 +1854,35 @@
         }
     }
 
-    // === طلب/تحقق من صلاحية الإشراف عبر Edge Function bot-check-status ===
+    // === طلب/تحقق من صلاحية الإشراف عبر الدالة الموحدة archive-comments (action=check-status) ===
     async function requestOrCheckModeratorStatus() {
-        if (!currentVideoId || !liveChatId) { showToast('يجب أن يكون البث متصلاً بيوتيوب أولاً', 'error'); return; }
+        if (!currentVideoId) { showToast('يجب فتح جلسة بث أولاً', 'error'); return; }
         if (modCheckInProgress) return;
         const now = Date.now();
         if (now - lastModCheckAt < MOD_CHECK_COOLDOWN_MS) {
             showToast('يرجى الانتظار قليلاً قبل التحقق مرة أخرى', 'info');
             return;
         }
+
+        // liveChatId قد لا يكون محلياً متوفراً إلا بمتصفح "القائد" (اللي يجلب من يوتيوب فعلياً).
+        // لذلك نعتمد أولاً على القيمة المخزّنة بقاعدة البيانات (saved_streams) لأنها تُحدَّث
+        // بشكل دوري بواسطة الروبوت بغض النظر عن أي متصفح مفتوح حالياً.
+        let effectiveLiveChatId = liveChatId;
+        if (!effectiveLiveChatId) {
+            try {
+                const { data } = await supabaseClient.from('saved_streams').select('live_chat_id')
+                    .ilike('stream_url', `%${currentVideoId}%`).limit(1).maybeSingle();
+                effectiveLiveChatId = data?.live_chat_id || null;
+            } catch(e) { /* تجاهل */ }
+        }
+        if (!effectiveLiveChatId) { showToast('لم يتم العثور على شات مباشر لهذا البث بعد — تأكد أن البث نشط حالياً', 'error'); return; }
+
         modCheckInProgress = true; lastModCheckAt = now;
         const btnEl = document.getElementById('mod-status-btn');
-        const originalHtml = btnEl ? btnEl.innerHTML : '';
         if (btnEl) { btnEl.disabled = true; btnEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; }
         try {
-            const { data, error } = await supabaseClient.functions.invoke('bot-check-status', {
-                body: { stream_id: currentVideoId, live_chat_id: liveChatId }
+            const { data, error } = await supabaseClient.functions.invoke('archive-comments', {
+                body: { action: 'check-status', stream_id: currentVideoId, live_chat_id: effectiveLiveChatId }
             });
             if (error || !data) { showToast('تعذّر التحقق من حالة الإشراف', 'error'); return; }
             if (data.error === 'no_bot_linked') { showToast('لم يتم ربط حساب المراقب الذكي بعد — راجع لوحة التحكم', 'error'); return; }
@@ -2032,8 +2045,9 @@
         if (!text) return;
         const matched = currentKeywordsCache.some(kw => text.includes(kw));
         if (!matched) return;
-        supabaseClient.functions.invoke('bot-delete-message', {
+        supabaseClient.functions.invoke('archive-comments', {
             body: {
+                action: 'delete-message',
                 stream_id: currentVideoId,
                 message_id: item.id,
                 author_name: item.authorDetails?.displayName || 'مجهول',
@@ -2338,5 +2352,4 @@
 </script>
 </body>
 </html>
- 
  
