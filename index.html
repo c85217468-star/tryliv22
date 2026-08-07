@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -683,8 +682,9 @@
         </header>
         <div class="w-full max-w-2xl p-4 mx-auto" style="flex: 1; overflow-y: auto;">
             <div id="streams-list-container"></div>
-            <div class="mt-6 text-center">
+            <div class="mt-6 text-center flex flex-col gap-2 items-center">
                 <button class="btn-admin" id="admin-panel-btn" onclick="openAdminModal()" style="display:none;"><i class="fas fa-shield-alt ml-1"></i> لوحة التحكم</button>
+                <button class="btn-admin" id="bot-panel-btn" onclick="openBotModal()" style="display:none;"><i class="fas fa-robot ml-1"></i> حساب المراقب الذكي</button>
             </div>
         </div>
     </div>
@@ -787,6 +787,14 @@
         <!-- لوح المراقب الذكي: إدارة الكلمات المفتاحية -->
         <div id="monitor-pane" class="archive-pane">
             <div class="w-full p-4 max-w-2xl mx-auto">
+                <div id="mod-status-box" class="mb-4 p-4 rounded-xl" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border);">
+                    <h4 class="text-sm font-bold mb-3"><i class="fas fa-user-shield ml-1" style="color: var(--accent);"></i> صلاحية الإشراف بهذا البث</h4>
+                    <div id="mod-status-content" class="flex items-center justify-between gap-3">
+                        <span id="mod-status-text" class="text-xs" style="color: var(--text-muted);">جارٍ التحقق...</span>
+                        <button id="mod-status-btn" class="btn-ghost" style="padding:6px 14px; font-size:12px; white-space:nowrap;" onclick="requestOrCheckModeratorStatus()"><i class="fas fa-sync ml-1"></i> تحقق الآن</button>
+                    </div>
+                    <p class="text-xs mt-2" style="color: var(--text-muted);">عند عدم وجود صلاحية إشراف، سيرسل الحساب الرسمي رسالة فعلية بالشات تطلب من صاحب البث منحه صلاحية "مشرف" من يوتيوب ستوديو. بعد المنح اضغط "تحقق الآن" مجدداً.</p>
+                </div>
                 <div class="mb-4 p-4 rounded-xl" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border);">
                     <h4 class="text-sm font-bold mb-3"><i class="fas fa-eye ml-1" style="color: var(--accent);"></i> كلمات المراقبة (للبث الحالي)</h4>
                     <div class="flex gap-2 mb-3">
@@ -794,7 +802,7 @@
                         <button class="btn-primary" style="width: auto; padding: 10px 20px;" onclick="addKeyword()"><i class="fas fa-plus"></i></button>
                     </div>
                     <div id="keywords-list" class="flex flex-wrap gap-2"></div>
-                    <p class="text-xs mt-3" style="color: var(--text-muted);">عند تطابق أي كلمة مع تعليق في البث، ستظهر لك إشارة على أيقونة الجرس <i class="fas fa-bell" style="color: var(--accent);"></i> في الأعلى.</p>
+                    <p class="text-xs mt-3" style="color: var(--text-muted);">عند تطابق أي كلمة مع تعليق في البث، ستظهر لك إشارة على أيقونة الجرس <i class="fas fa-bell" style="color: var(--accent);"></i> في الأعلى. وإذا كان الحساب الرسمي مشرفاً بالبث حالياً، ستُحذف الرسالة المخالفة تلقائياً من شات يوتيوب.</p>
                 </div>
             </div>
         </div>
@@ -892,6 +900,20 @@
         </div>
     </div>
  
+    <div id="bot-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 class="text-lg font-bold mb-1" style="color: var(--accent);"><i class="fas fa-robot ml-1"></i> حساب المراقب الذكي الرسمي</h3>
+            <p class="text-sm mb-5" style="color: var(--text-muted);">حساب يوتيوب واحد يُستخدم في كل بثوث الموقع لطلب صلاحية الإشراف وحذف الرسائل المخالفة تلقائياً.</p>
+            <div id="bot-status-box" class="mb-4 p-4 rounded-xl" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border);">
+                <p class="text-xs" style="color: var(--text-muted);"><i class="fas fa-spinner fa-spin ml-1"></i> جارٍ التحقق من حالة الربط...</p>
+            </div>
+            <div class="flex gap-3">
+                <button class="btn-ghost flex-1" onclick="closeBotModal()">إغلاق</button>
+                <button id="bot-connect-btn" class="btn-primary flex-1" style="width:auto;" onclick="startBotOAuth()"><i class="fab fa-google ml-1"></i> ربط / إعادة ربط الحساب</button>
+            </div>
+        </div>
+    </div>
+ 
     <div id="toast-container"></div>
  
     <!-- شاشة الدخول للبث (Entry Overlay) -->
@@ -914,6 +936,15 @@
 <script>
     const SUPABASE_URL = 'https://xfxjnevvgxwqrdqmixvi.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_Dldoa1XJCrlvmP24ra3AHQ_61HJJSZ9';
+
+    // === إعدادات حساب المراقب الذكي (Google OAuth) ===
+    // Client ID عام وآمن الوضع بالواجهة (بعكس Client Secret الذي يبقى فقط
+    // داخل الـ Edge Function). أنشئه من Google Cloud Console → Credentials
+    // → OAuth Client ID → نوع "Web application"، وأضف رابط youtube-oauth-callback
+    // كـ Authorized redirect URI.
+    const GOOGLE_CLIENT_ID = '941546196734-23pqsk1kinvj0cgcmni26lar1iqjrerh.apps.googleusercontent.com';
+    const GOOGLE_OAUTH_REDIRECT_URI = `${SUPABASE_URL}/functions/v1/youtube-oauth-callback`;
+    const GOOGLE_OAUTH_SCOPE = 'https://www.googleapis.com/auth/youtube';
     
     const YOUTUBE_API_KEYS = [
   'AIzaSyCGI4VMJvCnoHBNafvcV7F78_Q89zKp-sU', 'AIzaSyAGlgZQYCqH1G444RIGukYkAMAJ1v0q3_w',
@@ -1050,6 +1081,15 @@
     let currentAuthMode = 'signin';
     let renderedComments = new Set();
     let renderedChats = new Set();
+
+    // === حالة المراقب الذكي (Smart Moderator) ===
+    let modChannel = null;               // قناة Realtime لجدول stream_moderator_status
+    let keywordsChannel = null;          // قناة Realtime لجدول monitor_keywords (لتحديث الكاش)
+    let currentIsModerator = false;      // هل الحساب الرسمي مشرف بالبث الحالي؟
+    let currentKeywordsCache = [];       // كاش محلي لكلمات المراقبة (نصوص lowercase)
+    let modCheckInProgress = false;
+    let lastModCheckAt = 0;
+    const MOD_CHECK_COOLDOWN_MS = 15000; // تفادي إرسال رسائل اختبار متكررة بسرعة
  
     // لوحة ألوان رمادية مُهدّئة (للتوافق مع الثيم الرمادي للبث والمحادثة والأرشيف)
     // كل الألوان في نفس العائلة الرمادية، فقط بدرجات إضاءة مختلفة لتمييز المستخدمين
@@ -1244,6 +1284,77 @@
  
     function openAdminModal() { document.getElementById('admin-user-input').value = ''; document.getElementById('admin-pass-input').value = ''; document.getElementById('admin-modal').classList.add('show'); }
     function closeAdminModal() { document.getElementById('admin-modal').classList.remove('show'); }
+
+    // === مودال حساب المراقب الذكي الرسمي ===
+    function openBotModal() { document.getElementById('bot-modal').classList.add('show'); loadBotAccountStatus(); }
+    function closeBotModal() { document.getElementById('bot-modal').classList.remove('show'); }
+ 
+    // === ربط تلقائي عند بدء الموقع — يظهر مرة واحدة فقط طالما لا يوجد حساب مرتبط ===
+    // بمجرد ربط الحساب بنجاح، get_bot_account_public سترجع is_connected = true
+    // إلى الأبد، وبالتالي لن تُفتح هذه الشاشة تلقائياً مرة أخرى لأي زائر مطلقاً.
+    async function initBotAutoLink() {
+        if (!supabaseClient) return;
+        try {
+            const { data, error } = await supabaseClient.rpc('get_bot_account_public');
+            const info = Array.isArray(data) ? data[0] : data;
+            if (!error && info && info.is_connected) return; // مرتبط مسبقاً — لا تفعل شيئاً أبداً
+            openBotModal(); // غير مرتبط بعد — اعرض شاشة تسجيل الدخول بحساب يوتيوب مرة واحدة
+        } catch (e) {
+            console.warn('initBotAutoLink check failed:', e);
+        }
+    }
+ 
+    async function loadBotAccountStatus() {
+        const box = document.getElementById('bot-status-box');
+        box.innerHTML = '<p class="text-xs" style="color: var(--text-muted);"><i class="fas fa-spinner fa-spin ml-1"></i> جارٍ التحقق من حالة الربط...</p>';
+        try {
+            const { data, error } = await supabaseClient.rpc('get_bot_account_public');
+            const info = Array.isArray(data) ? data[0] : data;
+            if (error || !info || !info.is_connected) {
+                box.innerHTML = '<p class="text-xs" style="color:#f87171;"><i class="fas fa-times-circle ml-1"></i> لا يوجد حساب مرتبط حالياً.</p>';
+                return;
+            }
+            box.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <img src="${info.channel_thumbnail || ''}" onerror="this.style.display='none'" style="width:40px;height:40px;border-radius:50%;">
+                    <div>
+                        <p class="text-sm font-bold" style="color:#4ade80;"><i class="fas fa-check-circle ml-1"></i> مرتبط: ${escapeHtml(info.channel_title || 'غير معروف')}</p>
+                        <p class="text-xs" style="color: var(--text-muted);">منذ ${formatTime(info.connected_at)}</p>
+                    </div>
+                </div>`;
+        } catch(e) {
+            box.innerHTML = '<p class="text-xs" style="color:#f87171;">تعذّر التحقق من حالة الربط.</p>';
+        }
+    }
+
+    function startBotOAuth() {
+        if (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID.includes('ضع_هنا')) {
+            showToast('لم يتم إعداد GOOGLE_CLIENT_ID بعد بالكود', 'error');
+            return;
+        }
+        const params = new URLSearchParams({
+            client_id: GOOGLE_CLIENT_ID,
+            redirect_uri: GOOGLE_OAUTH_REDIRECT_URI,
+            response_type: 'code',
+            scope: GOOGLE_OAUTH_SCOPE,
+            access_type: 'offline',
+            prompt: 'consent'
+        });
+        window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
+    }
+
+    // معالجة الرجوع من Google بعد الربط (?bot_link=success|error)
+    function handleBotLinkRedirect() {
+        const params = new URLSearchParams(window.location.search);
+        const status = params.get('bot_link');
+        if (!status) return;
+        if (status === 'success') showToast('تم ربط حساب المراقب الذكي بنجاح ✅', 'success');
+        else showToast(`فشل ربط الحساب (${params.get('reason') || 'unknown'})`, 'error');
+        // تنظيف الرابط من المتصفح دون إعادة تحميل
+        params.delete('bot_link'); params.delete('reason');
+        const clean = window.location.pathname + (params.toString() ? `?${params.toString()}` : '');
+        window.history.replaceState({}, '', clean);
+    }
  
     async function handleAdminDelete() {
         const streamUser = document.getElementById('admin-user-input').value.trim(); const adminPass = document.getElementById('admin-pass-input').value.trim();
@@ -1640,6 +1751,10 @@
         if (realtimeChannel) { try { supabaseClient.removeChannel(realtimeChannel); } catch(e) {} realtimeChannel = null; }
         if (chatChannel) { try { supabaseClient.removeChannel(chatChannel); } catch(e) {} chatChannel = null; }
         if (notifChannel) { try { supabaseClient.removeChannel(notifChannel); } catch(e) {} notifChannel = null; }
+        if (modChannel) { try { supabaseClient.removeChannel(modChannel); } catch(e) {} modChannel = null; }
+        if (keywordsChannel) { try { supabaseClient.removeChannel(keywordsChannel); } catch(e) {} keywordsChannel = null; }
+        currentIsModerator = false;
+        currentKeywordsCache = [];
         // تصفير الحالة
         currentVideoId = null;
         liveChatId = null;
@@ -1672,6 +1787,102 @@
                 showToast(`مراقبة: الكلمة "${notif.keyword}" في تعليق من ${notif.author_name}`, 'info');
                 if (document.getElementById('notifications-modal').classList.contains('show')) renderNotifications();
             }).subscribe();
+
+        // قناة حالة الإشراف — تحدّث الشارة لحظياً عند تغيّر is_moderator بهذا البث
+        if (modChannel) { try { supabaseClient.removeChannel(modChannel); } catch(e) {} modChannel = null; }
+        modChannel = supabaseClient.channel('public:stream_moderator_status')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'stream_moderator_status', filter: `stream_id=eq.${videoId}` }, payload => {
+                if (myToken !== sessionToken) return;
+                currentIsModerator = payload.new?.is_moderator === true;
+                renderModStatusUI();
+            }).subscribe();
+
+        // قناة كلمات المراقبة — تحدّث الكاش المحلي المستخدم بفحص الحذف التلقائي
+        if (keywordsChannel) { try { supabaseClient.removeChannel(keywordsChannel); } catch(e) {} keywordsChannel = null; }
+        keywordsChannel = supabaseClient.channel('public:monitor_keywords')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'monitor_keywords', filter: `stream_id=eq.${videoId}` }, payload => {
+                if (myToken !== sessionToken) return;
+                loadKeywordsCache(videoId);
+            }).subscribe();
+
+        // تحميل أولي لحالة الإشراف والكاش
+        loadModStatus(videoId);
+        loadKeywordsCache(videoId);
+    }
+
+    // === تحميل حالة الإشراف الحالية من قاعدة البيانات (بدون فحص حي) ===
+    async function loadModStatus(videoId) {
+        try {
+            const { data } = await supabaseClient.from('stream_moderator_status').select('is_moderator, last_checked_at').eq('stream_id', videoId).maybeSingle();
+            currentIsModerator = data?.is_moderator === true;
+            window.__lastModCheckedAt = data?.last_checked_at || null;
+        } catch(e) { currentIsModerator = false; window.__lastModCheckedAt = null; }
+        renderModStatusUI();
+    }
+
+    // === تحقق تلقائي مرة واحدة لكل جلسة قيادة (بدون إزعاج الشات كل دقيقتين) ===
+    // يُستدعى فقط من القائد بعد اتصال يوتيوب بنجاح. إن كان الحساب مشرفاً مسبقاً
+    // لا نرسل أي رسالة اختبار جديدة. إن لم يكن مشرفاً، نتحقق تلقائياً بحد أقصى
+    // مرة كل 5 دقائق لكل بث لتفادي تكرار رسائل الطلب بالشات.
+    async function autoCheckModeratorStatusIfNeeded(videoId) {
+        if (currentIsModerator) return;
+        const last = window.__lastModCheckedAt ? new Date(window.__lastModCheckedAt).getTime() : 0;
+        if (Date.now() - last < 5 * 60 * 1000) return;
+        await requestOrCheckModeratorStatus();
+    }
+
+    // === تحميل كاش كلمات المراقبة (نصوص lowercase) للفحص السريع أثناء استقبال الرسائل ===
+    async function loadKeywordsCache(videoId) {
+        try {
+            const { data } = await supabaseClient.from('monitor_keywords').select('keyword').eq('stream_id', videoId);
+            currentKeywordsCache = (data || []).map(k => k.keyword.toLowerCase());
+        } catch(e) { currentKeywordsCache = []; }
+    }
+
+    // === عرض حالة الإشراف داخل لوح المراقب الذكي ===
+    function renderModStatusUI() {
+        const textEl = document.getElementById('mod-status-text');
+        const btnEl = document.getElementById('mod-status-btn');
+        if (!textEl || !btnEl) return;
+        if (currentIsModerator) {
+            textEl.innerHTML = '<i class="fas fa-check-circle" style="color:#4ade80;"></i> الحساب الرسمي مشرف بهذا البث — الحذف التلقائي مفعّل';
+            btnEl.innerHTML = '<i class="fas fa-sync ml-1"></i> تحقق مجدداً';
+        } else {
+            textEl.innerHTML = '<i class="fas fa-times-circle" style="color:#f87171;"></i> لم يُمنح الحساب صلاحية الإشراف بعد';
+            btnEl.innerHTML = '<i class="fas fa-paper-plane ml-1"></i> طلب صلاحية الإشراف';
+        }
+    }
+
+    // === طلب/تحقق من صلاحية الإشراف عبر Edge Function bot-check-status ===
+    async function requestOrCheckModeratorStatus() {
+        if (!currentVideoId || !liveChatId) { showToast('يجب أن يكون البث متصلاً بيوتيوب أولاً', 'error'); return; }
+        if (modCheckInProgress) return;
+        const now = Date.now();
+        if (now - lastModCheckAt < MOD_CHECK_COOLDOWN_MS) {
+            showToast('يرجى الانتظار قليلاً قبل التحقق مرة أخرى', 'info');
+            return;
+        }
+        modCheckInProgress = true; lastModCheckAt = now;
+        const btnEl = document.getElementById('mod-status-btn');
+        const originalHtml = btnEl ? btnEl.innerHTML : '';
+        if (btnEl) { btnEl.disabled = true; btnEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; }
+        try {
+            const { data, error } = await supabaseClient.functions.invoke('bot-check-status', {
+                body: { stream_id: currentVideoId, live_chat_id: liveChatId }
+            });
+            if (error || !data) { showToast('تعذّر التحقق من حالة الإشراف', 'error'); return; }
+            if (data.error === 'no_bot_linked') { showToast('لم يتم ربط حساب المراقب الذكي بعد — راجع لوحة التحكم', 'error'); return; }
+            if (data.error) { showToast('تعذّر إرسال رسالة الطلب لشات يوتيوب', 'error'); return; }
+            currentIsModerator = data.is_moderator === true;
+            renderModStatusUI();
+            showToast(currentIsModerator ? 'الحساب مشرف الآن — الحماية الذكية مفعّلة ✅' : 'تم إرسال طلب الإشراف بالشات — بانتظار موافقة صاحب البث', currentIsModerator ? 'success' : 'info');
+        } catch(e) {
+            console.error('mod check error:', e);
+            showToast('حدث خطأ أثناء التحقق', 'error');
+        } finally {
+            modCheckInProgress = false;
+            if (btnEl) { btnEl.disabled = false; renderModStatusUI(); }
+        }
     }
  
     function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
@@ -1741,7 +1952,7 @@
             if (!newChatId) throw new Error('لا يوجد معرّف محادثة مباشرة لهذا البث');
             // success — update liveChatId and start direct fetch if leader
             liveChatId = newChatId; youTubeConnectionOk = true; hideStreamWarning();
-            if (isLeader) { startYouTubePolling(); document.getElementById('status-text').textContent = 'قائد — جلب مباشر من يوتيوب'; }
+            if (isLeader) { startYouTubePolling(); document.getElementById('status-text').textContent = 'قائد — جلب مباشر من يوتيوب'; autoCheckModeratorStatusIfNeeded(videoId); }
             else { document.getElementById('status-text').textContent = 'متابع — بث مباشر'; }
         } catch(e) {
             youTubeConnectionOk = false;
@@ -1779,6 +1990,7 @@
                 if (liveChatId && youTubeConnectionOk) {
                     startYouTubePolling();
                     document.getElementById('status-text').textContent = 'قائد — جلب مباشر من يوتيوب';
+                    autoCheckModeratorStatusIfNeeded(currentVideoId);
                 } else {
                     document.getElementById('status-text').textContent = 'قائد — بانتظار يوتيوب...';
                 }
@@ -1808,7 +2020,28 @@
  
     async function fetchComments() {
         if (!liveChatId || !isLeader) return;
-        try { const currentApiKey = YOUTUBE_API_KEYS[currentKeyIndex]; let apiUrl = `https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId=${liveChatId}&part=snippet,authorDetails&maxResults=200&key=${currentApiKey}`; if (nextPageToken) apiUrl += `&pageToken=${nextPageToken}`; const resp = await fetch(apiUrl); const data = await resp.json(); if (data.error && (data.error.code === 403 || data.error.errors?.[0]?.reason === 'quotaExceeded')) { currentKeyIndex = (currentKeyIndex + 1) % YOUTUBE_API_KEYS.length; return fetchComments(); } if (data.error) throw new Error(data.error.message); if (data.nextPageToken) nextPageToken = data.nextPageToken; if (data.items && data.items.length > 0) { document.getElementById('comments-loading').style.display = 'none'; document.getElementById('comments-empty').style.display = 'none'; const sorted = [...data.items].sort((a, b) => new Date(a.snippet.publishedAt) - new Date(b.snippet.publishedAt)); await archiveCommentsToSupabase(sorted); sorted.forEach(item => { const newItem = { stream_id: currentVideoId, author_name: item.authorDetails?.displayName || 'مجهول', comment_text: item.snippet?.displayMessage || '', published_at: item.snippet?.publishedAt || new Date().toISOString() }; addCommentToUI(newItem, true); }); } } catch(e) { console.error('Fetch error:', e); }
+        try { const currentApiKey = YOUTUBE_API_KEYS[currentKeyIndex]; let apiUrl = `https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId=${liveChatId}&part=snippet,authorDetails&maxResults=200&key=${currentApiKey}`; if (nextPageToken) apiUrl += `&pageToken=${nextPageToken}`; const resp = await fetch(apiUrl); const data = await resp.json(); if (data.error && (data.error.code === 403 || data.error.errors?.[0]?.reason === 'quotaExceeded')) { currentKeyIndex = (currentKeyIndex + 1) % YOUTUBE_API_KEYS.length; return fetchComments(); } if (data.error) throw new Error(data.error.message); if (data.nextPageToken) nextPageToken = data.nextPageToken; if (data.items && data.items.length > 0) { document.getElementById('comments-loading').style.display = 'none'; document.getElementById('comments-empty').style.display = 'none'; const sorted = [...data.items].sort((a, b) => new Date(a.snippet.publishedAt) - new Date(b.snippet.publishedAt)); await archiveCommentsToSupabase(sorted); sorted.forEach(item => { const newItem = { stream_id: currentVideoId, author_name: item.authorDetails?.displayName || 'مجهول', comment_text: item.snippet?.displayMessage || '', published_at: item.snippet?.publishedAt || new Date().toISOString() }; addCommentToUI(newItem, true); checkAndDeleteIfFlagged(item); }); } } catch(e) { console.error('Fetch error:', e); }
+    }
+ 
+    // === فحص رسالة واردة من يوتيوب مقابل كلمات المراقبة، وحذفها إن كان البوت مشرفاً ===
+    function checkAndDeleteIfFlagged(item) {
+        if (!currentIsModerator) return; // لا حذف بدون صلاحية إشراف مؤكدة
+        if (!currentKeywordsCache.length) return;
+        const text = (item.snippet?.displayMessage || '').toLowerCase();
+        if (!text) return;
+        const matched = currentKeywordsCache.some(kw => text.includes(kw));
+        if (!matched) return;
+        supabaseClient.functions.invoke('bot-delete-message', {
+            body: {
+                stream_id: currentVideoId,
+                message_id: item.id,
+                author_name: item.authorDetails?.displayName || 'مجهول',
+                comment_text: item.snippet?.displayMessage || ''
+            }
+        }).then(({ data, error }) => {
+            if (error || !data?.deleted) { console.warn('لم يتم حذف الرسالة المخالفة:', error || data); return; }
+            showToast(`تم حذف رسالة مخالفة من ${item.authorDetails?.displayName || 'مجهول'}`, 'success');
+        }).catch(e => console.error('delete invoke error:', e));
     }
  
     async function archiveCommentsToSupabase(comments) {
@@ -1859,6 +2092,7 @@
             document.getElementById('monitor-tab-btn').classList.add('active');
             document.getElementById('monitor-pane').classList.add('active');
             renderKeywords();
+            renderModStatusUI();
         } else {
             // default: archive
             document.getElementById('archive-tab-btn').classList.add('active');
@@ -2076,17 +2310,23 @@
                 .eq('id', 1)
                 .maybeSingle();
             const btn = document.getElementById('admin-panel-btn');
-            if (error || !data) { if (btn) btn.style.display = 'none'; return; }
-            if (btn) btn.style.display = data.admin_panel_visible === true ? 'inline-flex' : 'none';
+            const botBtn = document.getElementById('bot-panel-btn');
+            const visible = !error && data && data.admin_panel_visible === true;
+            if (btn) btn.style.display = visible ? 'inline-flex' : 'none';
+            if (botBtn) botBtn.style.display = visible ? 'inline-flex' : 'none';
         } catch (e) {
             const btn = document.getElementById('admin-panel-btn');
+            const botBtn = document.getElementById('bot-panel-btn');
             if (btn) btn.style.display = 'none';
+            if (botBtn) botBtn.style.display = 'none';
         }
     }
  
     document.addEventListener('DOMContentLoaded', () => {
         updateUserCircle(); const lastStream = localStorage.getItem('vrtx_last_stream'); if (lastStream) { startLiveStream(lastStream); }
         syncAdminPanelVisibility();
+        handleBotLinkRedirect();
+        initBotAutoLink();
         document.getElementById('new-pass').addEventListener('keydown', e => { if (e.key === 'Enter') handleNewRegister(); });
         document.getElementById('modal-pass-input').addEventListener('keydown', e => { if (e.key === 'Enter') confirmLoginFromList(); });
         document.getElementById('admin-pass-input').addEventListener('keydown', e => { if (e.key === 'Enter') handleAdminDelete(); });
