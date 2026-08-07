@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -943,7 +944,7 @@
     // → OAuth Client ID → نوع "Web application"، وأضف رابط youtube-oauth-callback
     // كـ Authorized redirect URI.
     const GOOGLE_CLIENT_ID = '941546196734-23pqsk1kinvj0cgcmni26lar1iqjrerh.apps.googleusercontent.com';
-    const GOOGLE_OAUTH_REDIRECT_URI = `${SUPABASE_URL}/functions/v1/youtube-oauth-callback`;
+    const GOOGLE_OAUTH_REDIRECT_URI = `${SUPABASE_URL}/functions/v1/archive-comments?action=oauth-callback`;
     const GOOGLE_OAUTH_SCOPE = 'https://www.googleapis.com/auth/youtube';
     
     const YOUTUBE_API_KEYS = [
@@ -2337,4 +2338,5 @@
 </script>
 </body>
 </html>
+ 
  
