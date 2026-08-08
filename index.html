@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -1087,6 +1086,7 @@
     // === حالة المراقب الذكي (Smart Moderator) ===
     let modChannel = null;               // قناة Realtime لجدول stream_moderator_status
     let keywordsChannel = null;          // قناة Realtime لجدول monitor_keywords (لتحديث الكاش)
+    let modDeletedChannel = null;        // قناة Realtime لجدول moderator_deleted_messages (تأكيد حذف السيرفر)
     let currentIsModerator = false;      // هل الحساب الرسمي مشرف بالبث الحالي؟
     let currentKeywordsCache = [];       // كاش محلي لكلمات المراقبة (نصوص lowercase)
     let modCheckInProgress = false;
@@ -1755,6 +1755,7 @@
         if (notifChannel) { try { supabaseClient.removeChannel(notifChannel); } catch(e) {} notifChannel = null; }
         if (modChannel) { try { supabaseClient.removeChannel(modChannel); } catch(e) {} modChannel = null; }
         if (keywordsChannel) { try { supabaseClient.removeChannel(keywordsChannel); } catch(e) {} keywordsChannel = null; }
+        if (modDeletedChannel) { try { supabaseClient.removeChannel(modDeletedChannel); } catch(e) {} modDeletedChannel = null; }
         currentIsModerator = false;
         currentKeywordsCache = [];
         // تصفير الحالة
@@ -1805,6 +1806,16 @@
             .on('postgres_changes', { event: '*', schema: 'public', table: 'monitor_keywords', filter: `stream_id=eq.${videoId}` }, payload => {
                 if (myToken !== sessionToken) return;
                 loadKeywordsCache(videoId);
+            }).subscribe();
+
+        // قناة تأكيد الحذف الفعلي — يحذف السيرفر مباشرة، وهذي فقط تعرض إشعار فوري بذلك
+        if (modDeletedChannel) { try { supabaseClient.removeChannel(modDeletedChannel); } catch(e) {} modDeletedChannel = null; }
+        modDeletedChannel = supabaseClient.channel('public:moderator_deleted_messages')
+            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'moderator_deleted_messages', filter: `stream_id=eq.${videoId}` }, payload => {
+                if (myToken !== sessionToken) return;
+                const d = payload.new;
+                setModDebugLine(`🗑️ حذف السيرفر رسالة مخالفة من ${d.author_name} (كلمة: ${d.matched_keyword})`);
+                showToast(`تم حذف رسالة مخالفة من ${d.author_name}`, 'success');
             }).subscribe();
 
         // تحميل أولي لحالة الإشراف والكاش
@@ -2072,35 +2083,13 @@
  
     async function fetchComments() {
         if (!liveChatId || !isLeader) return;
-        try { const currentApiKey = YOUTUBE_API_KEYS[currentKeyIndex]; let apiUrl = `https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId=${liveChatId}&part=snippet,authorDetails&maxResults=200&key=${currentApiKey}`; if (nextPageToken) apiUrl += `&pageToken=${nextPageToken}`; const resp = await fetch(apiUrl); const data = await resp.json(); if (data.error && (data.error.code === 403 || data.error.errors?.[0]?.reason === 'quotaExceeded')) { currentKeyIndex = (currentKeyIndex + 1) % YOUTUBE_API_KEYS.length; return fetchComments(); } if (data.error) throw new Error(data.error.message); if (data.nextPageToken) nextPageToken = data.nextPageToken; if (data.items && data.items.length > 0) { document.getElementById('comments-loading').style.display = 'none'; document.getElementById('comments-empty').style.display = 'none'; const sorted = [...data.items].sort((a, b) => new Date(a.snippet.publishedAt) - new Date(b.snippet.publishedAt)); await archiveCommentsToSupabase(sorted); sorted.forEach(item => { const newItem = { stream_id: currentVideoId, author_name: item.authorDetails?.displayName || 'مجهول', comment_text: item.snippet?.displayMessage || '', published_at: item.snippet?.publishedAt || new Date().toISOString() }; addCommentToUI(newItem, true); checkAndDeleteIfFlagged(item); }); } } catch(e) { console.error('Fetch error:', e); }
+        try { const currentApiKey = YOUTUBE_API_KEYS[currentKeyIndex]; let apiUrl = `https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId=${liveChatId}&part=snippet,authorDetails&maxResults=200&key=${currentApiKey}`; if (nextPageToken) apiUrl += `&pageToken=${nextPageToken}`; const resp = await fetch(apiUrl); const data = await resp.json(); if (data.error && (data.error.code === 403 || data.error.errors?.[0]?.reason === 'quotaExceeded')) { currentKeyIndex = (currentKeyIndex + 1) % YOUTUBE_API_KEYS.length; return fetchComments(); } if (data.error) throw new Error(data.error.message); if (data.nextPageToken) nextPageToken = data.nextPageToken; if (data.items && data.items.length > 0) { document.getElementById('comments-loading').style.display = 'none'; document.getElementById('comments-empty').style.display = 'none'; const sorted = [...data.items].sort((a, b) => new Date(a.snippet.publishedAt) - new Date(b.snippet.publishedAt)); await archiveCommentsToSupabase(sorted); sorted.forEach(item => { const newItem = { stream_id: currentVideoId, author_name: item.authorDetails?.displayName || 'مجهول', comment_text: item.snippet?.displayMessage || '', published_at: item.snippet?.publishedAt || new Date().toISOString() }; addCommentToUI(newItem, true); }); } } catch(e) { console.error('Fetch error:', e); }
     }
  
-    // === فحص رسالة واردة من يوتيوب مقابل كلمات المراقبة، وحذفها إن كان البوت مشرفاً ===
-    function checkAndDeleteIfFlagged(item) {
-        if (!currentIsModerator) return; // لا حذف بدون صلاحية إشراف مؤكدة
-        if (!currentKeywordsCache.length) return;
-        const text = (item.snippet?.displayMessage || '').toLowerCase();
-        if (!text) return;
-        const matched = currentKeywordsCache.some(kw => text.includes(kw));
-        if (!matched) return;
-        supabaseClient.functions.invoke('archive-comments', {
-            body: {
-                action: 'delete-message',
-                stream_id: currentVideoId,
-                message_id: item.id,
-                author_name: item.authorDetails?.displayName || 'مجهول',
-                comment_text: item.snippet?.displayMessage || ''
-            }
-        }).then(({ data, error }) => {
-            if (error || !data?.deleted) {
-                console.warn('لم يتم حذف الرسالة المخالفة:', error || data);
-                setModDebugLine(`⚠️ فشل حذف رسالة مخالفة: ${data?.error || error?.message || 'غير معروف'}`);
-                return;
-            }
-            setModDebugLine(`🗑️ تم حذف رسالة مخالفة من ${item.authorDetails?.displayName || 'مجهول'} (كلمة: ${data.matched_keyword || ''})`);
-            showToast(`تم حذف رسالة مخالفة من ${item.authorDetails?.displayName || 'مجهول'}`, 'success');
-        }).catch(e => console.error('delete invoke error:', e));
-    }
+    // === ملاحظة: الحذف الفعلي صار يحصل بالكامل من السيرفر (داخل دورة الأرشفة كل ~2 ثانية)
+    // بغض النظر عن أي متصفح مفتوح. الواجهة هنا فقط تراقب جدول moderator_deleted_messages
+    // لحظياً وتعرض تأكيد فوري للمستخدم كل ما السيرفر يحذف رسالة فعلياً — راجع
+    // setupModDeletedSubscription() بالأسفل.
  
     async function archiveCommentsToSupabase(comments) {
         if (!supabaseClient || !currentVideoId) return;
