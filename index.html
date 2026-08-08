@@ -795,6 +795,10 @@
                     </div>
                     <p class="text-xs mt-2" style="color: var(--text-muted);">عند عدم وجود صلاحية إشراف، سيرسل الحساب الرسمي رسالة فعلية بالشات تطلب من صاحب البث منحه صلاحية "مشرف" من يوتيوب ستوديو. بعد المنح اضغط "تحقق الآن" مجدداً.</p>
                     <p id="mod-debug-line" class="text-xs mt-2" style="color: var(--accent); display:none; word-break: break-word;"></p>
+                    <div id="mod-log-box" class="mt-3 pt-3" style="display:none; border-top: 1px solid var(--border);">
+                        <p class="text-xs font-bold mb-2" style="color: var(--text-muted);"><i class="fas fa-terminal ml-1"></i> سجل السيرفر المباشر (يوضّح سبب أي حذف/تخطي بدقة):</p>
+                        <div id="mod-log-list" style="max-height:160px; overflow-y:auto; display:flex; flex-direction:column; gap:4px;"></div>
+                    </div>
                 </div>
                 <div class="mb-4 p-4 rounded-xl" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border);">
                     <h4 class="text-sm font-bold mb-3"><i class="fas fa-eye ml-1" style="color: var(--accent);"></i> كلمات المراقبة (للبث الحالي)</h4>
@@ -1087,6 +1091,7 @@
     let modChannel = null;               // قناة Realtime لجدول stream_moderator_status
     let keywordsChannel = null;          // قناة Realtime لجدول monitor_keywords (لتحديث الكاش)
     let modDeletedChannel = null;        // قناة Realtime لجدول moderator_deleted_messages (تأكيد حذف السيرفر)
+    let modDebugChannel = null;          // قناة Realtime لجدول mod_debug_log (سجل تشخيصي مباشر)
     let currentIsModerator = false;      // هل الحساب الرسمي مشرف بالبث الحالي؟
     let currentKeywordsCache = [];       // كاش محلي لكلمات المراقبة (نصوص lowercase)
     let modCheckInProgress = false;
@@ -1756,6 +1761,7 @@
         if (modChannel) { try { supabaseClient.removeChannel(modChannel); } catch(e) {} modChannel = null; }
         if (keywordsChannel) { try { supabaseClient.removeChannel(keywordsChannel); } catch(e) {} keywordsChannel = null; }
         if (modDeletedChannel) { try { supabaseClient.removeChannel(modDeletedChannel); } catch(e) {} modDeletedChannel = null; }
+        if (modDebugChannel) { try { supabaseClient.removeChannel(modDebugChannel); } catch(e) {} modDebugChannel = null; }
         currentIsModerator = false;
         currentKeywordsCache = [];
         // تصفير الحالة
@@ -1818,6 +1824,15 @@
                 showToast(`تم حذف رسالة مخالفة من ${d.author_name}`, 'success');
             }).subscribe();
 
+        // قناة السجل التشخيصي المباشر — تعرض كل قرار يتخذه السيرفر لحظياً (نجاح/فشل/تخطي مع السبب)
+        if (modDebugChannel) { try { supabaseClient.removeChannel(modDebugChannel); } catch(e) {} modDebugChannel = null; }
+        modDebugChannel = supabaseClient.channel('public:mod_debug_log')
+            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'mod_debug_log', filter: `stream_id=eq.${videoId}` }, payload => {
+                if (myToken !== sessionToken) return;
+                appendModLog(payload.new.message, payload.new.created_at);
+            }).subscribe();
+        loadModDebugHistory(videoId);
+
         // تحميل أولي لحالة الإشراف والكاش
         loadModStatus(videoId);
         loadKeywordsCache(videoId);
@@ -1858,6 +1873,34 @@
         if (!el) return;
         el.textContent = msg;
         el.style.display = msg ? 'block' : 'none';
+    }
+
+    // === سجل تراكمي (آخر 10 أحداث) يعرض بدقة سبب نجاح/فشل كل عملية حذف من السيرفر ===
+    function appendModLog(msg, ts) {
+        const box = document.getElementById('mod-log-box');
+        const list = document.getElementById('mod-log-list');
+        if (!box || !list) return;
+        box.style.display = 'block';
+        const line = document.createElement('div');
+        line.className = 'text-xs';
+        line.style.cssText = 'color: var(--text-muted); border-bottom: 1px dashed var(--border); padding-bottom: 4px; word-break: break-word;';
+        const timeStr = ts ? new Date(ts).toLocaleTimeString('ar-EG') : new Date().toLocaleTimeString('ar-EG');
+        line.innerHTML = `<span style="opacity:0.6;">[${timeStr}]</span> ${escapeHtml(msg)}`;
+        list.insertBefore(line, list.firstChild);
+        while (list.children.length > 10) list.removeChild(list.lastChild);
+    }
+
+    // === تحميل آخر 10 سجلات تشخيصية موجودة مسبقاً لهذا البث عند فتح التبويب ===
+    async function loadModDebugHistory(videoId) {
+        try {
+            const { data } = await supabaseClient.from('mod_debug_log').select('message, created_at')
+                .eq('stream_id', videoId).order('created_at', { ascending: false }).limit(10);
+            if (data && data.length) {
+                const list = document.getElementById('mod-log-list');
+                if (list) list.innerHTML = '';
+                [...data].reverse().forEach(row => appendModLog(row.message, row.created_at));
+            }
+        } catch(e) { /* تجاهل — الجدول قد لا يكون مطبَّقاً بعد */ }
     }
 
     // === عرض حالة الإشراف داخل لوح المراقب الذكي ===
