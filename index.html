@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فورتيكلس — أرشيف بثوث يوتيوب المباشر</title>
+    <title>فورتيكلس — أرشيف بثوث يوتيوب الLive</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -177,17 +177,17 @@
         /* Firefox */
         * { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.15) transparent; }
         
-        /* شريط تمرير خاص بشاشة الأرشيف */
+        /* شريط تمرير خاص بشاشة Archive */
         #archive-container::-webkit-scrollbar { width: 10px; }
         #archive-container::-webkit-scrollbar-thumb { background: rgba(232,168,56,0.2); background-clip: padding-box; border: 2px solid transparent; border-radius: 10px; }
         #archive-container::-webkit-scrollbar-thumb:hover { background: rgba(232,168,56,0.5); background-clip: padding-box; }
         
-        /* شريط تمرير شاشة المحادثة */
+        /* شريط تمرير شاشة Chat */
         #chat-container::-webkit-scrollbar { width: 8px; }
         #chat-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); background-clip: padding-box; border: 2px solid transparent; border-radius: 8px; }
         #chat-container::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); background-clip: padding-box; }
  
-        /* === أنماط المحادثة (Chat) - تصميم محسّن === */
+        /* === أنماط Chat (Chat) - تصميم محسّن === */
         .chat-wrapper { 
             display: flex; 
             width: 100%; 
@@ -264,13 +264,13 @@
         }
         .chat-card.me .chat-text { color: rgba(255,255,255,0.95); }
  
-        /* زر الإشعارات */
+        /* زر Notifications */
         .notif-btn { position: relative; }
         .notif-dot { position: absolute; top: 0; right: 0; width: 10px; height: 10px; background: #ef4444; border-radius: 50%; border: 2px solid var(--bg); display: none; }
         .notif-dot.show { display: block; animation: livePulse 1.5s ease-in-out infinite; }
         .keyword-highlight { background: rgba(239, 68, 68, 0.2); color: #f87171; padding: 0 4px; border-radius: 4px; font-weight: bold; }
  
-        /* === تبويبات شاشة الأرشيف (الأرشيف / المراقب الذكي) === */
+        /* === تبويبات شاشة Archive (Archive / المراقب الذكي Smart Moderator) === */
         .archive-tabs { display: flex; gap: 8px; padding: 12px 16px; max-width: 768px; margin: 0 auto; border-bottom: 1px solid var(--border); flex-shrink: 0; }
         .archive-tab { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 16px; border-radius: 10px; background: transparent; border: 1px solid var(--border); color: var(--text-muted); font-size: 13px; font-weight: 700; cursor: pointer; transition: all .2s ease; font-family: 'Tajawal', sans-serif; }
         .archive-tab:hover { background: var(--card-hover); color: var(--text); }
@@ -279,7 +279,7 @@
         .archive-pane { display: none; }
         .archive-pane.active { display: flex; flex-direction: column; flex: 1 1 0; min-height: 0; overflow: hidden; }
  
-        /* === واجهة داكنة دافئة مريحة للعين — تُطبّق على البث والمحادثة والأرشيف === */
+        /* === واجهة داكنة دافئة مريحة للعين — تُطبّق على البث وChat وArchive === */
         .screen-comments {
             --hx-bg: #10111a;
             --hx-bg-soft: #181924;
@@ -426,7 +426,7 @@
             border-radius: 1px !important;
         }
  
-        /* === تبويبات الأرشيف وحقل البحث — نفس الثيم الرمادي === */
+        /* === تبويبات Archive وحقل البحث — نفس الثيم الرمادي === */
         .screen-comments .archive-tabs {
             background: var(--hx-bg);
             border-bottom: 1px solid var(--hx-border);
@@ -480,7 +480,7 @@
             font-size: 12px !important;
         }
  
-        /* === فقاعات المحادثة — تصميم رمادي مريح === */
+        /* === فقاعات Chat — تصميم رمادي مريح === */
         .screen-comments .chat-wrapper {
             margin-bottom: 14px;
         }
@@ -545,7 +545,7 @@
         }
         .screen-comments .empty-state i { color: var(--hx-fg-mute) !important; }
  
-        /* === Entry Overlay (شاشة الدخول للبث) === */
+        /* === Entry Overlay (شاشة الLogin للبث) === */
         #entry-overlay {
             position: fixed; inset: 0; z-index: 200;
             background: rgba(5, 5, 8, 0.96);
@@ -628,20 +628,20 @@
                 <i class="fas fa-comments text-3xl" style="color: var(--accent);"></i>
             </div>
             <h1 class="text-4xl font-black mb-3 text-gray-400">فورتيكلس</h1>
-            <p class="text-base mb-10" style="color: var(--text-muted);">أرشيف مباشر لتعليقات يوتيوب — بحث سريع، حفظ دائم، ومزامنة لعدة بثوث في آنٍ واحد.</p>
+            <p class="text-base mb-10" style="color: var(--text-muted);">أرشيف Live لتعليقات YouTube — بحث سريع، حفظ دائم، ومزامنة أكثر من بث بنفس الوقت.</p>
  
             <div class="flex flex-col sm:flex-row gap-4">
                 <div class="flex-1 glass-card glass-card-hover p-6 text-center" onclick="showScreen('screen-new')">
                     <div class="inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4" style="background: var(--accent-glow);">
                         <i class="fas fa-plus text-xl" style="color: var(--accent);"></i>
                     </div>
-                    <h3 class="font-bold text-lg mb-2">بثٌ جديد</h3>
+                    <h3 class="font-bold text-lg mb-2">بث جديد</h3>
                 </div>
                 <div class="flex-1 glass-card glass-card-hover p-6 text-center" onclick="showStreamList()">
                     <div class="inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4" style="background: rgba(52,211,153,0.1);">
                         <i class="fas fa-list text-xl" style="color: var(--success);"></i>
                     </div>
-                    <h3 class="font-bold text-lg mb-2">البثوث المحفوظة</h3>
+                    <h3 class="font-bold text-lg mb-2">البثوث المحفوظة Saved Streams</h3>
                 </div>
             </div>
         </div>
@@ -652,22 +652,22 @@
         <div class="w-full max-w-md">
             <button class="back-btn mb-6" onclick="showScreen('screen-welcome')"><i class="fas fa-arrow-right"></i> رجوع</button>
             <div class="glass-card p-8">
-                <h2 class="text-2xl font-black mb-1">إضافة بثٍ جديد</h2>
-                <p class="text-sm mb-7" style="color: var(--text-muted);">بيانات البث · حتى 15 بثاً نشطاً · أرشيف التعليقات بلا حدود.</p>
+                <h2 class="text-2xl font-black mb-1">إضافة بث جديد</h2>
+                <p class="text-sm mb-7" style="color: var(--text-muted);">بيانات البث · لحد 15 بث نشط · وأرشيف التعليقات بدون حدود.</p>
                 <div class="space-y-5">
                     <div>
-                        <label class="block text-sm font-medium mb-2" style="color: var(--text-muted);"><i class="fas fa-link ml-1" style="color: var(--accent);"></i> رابط البث</label>
+                        <label class="block text-sm font-medium mb-2" style="color: var(--text-muted);"><i class="fas fa-link ml-1" style="color: var(--accent);"></i> رابط البث Stream URL</label>
                         <input id="new-url" type="url" class="input-field" placeholder="https://youtube.com/watch?v=..." dir="ltr">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2" style="color: var(--text-muted);"><i class="fas fa-user ml-1" style="color: var(--accent);"></i> اسم المستخدم للبث</label>
-                        <input id="new-user" type="text" class="input-field" placeholder="اكتب اسم المستخدم للبث">
+                        <label class="block text-sm font-medium mb-2" style="color: var(--text-muted);"><i class="fas fa-user ml-1" style="color: var(--accent);"></i> Username للبث</label>
+                        <input id="new-user" type="text" class="input-field" placeholder="اكتب Username البث">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2" style="color: var(--text-muted);"><i class="fas fa-lock ml-1" style="color: var(--accent);"></i> كلمة المرور</label>
-                        <input id="new-pass" type="password" class="input-field" placeholder="اكتب كلمة المرور">
+                        <label class="block text-sm font-medium mb-2" style="color: var(--text-muted);"><i class="fas fa-lock ml-1" style="color: var(--accent);"></i> Password</label>
+                        <input id="new-pass" type="password" class="input-field" placeholder="اكتب الـ Password">
                     </div>
-                    <button id="btn-new-register" class="btn-primary" onclick="handleNewRegister()">حفظ ودخول</button>
+                    <button id="btn-new-register" class="btn-primary" onclick="handleNewRegister()">حفظ وLogin</button>
                 </div>
             </div>
         </div>
@@ -677,14 +677,14 @@
     <div id="screen-list" class="screen screen-list">
         <header class="w-full flex items-center justify-between px-4 py-3" style="background: rgba(8,8,14,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);">
             <button class="back-btn" onclick="showScreen('screen-welcome')"><i class="fas fa-arrow-right"></i> رجوع</button>
-            <div class="text-sm font-bold">البثوث المحفوظة</div>
+            <div class="text-sm font-bold">البثوث المحفوظة Saved Streams</div>
             <div class="w-8"></div>
         </header>
         <div class="w-full max-w-2xl p-4 mx-auto" style="flex: 1; overflow-y: auto;">
             <div id="streams-list-container"></div>
             <div class="mt-6 text-center flex flex-col gap-2 items-center">
-                <button class="btn-admin" id="admin-panel-btn" onclick="openAdminModal()" style="display:none;"><i class="fas fa-shield-alt ml-1"></i> لوحة التحكم</button>
-                <button class="btn-admin" id="bot-panel-btn" onclick="openBotModal()" style="display:none;"><i class="fas fa-robot ml-1"></i> حساب المراقب الذكي</button>
+                <button class="btn-admin" id="admin-panel-btn" onclick="openAdminModal()" style="display:none;"><i class="fas fa-shield-alt ml-1"></i> Admin Panel</button>
+                <button class="btn-admin" id="bot-panel-btn" onclick="openBotModal()" style="display:none;"><i class="fas fa-robot ml-1"></i> حساب المراقب الذكي Smart Moderator Smart Moderator</button>
             </div>
         </div>
     </div>
@@ -695,20 +695,20 @@
             <button class="back-btn" onclick="handleExit()" title="خروج"><i class="fas fa-arrow-right"></i></button>
             <div class="flex items-center gap-2">
                 <span class="live-dot"></span>
-                <span class="text-xs font-bold" style="color: var(--hx-live); letter-spacing: 0.5px;">مباشر</span>
+                <span class="text-xs font-bold" style="color: var(--hx-live); letter-spacing: 0.5px;">Live</span>
             </div>
             <div class="flex items-center gap-1.5">
-                <button class="icon-btn notif-btn" onclick="openNotificationsModal()" title="الإشعارات">
+                <button class="icon-btn notif-btn" onclick="openNotificationsModal()" title="Notifications">
                     <i class="fas fa-bell"></i>
                     <span class="notif-badge" id="notif-dot"></span>
                 </button>
-                <button class="icon-btn" onclick="openArchiveScreen()" title="الأرشيف">
+                <button class="icon-btn" onclick="openArchiveScreen()" title="Archive">
                     <i class="fas fa-folder-open"></i>
                 </button>
-                <button class="icon-btn" onclick="openChatScreen()" title="المحادثة">
+                <button class="icon-btn" onclick="openChatScreen()" title="Chat">
                     <i class="fas fa-comment-dots"></i>
                 </button>
-                <button id="user-circle-btn" class="icon-btn user-icon-btn" onclick="handleUserCircleClick()" title="الحساب">
+                <button id="user-circle-btn" class="icon-btn user-icon-btn" onclick="handleUserCircleClick()" title="Account">
                     <i class="fas fa-user" id="user-circle-icon"></i>
                 </button>
             </div>
@@ -716,27 +716,27 @@
         <div id="comments-container" class="comments-container">
             <div id="stream-warning" style="display:none; margin-bottom:12px; padding:10px 14px; border-radius:2px; background:var(--hx-bg); border:1px solid var(--hx-warn); color:var(--hx-warn); font-size:12px; align-items:center; gap:10px; font-family: var(--hx-mono);">
                 <i class="fas fa-info-circle"></i>
-                <span id="stream-warning-text" style="flex:1;">جارٍ الاتصال بيوتيوب في الخلفية...</span>
-                <button class="btn-ghost" style="padding:4px 12px; font-size:12px;" onclick="retryYouTubeConnection()">إعادة المحاولة</button>
+                <span id="stream-warning-text" style="flex:1;">دا نحاول نتصل بـ YouTube بالخلفية...</span>
+                <button class="btn-ghost" style="padding:4px 12px; font-size:12px;" onclick="retryYouTubeConnection()">جرّب مرة ثانية Retry</button>
             </div>
-            <div id="comments-loading" class="empty-state"><span class="hacker-blink">جارٍ التحميل...</span></div>
-            <div id="comments-empty" class="empty-state" style="display: none;"><i class="fas fa-inbox" style="font-size:28px; color: var(--hx-fg-mute);"></i><p class="font-bold mb-1" style="margin-top:8px; color: var(--hx-fg-dim);">لا تعليقات بعد</p></div>
-            <div id="comments-error" class="empty-state" style="display: none;"><i class="fas fa-exclamation-triangle" style="font-size:28px; color: var(--hx-err);"></i><p class="font-bold mb-1" id="error-title" style="margin-top:8px; color: var(--hx-err);">خطأ</p><p class="text-sm mb-4" id="error-message"></p><button class="btn-ghost" onclick="retryFetchComments()">إعادة المحاولة</button></div>
+            <div id="comments-loading" class="empty-state"><span class="hacker-blink">دا يحمّل...</span></div>
+            <div id="comments-empty" class="empty-state" style="display: none;"><i class="fas fa-inbox" style="font-size:28px; color: var(--hx-fg-mute);"></i><p class="font-bold mb-1" style="margin-top:8px; color: var(--hx-fg-dim);">ماكو تعليقات لحد هسه</p></div>
+            <div id="comments-error" class="empty-state" style="display: none;"><i class="fas fa-exclamation-triangle" style="font-size:28px; color: var(--hx-err);"></i><p class="font-bold mb-1" id="error-title" style="margin-top:8px; color: var(--hx-err);">خطأ Error</p><p class="text-sm mb-4" id="error-message"></p><button class="btn-ghost" onclick="retryFetchComments()">جرّب مرة ثانية Retry</button></div>
             <div id="comments-list"></div>
         </div>
         <div class="status-bar w-full">
-            <span id="status-text">جارٍ الاتصال...</span>
+            <span id="status-text">دا يتصل...</span>
             <span style="margin-right: auto;" id="comments-count">0 تعليق</span>
         </div>
     </div>
  
-    <!-- شاشة المحادثة (Chat) — نفس ثيم البث الرمادي -->
+    <!-- شاشة Chat (Chat) — نفس ثيم البث الرمادي -->
     <div id="screen-chat" class="screen screen-comments" style="z-index: 50;">
         <header class="w-full flex items-center justify-between px-4 py-3" style="background: var(--hx-bg); border-bottom: 1px solid var(--hx-border);">
-            <button class="icon-btn" onclick="showScreen('screen-comments')" title="العودة للبث"><i class="fas fa-arrow-right"></i></button>
+            <button class="icon-btn" onclick="showScreen('screen-comments')" title="الرجوع للبث"><i class="fas fa-arrow-right"></i></button>
             <div class="flex items-center gap-2">
                 <i class="fas fa-comment-dots" style="color: var(--hx-fg-dim); font-size: 14px;"></i>
-                <span class="text-xs font-bold" style="color: var(--hx-fg); letter-spacing: 0.4px;">محادثة البث</span>
+                <span class="text-xs font-bold" style="color: var(--hx-fg); letter-spacing: 0.4px;">Chat البث</span>
             </div>
             <div style="width: 38px;"></div>
         </header>
@@ -745,92 +745,92 @@
         </div>
         <div class="status-bar w-full" style="flex-direction: column; align-items: stretch; gap: 10px;">
             <div class="flex gap-2">
-                <input id="chat-input" type="text" class="input-field" placeholder="اكتب رسالة..." style="text-align: right;">
+                <input id="chat-input" type="text" class="input-field" placeholder="اكتب رسالتك..." style="text-align: right;">
                 <button class="btn-primary" style="width: auto; padding: 10px 20px;" onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
     </div>
  
-    <!-- شاشة الأرشيف (الأرشيف فقط + تبويب المراقب الذكي كأحد الخيارات) -->
+    <!-- شاشة Archive (Archive فقط + تبويب المراقب الذكي Smart Moderator كأحد الخيارات) -->
     <div id="screen-archive" class="screen screen-comments" style="z-index: 50;">
         <header class="w-full flex items-center justify-between px-4 py-3" style="background: var(--hx-bg); border-bottom: 1px solid var(--hx-border);">
-            <button class="icon-btn" onclick="showScreen('screen-comments')" title="العودة للبث"><i class="fas fa-arrow-right"></i></button>
+            <button class="icon-btn" onclick="showScreen('screen-comments')" title="الرجوع للبث"><i class="fas fa-arrow-right"></i></button>
             <div class="flex items-center gap-2">
                 <i class="fas fa-folder-open" style="color: var(--hx-fg-dim); font-size: 14px;"></i>
-                <span class="text-xs font-bold" style="color: var(--hx-fg); letter-spacing: 0.4px;">الأرشيف والمراقب</span>
+                <span class="text-xs font-bold" style="color: var(--hx-fg); letter-spacing: 0.4px;">Archive & Smart Moderator</span>
             </div>
             <div style="width: 38px;"></div>
         </header>
  
-        <!-- تبويبات الأرشيف: الأرشيف / المراقب الذكي -->
+        <!-- تبويبات Archive: Archive / المراقب الذكي Smart Moderator -->
         <div class="archive-tabs">
             <button id="archive-tab-btn" class="archive-tab active" onclick="switchArchiveTab('archive')">
-                <i class="fas fa-archive"></i> الأرشيف
+                <i class="fas fa-archive"></i> Archive
             </button>
             <button id="monitor-tab-btn" class="archive-tab" onclick="switchArchiveTab('monitor')">
-                <i class="fas fa-eye"></i> المراقب الذكي
+                <i class="fas fa-eye"></i> المراقب الذكي Smart Moderator
             </button>
         </div>
  
-        <!-- لوح الأرشيف: بحث + قائمة التعليقات المؤرشفة -->
+        <!-- لوح Archive: بحث + قائمة التعليقات المؤرشفة -->
         <div id="archive-pane" class="archive-pane active">
             <div class="w-full p-4 max-w-2xl mx-auto" style="flex-shrink: 0;">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <input id="search-archive-input" type="text" class="input-field" placeholder="ابحث في نص التعليق..." oninput="searchArchivedComments()">
-                    <input id="search-archive-user" type="text" class="input-field" placeholder="تصفية باسم المستخدم..." oninput="searchArchivedComments()">
+                    <input id="search-archive-input" type="text" class="input-field" placeholder="دوّر بنص التعليق..." oninput="searchArchivedComments()">
+                    <input id="search-archive-user" type="text" class="input-field" placeholder="فلترة حسب Username..." oninput="searchArchivedComments()">
                 </div>
-                <div id="archive-status" class="text-xs mt-2" style="color: var(--text-muted);">جارٍ تحميل الأرشيف...</div>
+                <div id="archive-status" class="text-xs mt-2" style="color: var(--text-muted);">دا يحمّل الـ Archive...</div>
             </div>
             <div id="archive-container" class="comments-container"><div id="archive-list"></div></div>
         </div>
  
-        <!-- لوح المراقب الذكي: إدارة الكلمات المفتاحية -->
+        <!-- لوح المراقب الذكي Smart Moderator: إدارة الكلمات المفتاحية -->
         <div id="monitor-pane" class="archive-pane">
             <div class="w-full p-4 max-w-2xl mx-auto">
                 <div id="mod-status-box" class="mb-4 p-4 rounded-xl" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border);">
-                    <h4 class="text-sm font-bold mb-3"><i class="fas fa-user-shield ml-1" style="color: var(--accent);"></i> صلاحية الإشراف بهذا البث</h4>
+                    <h4 class="text-sm font-bold mb-3"><i class="fas fa-user-shield ml-1" style="color: var(--accent);"></i> صلاحية الـ Moderator بهذا البث</h4>
                     <div id="mod-status-content" class="flex items-center justify-between gap-3">
-                        <span id="mod-status-text" class="text-xs" style="color: var(--text-muted);">جارٍ التحقق...</span>
-                        <button id="mod-status-btn" class="btn-ghost" style="padding:6px 14px; font-size:12px; white-space:nowrap;" onclick="requestOrCheckModeratorStatus()"><i class="fas fa-sync ml-1"></i> تحقق الآن</button>
+                        <span id="mod-status-text" class="text-xs" style="color: var(--text-muted);">دا يتحقق...</span>
+                        <button id="mod-status-btn" class="btn-ghost" style="padding:6px 14px; font-size:12px; white-space:nowrap;" onclick="requestOrCheckModeratorStatus()"><i class="fas fa-sync ml-1"></i> تحقق هسه</button>
                     </div>
-                    <p class="text-xs mt-2" style="color: var(--text-muted);">عند عدم وجود صلاحية إشراف، سيرسل الحساب الرسمي رسالة فعلية بالشات تطلب من صاحب البث منحه صلاحية "مشرف" من يوتيوب ستوديو. بعد المنح اضغط "تحقق الآن" مجدداً.</p>
+                    <p class="text-xs mt-2" style="color: var(--text-muted);">إذا Account بعده ما عنده صلاحية Moderator، Account الرسمي راح يرسل رسالة فعلية بالـ Chat يطلب من صاحب البث يضيفه Moderator من YouTube Studio. من تمنحه الصلاحية، اضغط "تحقق هسه" مرة ثانية.</p>
                     <p id="mod-debug-line" class="text-xs mt-2" style="color: var(--accent); display:none; word-break: break-word;"></p>
                     <div id="mod-log-box" class="mt-3 pt-3" style="display:none; border-top: 1px solid var(--border);">
-                        <p class="text-xs font-bold mb-2" style="color: var(--text-muted);"><i class="fas fa-terminal ml-1"></i> سجل السيرفر المباشر (يوضّح سبب أي حذف/تخطي بدقة):</p>
+                        <p class="text-xs font-bold mb-2" style="color: var(--text-muted);"><i class="fas fa-terminal ml-1"></i> Live Server Log — يوضح سبب أي حذف أو تخطي بالتفصيل:</p>
                         <div id="mod-log-list" style="max-height:160px; overflow-y:auto; display:flex; flex-direction:column; gap:4px;"></div>
                     </div>
                 </div>
                 <div class="mb-4 p-4 rounded-xl" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border);">
-                    <h4 class="text-sm font-bold mb-3"><i class="fas fa-eye ml-1" style="color: var(--accent);"></i> كلمات المراقبة (للبث الحالي)</h4>
+                    <h4 class="text-sm font-bold mb-3"><i class="fas fa-eye ml-1" style="color: var(--accent);"></i> كلمات المراقبة لهذا البث</h4>
                     <div class="flex gap-2 mb-3">
-                        <input id="keyword-input" type="text" class="input-field" placeholder="مثال: سؤال، هدية، تحدٍّ..." style="text-align: right;">
+                        <input id="keyword-input" type="text" class="input-field" placeholder="مثال: سؤال، هدية، تحدي..." style="text-align: right;">
                         <button class="btn-primary" style="width: auto; padding: 10px 20px;" onclick="addKeyword()"><i class="fas fa-plus"></i></button>
                     </div>
                     <div id="keywords-list" class="flex flex-wrap gap-2"></div>
-                    <p class="text-xs mt-3" style="color: var(--text-muted);">عند تطابق أي كلمة مع تعليق في البث، ستظهر لك إشارة على أيقونة الجرس <i class="fas fa-bell" style="color: var(--accent);"></i> في الأعلى. وإذا كان الحساب الرسمي مشرفاً بالبث حالياً، ستُحذف الرسالة المخالفة تلقائياً من شات يوتيوب.</p>
+                    <p class="text-xs mt-3" style="color: var(--text-muted);">إذا تطابقت أي كلمة ويا تعليق بالبث، راح تظهر إشارة على جرس <i class="fas fa-bell" style="color: var(--accent);"></i> في الأعلى. وإذا Account الرسمي صار Moderator بالبث، الرسالة المخالفة راح تنحذف تلقائياً من YouTube Chat.</p>
                 </div>
             </div>
         </div>
     </div>
  
-    <!-- مودال تسجيل الدخول/الحساب -->
+    <!-- مودال Login/Account -->
     <div id="auth-modal" class="modal-overlay">
         <div class="modal-content">
             <div class="flex gap-2 mb-5 p-1 rounded-xl" style="background: rgba(0,0,0,0.3);">
-                <div class="auth-tab active" onclick="switchAuthTab('signin', event)">تسجيل الدخول</div>
-                <div class="auth-tab" onclick="switchAuthTab('signup', event)">حساب جديد</div>
-                <div class="auth-tab" onclick="switchAuthTab('quick', event)">دخول سريع</div>
+                <div class="auth-tab active" onclick="switchAuthTab('signin', event)">Login</div>
+                <div class="auth-tab" onclick="switchAuthTab('signup', event)">حساب جديد Sign Up</div>
+                <div class="auth-tab" onclick="switchAuthTab('quick', event)">Login سريع Quick Login</div>
             </div>
             <div id="auth-fields"></div>
-            <button id="auth-submit-btn" class="btn-primary mt-4" onclick="handleAuthAction()">متابعة</button>
-            <button class="btn-ghost mt-2" onclick="closeAuthModal()">إلغاء</button>
+            <button id="auth-submit-btn" class="btn-primary mt-4" onclick="handleAuthAction()">كمّل</button>
+            <button class="btn-ghost mt-2" onclick="closeAuthModal()">خليها، إلغاء</button>
         </div>
     </div>
  
-    <!-- مودال الملف الشخصي (Profile) -->
+    <!-- مودال Profile (Profile) -->
     <div id="profile-modal" class="modal-overlay">
         <div class="modal-content">
-            <h3 class="text-lg font-bold mb-1">الملف الشخصي</h3>
+            <h3 class="text-lg font-bold mb-1">Profile</h3>
             <p class="text-sm mb-5" style="color: var(--text-muted);">إدارة بيانات حسابك.</p>
             
             <div id="profile-view">
@@ -843,49 +843,49 @@
                     </div>
                 </div>
                 <div class="flex gap-3">
-                    <button class="btn-ghost flex-1" onclick="closeProfileModal()">إغلاق</button>
-                    <button class="btn-primary flex-1" style="width: auto; background: transparent; border: 1px solid var(--accent); color: var(--accent);" onclick="toggleEditMode(true)">تعديل</button>
-                    <button class="btn-danger flex-1" style="width: auto;" onclick="handleLogout()">تسجيل الخروج</button>
+                    <button class="btn-ghost flex-1" onclick="closeProfileModal()">سدّها</button>
+                    <button class="btn-primary flex-1" style="width: auto; background: transparent; border: 1px solid var(--accent); color: var(--accent);" onclick="toggleEditMode(true)">تعديل Edit</button>
+                    <button class="btn-danger flex-1" style="width: auto;" onclick="handleLogout()">Logout</button>
                 </div>
             </div>
  
             <div id="profile-edit" style="display: none;">
                 <div class="space-y-3 mb-6">
                     <input type="text" id="edit-name" class="input-field" placeholder="الاسم الجديد">
-                    <input type="text" id="edit-user" class="input-field" placeholder="اسم المستخدم الجديد">
-                    <p class="text-xs" style="color: var(--text-muted);">* لا يمكن تغيير كلمة المرور من هنا.</p>
+                    <input type="text" id="edit-user" class="input-field" placeholder="Username الجديد">
+                    <p class="text-xs" style="color: var(--text-muted);">* ما تگدر تغيّر الـ Password من هنا.</p>
                 </div>
                 <div class="flex gap-3">
-                    <button class="btn-ghost flex-1" onclick="toggleEditMode(false)">إلغاء</button>
+                    <button class="btn-ghost flex-1" onclick="toggleEditMode(false)">خليها، إلغاء</button>
                     <button class="btn-primary flex-1" style="width: auto;" onclick="saveProfileChanges()">حفظ التغييرات</button>
                 </div>
             </div>
         </div>
     </div>
  
-    <!-- مودال الإشعارات (يعرض سجل إشعارات الكلمات المفتاحية فقط) -->
+    <!-- مودال Notifications (يعرض سجل إشعارات الكلمات المفتاحية فقط) -->
     <div id="notifications-modal" class="modal-overlay">
         <div class="modal-content" style="max-width: 600px;">
             <div class="flex items-center justify-between mb-5">
-                <h3 class="text-lg font-bold"><i class="fas fa-bell ml-1"></i> الإشعارات</h3>
+                <h3 class="text-lg font-bold"><i class="fas fa-bell ml-1"></i> Notifications</h3>
                 <button onclick="closeNotificationsModal()" style="background:none;border:none;color:var(--text-muted);font-size:20px;"><i class="fas fa-times"></i></button>
             </div>
-            <p class="text-xs mb-4" style="color: var(--text-muted);">تظهر هنا التعليقات التي تطابق كلمات مراقبتك. يمكنك إدارة الكلمات من شاشة <i class="fas fa-archive"></i> الأرشيف ← تبويب <i class="fas fa-eye"></i> المراقب الذكي.</p>
-            <h4 class="text-sm font-bold mb-3">سجل الإشعارات</h4>
+            <p class="text-xs mb-4" style="color: var(--text-muted);">هنا راح تطلع التعليقات اللي تطابق كلمات المراقبة مالك. تگدر تدير الكلمات من شاشة <i class="fas fa-archive"></i> Archive ← تبويب <i class="fas fa-eye"></i> المراقب الذكي Smart Moderator.</p>
+            <h4 class="text-sm font-bold mb-3">سجل Notifications</h4>
             <div id="notifications-list" style="max-height: 400px; overflow-y: auto;">
-                <div class="empty-state" style="padding: 20px;"><i class="fas fa-bell-slash"></i><p style="color: var(--text-muted);">لا توجد إشعارات بعد.</p></div>
+                <div class="empty-state" style="padding: 20px;"><i class="fas fa-bell-slash"></i><p style="color: var(--text-muted);">ماكو Notifications لحد هسه.</p></div>
             </div>
         </div>
     </div>
  
-    <!-- مودال كلمة المرور للبث المحفوظ -->
+    <!-- مودال Password للبث المحفوظ -->
     <div id="password-modal" class="modal-overlay">
         <div class="modal-content">
-            <h3 class="text-lg font-bold mb-1">دخول البث</h3>
-            <p class="text-sm mb-5" style="color: var(--text-muted);">أدخل كلمة المرور للمتابعة</p>
-            <input id="modal-pass-input" type="password" class="input-field mb-4" placeholder="كلمة المرور">
+            <h3 class="text-lg font-bold mb-1">Login للبث</h3>
+            <p class="text-sm mb-5" style="color: var(--text-muted);">اكتب الـ Password حتى تكمل</p>
+            <input id="modal-pass-input" type="password" class="input-field mb-4" placeholder="Password">
             <div class="flex gap-3">
-                <button class="btn-ghost flex-1" onclick="closePasswordModal()">إلغاء</button>
+                <button class="btn-ghost flex-1" onclick="closePasswordModal()">خليها، إلغاء</button>
                 <button id="confirm-login-btn" class="btn-primary flex-1" style="width: auto;" onclick="confirmLoginFromList()">تأكيد</button>
             </div>
         </div>
@@ -894,12 +894,12 @@
     <!-- مودال لوحة تحكم الأدمن -->
     <div id="admin-modal" class="modal-overlay">
         <div class="modal-content">
-            <h3 class="text-lg font-bold mb-1 text-red-400"><i class="fas fa-shield-alt ml-1"></i> لوحة التحكم</h3>
-            <p class="text-sm mb-5" style="color: var(--text-muted);">أدخل اسم مستخدم البث وكلمة مرور التحكم لحذف البث وكل البيانات المرتبطة به نهائياً.</p>
-            <input id="admin-user-input" type="text" class="input-field mb-3" placeholder="اسم المستخدم للبث المراد حذفه">
-            <input id="admin-pass-input" type="password" class="input-field mb-4" placeholder="كلمة مرور التحكم">
+            <h3 class="text-lg font-bold mb-1 text-red-400"><i class="fas fa-shield-alt ml-1"></i> Admin Panel</h3>
+            <p class="text-sm mb-5" style="color: var(--text-muted);">اكتب Username البث وPassword التحكم حتى تحذف البث وكل البيانات المرتبطة بيه نهائياً.</p>
+            <input id="admin-user-input" type="text" class="input-field mb-3" placeholder="Username البث المراد حذفه">
+            <input id="admin-pass-input" type="password" class="input-field mb-4" placeholder="Password التحكم">
             <div class="flex gap-3">
-                <button class="btn-ghost flex-1" onclick="closeAdminModal()">إلغاء</button>
+                <button class="btn-ghost flex-1" onclick="closeAdminModal()">خليها، إلغاء</button>
                 <button class="btn-danger flex-1" style="width: auto;" onclick="handleAdminDelete()"><i class="fas fa-trash ml-1"></i> حذف البث نهائياً</button>
             </div>
         </div>
@@ -907,33 +907,33 @@
  
     <div id="bot-modal" class="modal-overlay">
         <div class="modal-content">
-            <h3 class="text-lg font-bold mb-1" style="color: var(--accent);"><i class="fas fa-robot ml-1"></i> حساب المراقب الذكي الرسمي</h3>
-            <p class="text-sm mb-5" style="color: var(--text-muted);">حساب يوتيوب واحد يُستخدم في كل بثوث الموقع لطلب صلاحية الإشراف وحذف الرسائل المخالفة تلقائياً.</p>
+            <h3 class="text-lg font-bold mb-1" style="color: var(--accent);"><i class="fas fa-robot ml-1"></i> حساب المراقب الذكي Smart Moderator Smart Moderator الرسمي</h3>
+            <p class="text-sm mb-5" style="color: var(--text-muted);">حساب YouTube واحد يُستخدم بكل بثوث الموقع حتى يطلب صلاحية الـ Moderator ويحذف الرسائل المخالفة تلقائياً.</p>
             <div id="bot-status-box" class="mb-4 p-4 rounded-xl" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border);">
-                <p class="text-xs" style="color: var(--text-muted);"><i class="fas fa-spinner fa-spin ml-1"></i> جارٍ التحقق من حالة الربط...</p>
+                <p class="text-xs" style="color: var(--text-muted);"><i class="fas fa-spinner fa-spin ml-1"></i> دا يتحقق من حالة الربط...</p>
             </div>
             <div class="flex gap-3">
-                <button class="btn-ghost flex-1" onclick="closeBotModal()">إغلاق</button>
-                <button id="bot-connect-btn" class="btn-primary flex-1" style="width:auto;" onclick="startBotOAuth()"><i class="fab fa-google ml-1"></i> ربط / إعادة ربط الحساب</button>
+                <button class="btn-ghost flex-1" onclick="closeBotModal()">سدّها</button>
+                <button id="bot-connect-btn" class="btn-primary flex-1" style="width:auto;" onclick="startBotOAuth()"><i class="fab fa-google ml-1"></i> ربط / إعادة ربط Account</button>
             </div>
         </div>
     </div>
  
     <div id="toast-container"></div>
  
-    <!-- شاشة الدخول للبث (Entry Overlay) -->
+    <!-- شاشة الLogin للبث (Entry Overlay) -->
     <div id="entry-overlay">
         <div class="entry-content">
             <div id="entry-icon" class="entry-icon-wrap">
                 <i class="fas fa-video"></i>
             </div>
-            <div id="entry-title" class="entry-title">جارٍ الدخول للبث</div>
-            <div id="entry-subtitle" class="entry-subtitle">يرجى الانتظار...</div>
+            <div id="entry-title" class="entry-title">دا يدخل للبث</div>
+            <div id="entry-subtitle" class="entry-subtitle">انتظر شوي...</div>
             <div id="entry-spinner" class="entry-spinner"></div>
             <div id="entry-steps" class="entry-steps"></div>
             <div id="entry-actions" class="entry-actions" style="display:none;">
-                <button class="btn-ghost" onclick="cancelEntry()">إلغاء</button>
-                <button class="btn-primary" style="width:auto;" onclick="retryEntry()">إعادة المحاولة</button>
+                <button class="btn-ghost" onclick="cancelEntry()">خليها، إلغاء</button>
+                <button class="btn-primary" style="width:auto;" onclick="retryEntry()">جرّب مرة ثانية Retry</button>
             </div>
         </div>
     </div>
@@ -942,7 +942,7 @@
     const SUPABASE_URL = 'https://xfxjnevvgxwqrdqmixvi.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_Dldoa1XJCrlvmP24ra3AHQ_61HJJSZ9';
 
-    // === إعدادات حساب المراقب الذكي (Google OAuth) ===
+    // === إعدادات حساب المراقب الذكي Smart Moderator Smart Moderator (Google OAuth) ===
     // Client ID عام وآمن الوضع بالواجهة (بعكس Client Secret الذي يبقى فقط
     // داخل الـ Edge Function). أنشئه من Google Cloud Console → Credentials
     // → OAuth Client ID → نوع "Web application"، وأضف رابط youtube-oauth-callback
@@ -1087,18 +1087,18 @@
     let renderedComments = new Set();
     let renderedChats = new Set();
 
-    // === حالة المراقب الذكي (Smart Moderator) ===
+    // === حالة المراقب الذكي Smart Moderator (Smart Moderator) ===
     let modChannel = null;               // قناة Realtime لجدول stream_moderator_status
     let keywordsChannel = null;          // قناة Realtime لجدول monitor_keywords (لتحديث الكاش)
     let modDeletedChannel = null;        // قناة Realtime لجدول moderator_deleted_messages (تأكيد حذف السيرفر)
-    let modDebugChannel = null;          // قناة Realtime لجدول mod_debug_log (سجل تشخيصي مباشر)
-    let currentIsModerator = false;      // هل الحساب الرسمي مشرف بالبث الحالي؟
+    let modDebugChannel = null;          // قناة Realtime لجدول mod_debug_log (سجل تشخيصي Live)
+    let currentIsModerator = false;      // هل Account الرسمي Moderator بالبث الحالي؟
     let currentKeywordsCache = [];       // كاش محلي لكلمات المراقبة (نصوص lowercase)
     let modCheckInProgress = false;
     let lastModCheckAt = 0;
     const MOD_CHECK_COOLDOWN_MS = 15000; // تفادي إرسال رسائل اختبار متكررة بسرعة
  
-    // لوحة ألوان رمادية مُهدّئة (للتوافق مع الثيم الرمادي للبث والمحادثة والأرشيف)
+    // لوحة ألوان رمادية مُهدّئة (للتوافق مع الثيم الرمادي للبث وChat وArchive)
     // كل الألوان في نفس العائلة الرمادية، فقط بدرجات إضاءة مختلفة لتمييز المستخدمين
     const AVATAR_COLORS = ['#7a7d83', '#8a8d93', '#9a9da3', '#6a6d73', '#a5a8ae', '#888b91', '#979aa0', '#7d8086', '#8f9298', '#73767c'];
     function getAvatarColor(name) { let hash = 0; for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash); return AVATAR_COLORS[Math.abs(hash) % AVATAR_COLORS.length]; }
@@ -1107,24 +1107,24 @@
     function showScreen(screenId) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); const target = document.getElementById(screenId); if (target) target.classList.add('active'); }
     function showToast(message, type = 'info') { const container = document.getElementById('toast-container'); const toast = document.createElement('div'); const icons = { success: 'check-circle', error: 'exclamation-circle', info: 'info-circle' }; toast.className = `toast toast-${type}`; toast.innerHTML = `<i class="fas fa-${icons[type] || 'info-circle'}"></i><span>${message}</span>`; container.appendChild(toast); requestAnimationFrame(() => toast.classList.add('show')); setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 350); }, 3500); }
  
-    // === نظام الملف الشخصي وتسجيل الدخول ===
+    // === نظام Profile وLogin ===
     function updateUserCircle() {
         const btn = document.getElementById('user-circle-btn');
         if (!btn) return;
         if (currentUser) {
-            // عرض الحرف الأول من اسم المستخدم داخل زر الأيقونة
+            // عرض الحرف الأول من Username داخل زر الأيقونة
             btn.innerHTML = `<span style="font-weight:700; font-size:14px;">${escapeHtml(currentUser.display_name.charAt(0).toUpperCase())}</span>`;
             btn.style.background = 'var(--hx-bg-soft)';
             btn.style.borderColor = 'var(--hx-accent)';
             btn.style.color = 'var(--hx-fg)';
-            btn.title = `مرحباً ${currentUser.display_name} — اضغط لإدارة حسابك`;
+            btn.title = `هلا ${currentUser.display_name} — اضغط هنا حتى تدير حسابك`;
         } else {
-            // عرض أيقونة user فقط عند عدم تسجيل الدخول
+            // عرض أيقونة user فقط عند عدم Login
             btn.innerHTML = '<i class="fas fa-user"></i>';
             btn.style.background = 'transparent';
             btn.style.borderColor = 'var(--hx-border)';
             btn.style.color = 'var(--hx-fg-dim)';
-            btn.title = 'تسجيل الدخول';
+            btn.title = 'Login';
         }
     }
  
@@ -1158,18 +1158,18 @@
     async function saveProfileChanges() {
         const newName = document.getElementById('edit-name').value.trim();
         const newUser = document.getElementById('edit-user').value.trim();
-        if (!newName || !newUser) { showToast('يرجى تعبئة جميع الحقول', 'error'); return; }
+        if (!newName || !newUser) { showToast('عبّي كل الحقول', 'error'); return; }
  
         try {
             const { data, error } = await supabaseClient.from('users').update({ display_name: newName, username: newUser }).eq('id', currentUser.id).select().single();
-            if (error) { showToast('اسم المستخدم مستخدم مسبقاً', 'error'); return; }
+            if (error) { showToast('هذا الـ Username مستخدم من قبل', 'error'); return; }
             
             currentUser = data;
             localStorage.setItem('vrtx_user', JSON.stringify(data));
             updateUserCircle();
             handleUserCircleClick(); // Refresh modal
-            showToast('تم تحديث الملف الشخصي', 'success');
-        } catch(e) { showToast('فشل التحديث', 'error'); }
+            showToast('تم تحديث الـ Profile', 'success');
+        } catch(e) { showToast('التحديث فشل', 'error'); }
     }
  
     function handleLogout() {
@@ -1177,7 +1177,7 @@
         currentUser = null;
         updateUserCircle();
         closeProfileModal();
-        showToast('تم تسجيل الخروج', 'info');
+        showToast('تم Logout', 'info');
     }
  
     function openAuthModal() { document.getElementById('auth-modal').classList.add('show'); switchAuthTab('signin'); }
@@ -1195,13 +1195,13 @@
         const fieldsDiv = document.getElementById('auth-fields');
         const submitBtn = document.getElementById('auth-submit-btn');
         if (mode === 'signin') {
-            fieldsDiv.innerHTML = `<input id="auth-username" type="text" class="input-field mb-3" placeholder="اسم المستخدم"><input id="auth-password" type="password" class="input-field mb-3" placeholder="كلمة المرور">`;
-            submitBtn.innerText = 'دخول';
+            fieldsDiv.innerHTML = `<input id="auth-username" type="text" class="input-field mb-3" placeholder="Username"><input id="auth-password" type="password" class="input-field mb-3" placeholder="Password">`;
+            submitBtn.innerText = 'Login';
         } else if (mode === 'signup') {
-            fieldsDiv.innerHTML = `<input id="auth-display" type="text" class="input-field mb-3" placeholder="الاسم المعروض (أي اسم)"><input id="auth-username" type="text" class="input-field mb-3" placeholder="اسم المستخدم (فريد)"><input id="auth-password" type="password" class="input-field mb-3" placeholder="كلمة المرور">`;
+            fieldsDiv.innerHTML = `<input id="auth-display" type="text" class="input-field mb-3" placeholder="الاسم الظاهر (أي اسم)"><input id="auth-username" type="text" class="input-field mb-3" placeholder="Username (لازم يكون فريد)"><input id="auth-password" type="password" class="input-field mb-3" placeholder="Password">`;
             submitBtn.innerText = 'إنشاء';
         } else if (mode === 'quick') {
-            fieldsDiv.innerHTML = `<input id="auth-display" type="text" class="input-field mb-3" placeholder="الاسم المعروض فقط"><p class="text-xs text-center" style="color: var(--text-muted);">سيتم توليد اسم المستخدم وكلمة المرور تلقائياً وحفظهما.</p>`;
+            fieldsDiv.innerHTML = `<input id="auth-display" type="text" class="input-field mb-3" placeholder="الاسم الظاهر فقط"><p class="text-xs text-center" style="color: var(--text-muted);">راح ينولد الـ Username والـ Password تلقائياً وينحفظن.</p>`;
             submitBtn.innerText = 'إنشاء سريع';
         }
     }
@@ -1210,23 +1210,23 @@
         if (currentAuthMode === 'signin') {
             const username = document.getElementById('auth-username').value.trim();
             const password = document.getElementById('auth-password').value.trim();
-            if (!username || !password) { showToast('يرجى تعبئة جميع الحقول', 'error'); return; }
+            if (!username || !password) { showToast('عبّي كل الحقول', 'error'); return; }
             const { data, error } = await supabaseClient.from('users').select('*').eq('username', username).eq('password', password).single();
-            if (error || !data) { showToast('بيانات الدخول غير صحيحة', 'error'); return; }
-            currentUser = data; localStorage.setItem('vrtx_user', JSON.stringify(data)); updateUserCircle(); closeAuthModal(); showToast('تم تسجيل الدخول', 'success');
+            if (error || !data) { showToast('بيانات الـ Login مو مضبوطة', 'error'); return; }
+            currentUser = data; localStorage.setItem('vrtx_user', JSON.stringify(data)); updateUserCircle(); closeAuthModal(); showToast('تم Login', 'success');
         } else if (currentAuthMode === 'signup') {
             const display = document.getElementById('auth-display').value.trim(); const username = document.getElementById('auth-username').value.trim(); const password = document.getElementById('auth-password').value.trim();
-            if (!display || !username || !password) { showToast('يرجى تعبئة جميع الحقول', 'error'); return; }
+            if (!display || !username || !password) { showToast('عبّي كل الحقول', 'error'); return; }
             const { data, error } = await supabaseClient.from('users').insert([{ display_name: display, username: username, password: password }]).select().single();
-            if (error) { showToast('اسم المستخدم مستخدم مسبقاً', 'error'); return; }
-            currentUser = data; localStorage.setItem('vrtx_user', JSON.stringify(data)); updateUserCircle(); closeAuthModal(); showToast('تم إنشاء الحساب', 'success');
+            if (error) { showToast('هذا الـ Username مستخدم من قبل', 'error'); return; }
+            currentUser = data; localStorage.setItem('vrtx_user', JSON.stringify(data)); updateUserCircle(); closeAuthModal(); showToast('تم إنشاء Account', 'success');
         } else if (currentAuthMode === 'quick') {
             const display = document.getElementById('auth-display').value.trim();
-            if (!display) { showToast('الاسم المعروض مطلوب', 'error'); return; }
+            if (!display) { showToast('الاسم الظاهر مطلوب', 'error'); return; }
             const randomUser = 'user_' + Math.random().toString(36).substring(2, 8); const randomPass = Math.random().toString(36).substring(2, 10);
             const { data, error } = await supabaseClient.from('users').insert([{ display_name: display, username: randomUser, password: randomPass }]).select().single();
-            if (error) { showToast('فشل الإنشاء السريع، حاول مرة أخرى', 'error'); return; }
-            currentUser = data; localStorage.setItem('vrtx_user', JSON.stringify(data)); updateUserCircle(); closeAuthModal(); showToast(`تم الإنشاء بنجاح · اسم المستخدم: ${randomUser}`, 'success');
+            if (error) { showToast('الإنشاء السريع فشل، جرّب مرة ثانية', 'error'); return; }
+            currentUser = data; localStorage.setItem('vrtx_user', JSON.stringify(data)); updateUserCircle(); closeAuthModal(); showToast(`تم الإنشاء، عاشت إيدك · Username: ${randomUser}`, 'success');
         }
     }
  
@@ -1236,39 +1236,39 @@
  
     async function handleNewRegister() {
         const url = document.getElementById('new-url').value.trim(); const user = document.getElementById('new-user').value.trim(); const pass = document.getElementById('new-pass').value.trim();
-        if (!url || !user || !pass) { showToast('يرجى تعبئة جميع الحقول', 'error'); return; }
-        const videoId = getVideoId(url); if (!videoId) { showToast('رابط يوتيوب غير صالح', 'error'); return; }
+        if (!url || !user || !pass) { showToast('عبّي كل الحقول', 'error'); return; }
+        const videoId = getVideoId(url); if (!videoId) { showToast('رابط YouTube مو صالح', 'error'); return; }
         try {
             // Layer 1: pre-count check
             const { count, error: countError } = await supabaseClient.from('saved_streams').select('*', { count: 'exact', head: true }).eq('is_active', true);
             if (countError) throw countError;
             if (count >= MAX_ACTIVE_STREAMS) {
-                showToast(`وصلت للحد الأقصى (${MAX_ACTIVE_STREAMS} بث نشط). احذف أحد البثوث القديمة لإضافة بث جديد.`, 'error');
+                showToast(`وصلت للحد الأعلى (${MAX_ACTIVE_STREAMS} بث نشط). احذف بث قديم حتى تضيف بث جديد.`, 'error');
                 return;
             }
             const { data: existingStreams } = await supabaseClient.from('saved_streams').select('stream_url').ilike('stream_url', `%${videoId}%`);
-            if (existingStreams && existingStreams.length > 0) { showToast('هذا البث مُسجّل مسبقاً', 'error'); return; }
+            if (existingStreams && existingStreams.length > 0) { showToast('هذا البث مسجّل من قبل', 'error'); return; }
             const { error } = await supabaseClient.from('saved_streams').insert([{ username: user, password: pass, stream_url: url, is_active: true }]);
             if (error) {
                 // Layer 2: DB trigger rejects on overflow
                 if (error.message && error.message.includes('MAX_STREAMS_REACHED')) {
-                    showToast(`وصلت للحد الأقصى (${MAX_ACTIVE_STREAMS} بث نشط)`, 'error');
+                    showToast(`وصلت للحد الأعلى (${MAX_ACTIVE_STREAMS} بث نشط)`, 'error');
                 } else {
                     throw error;
                 }
                 return;
             }
-            showToast(`تم الحفظ (${(count || 0) + 1}/${MAX_ACTIVE_STREAMS} بث نشط)`, 'success');
+            showToast(`انحفظ (${(count || 0) + 1}/${MAX_ACTIVE_STREAMS} بث نشط)`, 'success');
             startLiveStream(videoId);
-        } catch(e) { showToast('فشل الحفظ: ' + (e.message || ''), 'error'); }
+        } catch(e) { showToast('الحفظ ما نجح: ' + (e.message || ''), 'error'); }
     }
  
     async function showStreamList() {
         showScreen('screen-list'); const container = document.getElementById('streams-list-container');
-        container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p style="color: var(--text-muted);">جارٍ التحميل...</p></div>';
+        container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p style="color: var(--text-muted);">دا يحمّل...</p></div>';
         try {
             const { data, error } = await supabaseClient.from('saved_streams').select('username, stream_url').order('created_at', { ascending: false });
-            if (error) throw error; if (!data || data.length === 0) { container.innerHTML = '<div class="empty-state"><i class="fas fa-folder-open"></i><p class="font-bold mt-4">لا توجد بثوث محفوظة بعد</p></div>'; return; }
+            if (error) throw error; if (!data || data.length === 0) { container.innerHTML = '<div class="empty-state"><i class="fas fa-folder-open"></i><p class="font-bold mt-4">ماكو بثوث محفوظة لحد هسه</p></div>'; return; }
             container.innerHTML = '<div class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>'; const grid = container.firstChild;
             data.forEach(stream => {
                 const videoId = getVideoId(stream.stream_url); const card = document.createElement('div');
@@ -1278,26 +1278,26 @@
                 left.querySelector('h3').textContent = stream.username;
                 left.querySelector('p').textContent = videoId || '—';
                 const btn = document.createElement('button');
-                btn.className = 'btn-ghost text-xs'; btn.textContent = 'دخول';
+                btn.className = 'btn-ghost text-xs'; btn.textContent = 'Login';
                 btn.addEventListener('click', () => openPasswordModal(stream.username, stream.stream_url));
                 card.appendChild(left); card.appendChild(btn); grid.appendChild(card);
             });
         } catch(e) {
             const detail = e?.message || e?.error_description || (typeof e === 'string' ? e : JSON.stringify(e));
             console.error('فشل تحميل قائمة البثوث:', detail, e);
-            container.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p class="mt-4">فشل التحميل</p><p class="text-xs mt-2" style="color: var(--text-muted);">${escapeHtml(detail || 'خطأ غير معروف')}</p><button class="btn-ghost mt-4" onclick="showStreamList()"><i class="fas fa-redo ml-1"></i> إعادة المحاولة</button></div>`;
+            container.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p class="mt-4">التحميل فشل</p><p class="text-xs mt-2" style="color: var(--text-muted);">${escapeHtml(detail || 'خطأ Error غير معروف')}</p><button class="btn-ghost mt-4" onclick="showStreamList()"><i class="fas fa-redo ml-1"></i> جرّب مرة ثانية Retry</button></div>`;
         }
     }
  
     function openAdminModal() { document.getElementById('admin-user-input').value = ''; document.getElementById('admin-pass-input').value = ''; document.getElementById('admin-modal').classList.add('show'); }
     function closeAdminModal() { document.getElementById('admin-modal').classList.remove('show'); }
 
-    // === مودال حساب المراقب الذكي الرسمي ===
+    // === مودال حساب المراقب الذكي Smart Moderator Smart Moderator الرسمي ===
     function openBotModal() { document.getElementById('bot-modal').classList.add('show'); loadBotAccountStatus(); }
     function closeBotModal() { document.getElementById('bot-modal').classList.remove('show'); }
  
-    // === ربط تلقائي عند بدء الموقع — يظهر مرة واحدة فقط طالما لا يوجد حساب مرتبط ===
-    // بمجرد ربط الحساب بنجاح، get_bot_account_public سترجع is_connected = true
+    // === ربط تلقائي عند بدء الموقع — يظهر مرة واحدة فقط طالما ماكو حساب مرتبط ===
+    // بمجرد ربط Account بنجاح، get_bot_account_public سترجع is_connected = true
     // إلى الأبد، وبالتالي لن تُفتح هذه الشاشة تلقائياً مرة أخرى لأي زائر مطلقاً.
     async function initBotAutoLink() {
         if (!supabaseClient) return;
@@ -1305,7 +1305,7 @@
             const { data, error } = await supabaseClient.rpc('get_bot_account_public');
             const info = Array.isArray(data) ? data[0] : data;
             if (!error && info && info.is_connected) return; // مرتبط مسبقاً — لا تفعل شيئاً أبداً
-            openBotModal(); // غير مرتبط بعد — اعرض شاشة تسجيل الدخول بحساب يوتيوب مرة واحدة
+            openBotModal(); // غير مرتبط بعد — اعرض شاشة Login بحساب يوتيوب مرة واحدة
         } catch (e) {
             console.warn('initBotAutoLink check failed:', e);
         }
@@ -1313,30 +1313,30 @@
  
     async function loadBotAccountStatus() {
         const box = document.getElementById('bot-status-box');
-        box.innerHTML = '<p class="text-xs" style="color: var(--text-muted);"><i class="fas fa-spinner fa-spin ml-1"></i> جارٍ التحقق من حالة الربط...</p>';
+        box.innerHTML = '<p class="text-xs" style="color: var(--text-muted);"><i class="fas fa-spinner fa-spin ml-1"></i> دا يتحقق من حالة الربط...</p>';
         try {
             const { data, error } = await supabaseClient.rpc('get_bot_account_public');
             const info = Array.isArray(data) ? data[0] : data;
             if (error || !info || !info.is_connected) {
-                box.innerHTML = '<p class="text-xs" style="color:#f87171;"><i class="fas fa-times-circle ml-1"></i> لا يوجد حساب مرتبط حالياً.</p>';
+                box.innerHTML = '<p class="text-xs" style="color:#f87171;"><i class="fas fa-times-circle ml-1"></i> ماكو حساب مرتبط حالياً.</p>';
                 return;
             }
             box.innerHTML = `
                 <div class="flex items-center gap-3">
                     <img src="${info.channel_thumbnail || ''}" onerror="this.style.display='none'" style="width:40px;height:40px;border-radius:50%;">
                     <div>
-                        <p class="text-sm font-bold" style="color:#4ade80;"><i class="fas fa-check-circle ml-1"></i> مرتبط: ${escapeHtml(info.channel_title || 'غير معروف')}</p>
+                        <p class="text-sm font-bold" style="color:#4ade80;"><i class="fas fa-check-circle ml-1"></i> مربوط: ${escapeHtml(info.channel_title || 'غير معروف')}</p>
                         <p class="text-xs" style="color: var(--text-muted);">منذ ${formatTime(info.connected_at)}</p>
                     </div>
                 </div>`;
         } catch(e) {
-            box.innerHTML = '<p class="text-xs" style="color:#f87171;">تعذّر التحقق من حالة الربط.</p>';
+            box.innerHTML = '<p class="text-xs" style="color:#f87171;">ما قدرنا نتحقق من حالة الربط.</p>';
         }
     }
 
     function startBotOAuth() {
         if (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID.includes('ضع_هنا')) {
-            showToast('لم يتم إعداد GOOGLE_CLIENT_ID بعد بالكود', 'error');
+            showToast('GOOGLE_CLIENT_ID بعده ما متضبط بالكود', 'error');
             return;
         }
         const params = new URLSearchParams({
@@ -1355,8 +1355,8 @@
         const params = new URLSearchParams(window.location.search);
         const status = params.get('bot_link');
         if (!status) return;
-        if (status === 'success') showToast('تم ربط حساب المراقب الذكي بنجاح ✅', 'success');
-        else showToast(`فشل ربط الحساب (${params.get('reason') || 'unknown'})`, 'error');
+        if (status === 'success') showToast('تم ربط حساب الـ Smart Moderator بنجاح ✅', 'success');
+        else showToast(`فشل ربط Account (${params.get('reason') || 'unknown'})`, 'error');
         // تنظيف الرابط من المتصفح دون إعادة تحميل
         params.delete('bot_link'); params.delete('reason');
         const clean = window.location.pathname + (params.toString() ? `?${params.toString()}` : '');
@@ -1365,19 +1365,19 @@
  
     async function handleAdminDelete() {
         const streamUser = document.getElementById('admin-user-input').value.trim(); const adminPass = document.getElementById('admin-pass-input').value.trim();
-        if (!streamUser || !adminPass) { showToast('يرجى تعبئة جميع الحقول', 'error'); return; }
+        if (!streamUser || !adminPass) { showToast('عبّي كل الحقول', 'error'); return; }
         
         // Double-confirm before permanent delete
-        if (!confirm(`⚠️ سيتم حذف البث "${streamUser}" وكل البيانات المرتبطة به نهائياً:\n\n• التعليقات المؤرشفة\n• رسائل المحادثة\n• كلمات المراقبة\n• الإشعارات\n• أقفال الانتخاب\n\nهل أنت متأكد؟`)) return;
+        if (!confirm(`⚠️ سيانحذف البث "${streamUser}" وكل البيانات المرتبطة به نهائياً:\n\n• التعليقات المؤرشفة\n• رسائل Chat\n• كلمات المراقبة\n• Notifications\n• أقفال الانتخاب\n\nهل أنت متأكد؟`)) return;
         
         try {
             // 1) Verify admin password
             const { data: settings, error: settingsError } = await supabaseClient.from('app_settings').select('admin_password').eq('id', 1).single();
-            if (settingsError || !settings || settings.admin_password !== adminPass) { showToast('كلمة مرور التحكم غير صحيحة', 'error'); return; }
+            if (settingsError || !settings || settings.admin_password !== adminPass) { showToast('Password التحكم مو مضبوط', 'error'); return; }
             
             // 2) Fetch stream record
             const { data: stream, error: streamError } = await supabaseClient.from('saved_streams').select('id, stream_url').eq('username', streamUser).single();
-            if (streamError || !stream) { showToast('اسم مستخدم البث غير موجود', 'error'); return; }
+            if (streamError || !stream) { showToast('Username البث مو موجود', 'error'); return; }
             
             const videoId = getVideoId(stream.stream_url);
             const streamId = stream.id;
@@ -1390,7 +1390,7 @@
             
             // 4) حذف كل البيانات المرتبطة بالـ videoId بالتوازي (أسرع 5 أضعاف)
             if (videoId) {
-                showToast('جارٍ حذف بيانات البث...', 'info');
+                showToast('دا نحذف بيانات البث...', 'info');
                 
                 const deleteResults = await Promise.allSettled([
                     supabaseClient.from('archived_comments').delete().eq('stream_id', videoId),
@@ -1415,14 +1415,14 @@
             const { error: deleteError } = await supabaseClient.from('saved_streams').delete().eq('id', streamId);
             if (deleteError) throw deleteError;
             
-            showToast(`تم حذف البث "${streamUser}" نهائياً`, 'success');
+            showToast(`انحذف البث "${streamUser}" نهائياً`, 'success');
             closeAdminModal();
             showStreamList();
-        } catch(e) { showToast('فشل الحذف: ' + (e.message || ''), 'error'); }
+        } catch(e) { showToast('الحذف ما نجح: ' + (e.message || ''), 'error'); }
     }
  
     function openPasswordModal(username, streamUrl) {
-        if (isEnteringSession) { showToast('جارٍ الدخول لبث آخر، يرجى الانتظار...', 'info'); return; }
+        if (isEnteringSession) { showToast('دا ندخل لبث ثاني، انتظر شوي...', 'info'); return; }
         tempLoginData = { username, streamUrl };
         document.getElementById('modal-pass-input').value = '';
         document.getElementById('password-modal').classList.add('show');
@@ -1433,17 +1433,17 @@
         tempLoginData = null;
     }
  
-    // === المرحلة 1: التحقق من كلمة المرور فقط ===
+    // === المرحلة 1: التحقق من Password فقط ===
     // بعد نجاح التحقق، نعتمد على streamData كمصدر وحيد للحقيقة ولا نعود إلى tempLoginData.
     async function confirmLoginFromList() {
-        if (isEnteringSession) { showToast('جارٍ الدخول لبث آخر، يرجى الانتظار...', 'info'); return; }
+        if (isEnteringSession) { showToast('دا ندخل لبث ثاني، انتظر شوي...', 'info'); return; }
         if (!tempLoginData) return;
         const pass = document.getElementById('modal-pass-input').value.trim();
-        if (!pass) { showToast('أدخل كلمة المرور', 'error'); return; }
+        if (!pass) { showToast('اكتب الـ Password', 'error'); return; }
  
         const btn = document.getElementById('confirm-login-btn');
         const originalText = btn ? btn.innerHTML : '';
-        if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جارٍ الدخول...'; }
+        if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> دا الLogin...'; }
  
         // Capture username before clearing tempLoginData
         const targetUsername = tempLoginData.username;
@@ -1457,13 +1457,13 @@
                 .eq('password', pass)
                 .single();
             if (error || !data) {
-                showToast('كلمة المرور غير صحيحة أو البث غير موجود', 'error');
+                showToast('الـ Password مو مضبوط أو البث مو موجود', 'error');
                 if (btn) { btn.disabled = false; btn.innerHTML = originalText; }
                 return;
             }
             streamData = data;
         } catch(e) {
-            showToast('خطأ في المصادقة: ' + (e.message || ''), 'error');
+            showToast('خطأ Error بالـ Authentication: ' + (e.message || ''), 'error');
             if (btn) { btn.disabled = false; btn.innerHTML = originalText; }
             return;
         }
@@ -1471,12 +1471,12 @@
         // Extract videoId from streamData.stream_url (not from tempLoginData)
         const videoId = getVideoId(streamData.stream_url);
         if (!videoId) {
-            showToast('رابط البث في السجل غير صالح', 'error');
+            showToast('رابط البث Stream URL المحفوظ مو صالح', 'error');
             if (btn) { btn.disabled = false; btn.innerHTML = originalText; }
             return;
         }
  
-        // إغلاق المودال وتنظيف tempLoginData فوراً — streamData هو المصدر الوحيد الآن
+        // سدّها المودال وتنظيف tempLoginData فوراً — streamData هو المصدر الوحيد هسه
         closePasswordModal();
         if (btn) { btn.disabled = false; btn.innerHTML = originalText; }
  
@@ -1484,17 +1484,17 @@
         await startLiveStreamWithOverlay(videoId, streamData);
     }
  
-    // === البث الحي والمراقب الذكي ===
+    // === البث الحي والمراقب الذكي Smart Moderator ===
     // متغيرات إضافية لمتانة الجلسة
     let youTubeConnectAttempt = 0;
     let youTubeReconnectTimer = null;
     let youTubeConnectionOk = false;
     let entryOverlayActive = false;
     let entryTargetVideoId = null;
-    // منع تكرار الدخول وحماية من race conditions
+    // منع تكرار الLogin وحماية من race conditions
     let isEnteringSession = false;
     let sessionToken = 0;                // يُزاد عند كل جلسة جديدة لإبطال العمليات القديمة
-    let entryTargetStreamData = null;    // يحفظ streamData الكامل لإعادة المحاولة
+    let entryTargetStreamData = null;    // يحفظ streamData الكامل لجرّب مرة ثانية Retry
  
     function showStreamWarning(msg) {
         const w = document.getElementById('stream-warning'); const t = document.getElementById('stream-warning-text');
@@ -1512,8 +1512,8 @@
         const iconWrap = document.getElementById('entry-icon');
         const spinner = document.getElementById('entry-spinner');
         const actions = document.getElementById('entry-actions');
-        if (titleEl) titleEl.textContent = title || 'جارٍ الدخول للبث';
-        if (subEl) subEl.textContent = subtitle || 'يرجى الانتظار...';
+        if (titleEl) titleEl.textContent = title || 'دا يدخل للبث';
+        if (subEl) subEl.textContent = subtitle || 'انتظر شوي...';
         if (iconWrap) { iconWrap.className = 'entry-icon-wrap'; iconWrap.innerHTML = '<i class="fas fa-video"></i>'; }
         if (spinner) spinner.style.display = 'block';
         if (actions) actions.style.display = 'none';
@@ -1549,8 +1549,8 @@
         const iconWrap = document.getElementById('entry-icon');
         const spinner = document.getElementById('entry-spinner');
         const actions = document.getElementById('entry-actions');
-        if (titleEl) titleEl.textContent = title || 'فشل الدخول';
-        if (subEl) subEl.textContent = subtitle || 'خطأ غير متوقع';
+        if (titleEl) titleEl.textContent = title || 'الLogin فشل';
+        if (subEl) subEl.textContent = subtitle || 'صار خطأ Error غير متوقع';
         if (iconWrap) { iconWrap.className = 'entry-icon-wrap error'; iconWrap.innerHTML = '<i class="fas fa-exclamation-triangle"></i>'; }
         if (spinner) spinner.style.display = 'none';
         if (actions) actions.style.display = 'flex';
@@ -1580,37 +1580,37 @@
         }
     }
  
-    // === التدفق الجديد للدخول للبث (مبسّط وغير حظر) ===
-    // الترتيب الصحيح:
+    // === التدفق الجديد للLogin للبث (مبسّط وغير حظر) ===
+    // الترتيب المضبوط:
     //   1) التحقق من streamData
     //   2) استخراج videoId من streamData.stream_url
     //   3) تنظيف أي جلسة قديمة (لمنع التضارب وتكرار القنوات)
     //   4) إنشاء حالة الجلسة الجديدة
-    //   5) إظهار شاشة البث فوراً + إخفاء overlay الدخول
-    //   6) تحميل الأرشيف في الخلفية
+    //   5) إظهار شاشة البث فوراً + إخفاء overlay الLogin
+    //   6) تحميل Archive في الخلفية
     //   7) تشغيل Realtime في الخلفية
     //   8) تشغيل Leader Election في الخلفية
     //   9) محاولة الاتصال بيوتيوب في الخلفية
     // فشل أي خدمة خلفية لا يمنع فتح الجلسة، فقط يُظهر تنبيه للخدمة الفاشلة.
     async function startLiveStreamWithOverlay(videoId, streamData) {
         if (isEnteringSession) {
-            showToast('جارٍ الدخول لبث آخر، يرجى الانتظار...', 'info');
+            showToast('دا ندخل لبث ثاني، انتظر شوي...', 'info');
             return;
         }
  
         // === Verify streamData (single source of truth) ===
         if (!streamData || !streamData.stream_url) {
-            renderEntrySteps(['إعداد الجلسة']);
-            showEntryOverlay('فشل الدخول', 'بيانات البث غير مكتملة.');
-            setEntryError('بيانات البث غير مكتملة', 'لا يوجد رابط للبث في السجل. قد يكون البث قد حُذف أو أنه غير صالح.');
+            renderEntrySteps(['تهيئة الـ Session']);
+            showEntryOverlay('الLogin فشل', 'بيانات البث ناقصة.');
+            setEntryError('بيانات البث ناقصة', 'ماكو رابط للبث بالسجل. يمكن البث انحذف أو الرابط مو صالح.');
             return;
         }
  
         const verifiedVideoId = getVideoId(streamData.stream_url);
         if (!verifiedVideoId) {
-            renderEntrySteps(['إعداد الجلسة']);
-            showEntryOverlay('فشل الدخول', 'رابط البث غير صالح.');
-            setEntryError('رابط البث غير صالح', 'تعذّر استخراج معرّف الفيديو من رابط البث: ' + (streamData.stream_url || '(فارغ)'));
+            renderEntrySteps(['تهيئة الـ Session']);
+            showEntryOverlay('الLogin فشل', 'رابط البث Stream URL مو صالح.');
+            setEntryError('رابط البث Stream URL مو صالح', 'ما قدرنا نستخرج Video ID من رابط البث Stream URL: ' + (streamData.stream_url || '(فارغ)'));
             return;
         }
         // استخدام videoId المُتحقق منه من streamData (وليس من أي مصدر آخر)
@@ -1643,37 +1643,37 @@
         document.getElementById('comments-empty').style.display = 'none';
         document.getElementById('comments-error').style.display = 'none';
         document.getElementById('comments-count').textContent = '0 تعليق';
-        document.getElementById('status-text').textContent = 'جارٍ فتح الجلسة...';
+        document.getElementById('status-text').textContent = 'دا نفتتح الـ Session...';
         hideStreamWarning();
  
         // === Show comments screen immediately + entry overlay ===
         showScreen('screen-comments');
         const steps = [
-            'إعداد الجلسة',
-            'تحميل الأرشيف (في الخلفية)',
-            'الاتصال اللحظي (في الخلفية)',
-            'الاتصال بيوتيوب (في الخلفية)'
+            'تهيئة الـ Session',
+            'تحميل الـ Archive (بالخلفية)',
+            'اتصال Realtime (بالخلفية)',
+            'اتصال YouTube (بالخلفية)'
         ];
         renderEntrySteps(steps);
-        showEntryOverlay('جارٍ الدخول للبث', 'معرّف البث: ' + effectiveVideoId);
+        showEntryOverlay('دا يدخل للبث', 'Video ID: ' + effectiveVideoId);
         setEntryStep(0, 'active');
  
-        // === المرحلة 1: إعداد الجلسة (تم بالفعل أعلاه) ===
+        // === المرحلة 1: تهيئة الـ Session (تم بالفعل أعلاه) ===
         setEntryStep(0, 'done');
  
-        // === المرحلة 2: إظهار الجلسة فوراً وإخفاء overlay الدخول ===
+        // === المرحلة 2: إظهار الجلسة فوراً وإخفاء overlay الLogin ===
         // فاصل بصري قصير فقط، لا ننتظر أي خدمة خلفية
         await sleep(200);
         if (myToken !== sessionToken) { isEnteringSession = false; return; } // race condition guard
  
         hideEntryOverlay();
         isEnteringSession = false;
-        showToast('جلسة البث مفعّلة', 'success');
-        document.getElementById('status-text').textContent = 'تم الاتصال — جارٍ تحميل الخدمات...';
+        showToast('جلسة البث اشتغلت', 'success');
+        document.getElementById('status-text').textContent = 'تم الاتصال — دا نحمّل الخدمات...';
  
         // === المرحلة 3: الخدمات الخلفية (غير حظرية) — فشل أي منها لا يغلق الجلسة ===
  
-        // 3أ: تحميل الأرشيف في الخلفية
+        // 3أ: تحميل Archive في الخلفية
         setEntryStep(1, 'active');
         loadExistingComments(effectiveVideoId)
             .then(count => {
@@ -1685,7 +1685,7 @@
                 console.error('Archive load error:', e);
                 if (myToken === sessionToken) {
                     setEntryStep(1, 'done');
-                    showStreamWarning('تعذّر تحميل الأرشيف من Supabase. تحقق من الاتصال وأعد المحاولة.');
+                    showStreamWarning('ما قدرنا نحمّل الـ Archive من Supabase. تأكد من الاتصال وجرّب مرة ثانية.');
                 }
             });
  
@@ -1707,7 +1707,7 @@
         // 3ج: انتخاب القائد في الخلفية
         try { startLeaderElection(); } catch(e) { console.error('Leader election start error:', e); }
  
-        // 3د: محاولة الاتصال بيوتيوب في الخلفية (مع إعادة المحاولة التلقائية)
+        // 3د: محاولة الاتصال بيوتيوب في الخلفية (مع جرّب مرة ثانية Retry التلقائية)
         setEntryStep(3, 'active');
         attemptYouTubeConnect(effectiveVideoId)
             .then(() => {
@@ -1734,13 +1734,13 @@
         if (!currentVideoId) return;
         const statusEl = document.getElementById('status-text');
         if (youTubeConnectionOk && isLeader) {
-            statusEl.textContent = 'قائد — جلب مباشر من يوتيوب';
+            statusEl.textContent = 'Leader — جلب Live من YouTube';
         } else if (youTubeConnectionOk && !isLeader) {
-            statusEl.textContent = 'متابع — بث مباشر';
+            statusEl.textContent = 'Follower — بث Live';
         } else if (commentsTotal > 0) {
-            statusEl.textContent = 'وضع الأرشيف (يوتيوب يعاود المحاولة)';
+            statusEl.textContent = 'Archive Mode — YouTube دا يعاود المحاولة';
         } else {
-            statusEl.textContent = 'تم الاتصال — بانتظار التعليقات';
+            statusEl.textContent = 'تم الاتصال — ننتظر التعليقات';
             document.getElementById('comments-loading').style.display = 'none';
             document.getElementById('comments-empty').style.display = 'flex';
         }
@@ -1793,7 +1793,7 @@
                 if (myToken !== sessionToken) return;
                 const notif = payload.new;
                 document.getElementById('notif-dot').classList.add('show');
-                showToast(`مراقبة: الكلمة "${notif.keyword}" في تعليق من ${notif.author_name}`, 'info');
+                showToast(`Monitor: الكلمة "${notif.keyword}" ظهرت بتعليق من ${notif.author_name}`, 'info');
                 if (document.getElementById('notifications-modal').classList.contains('show')) renderNotifications();
             }).subscribe();
 
@@ -1814,17 +1814,17 @@
                 loadKeywordsCache(videoId);
             }).subscribe();
 
-        // قناة تأكيد الحذف الفعلي — يحذف السيرفر مباشرة، وهذي فقط تعرض إشعار فوري بذلك
+        // قناة تأكيد الحذف الفعلي — يحذف السيرفر Liveة، وهذي فقط تعرض إشعار فوري بذلك
         if (modDeletedChannel) { try { supabaseClient.removeChannel(modDeletedChannel); } catch(e) {} modDeletedChannel = null; }
         modDeletedChannel = supabaseClient.channel('public:moderator_deleted_messages')
             .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'moderator_deleted_messages', filter: `stream_id=eq.${videoId}` }, payload => {
                 if (myToken !== sessionToken) return;
                 const d = payload.new;
                 setModDebugLine(`🗑️ حذف السيرفر رسالة مخالفة من ${d.author_name} (كلمة: ${d.matched_keyword})`);
-                showToast(`تم حذف رسالة مخالفة من ${d.author_name}`, 'success');
+                showToast(`انحذفت رسالة مخالفة من ${d.author_name}`, 'success');
             }).subscribe();
 
-        // قناة السجل التشخيصي المباشر — تعرض كل قرار يتخذه السيرفر لحظياً (نجاح/فشل/تخطي مع السبب)
+        // قناة السجل التشخيصي الLive — تعرض كل قرار يتخذه السيرفر لحظياً (نجاح/فشل/تخطي مع السبب)
         if (modDebugChannel) { try { supabaseClient.removeChannel(modDebugChannel); } catch(e) {} modDebugChannel = null; }
         modDebugChannel = supabaseClient.channel('public:mod_debug_log')
             .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'mod_debug_log', filter: `stream_id=eq.${videoId}` }, payload => {
@@ -1849,8 +1849,8 @@
     }
 
     // === تحقق تلقائي مرة واحدة لكل جلسة قيادة (بدون إزعاج الشات كل دقيقتين) ===
-    // يُستدعى فقط من القائد بعد اتصال يوتيوب بنجاح. إن كان الحساب مشرفاً مسبقاً
-    // لا نرسل أي رسالة اختبار جديدة. إن لم يكن مشرفاً، نتحقق تلقائياً بحد أقصى
+    // يُستدعى فقط من القائد بعد اتصال يوتيوب بنجاح. إن كان Account Moderatorاً مسبقاً
+    // لا نرسل أي رسالة اختبار جديدة. إن لم يكن Moderatorاً، نتحقق تلقائياً بحد أقصى
     // مرة كل 5 دقائق لكل بث لتفادي تكرار رسائل الطلب بالشات.
     async function autoCheckModeratorStatusIfNeeded(videoId) {
         if (currentIsModerator) return;
@@ -1903,27 +1903,27 @@
         } catch(e) { /* تجاهل — الجدول قد لا يكون مطبَّقاً بعد */ }
     }
 
-    // === عرض حالة الإشراف داخل لوح المراقب الذكي ===
+    // === عرض حالة الإشراف داخل لوح المراقب الذكي Smart Moderator ===
     function renderModStatusUI() {
         const textEl = document.getElementById('mod-status-text');
         const btnEl = document.getElementById('mod-status-btn');
         if (!textEl || !btnEl) return;
         if (currentIsModerator) {
-            textEl.innerHTML = '<i class="fas fa-check-circle" style="color:#4ade80;"></i> الحساب الرسمي مشرف بهذا البث — الحذف التلقائي مفعّل';
-            btnEl.innerHTML = '<i class="fas fa-sync ml-1"></i> تحقق مجدداً';
+            textEl.innerHTML = '<i class="fas fa-check-circle" style="color:#4ade80;"></i> Account الرسمي Moderator بهذا البث — الحذف التلقائي مفعّل';
+            btnEl.innerHTML = '<i class="fas fa-sync ml-1"></i> تحقق مرة ثانية';
         } else {
-            textEl.innerHTML = '<i class="fas fa-times-circle" style="color:#f87171;"></i> لم يُمنح الحساب صلاحية الإشراف بعد';
-            btnEl.innerHTML = '<i class="fas fa-paper-plane ml-1"></i> طلب صلاحية الإشراف';
+            textEl.innerHTML = '<i class="fas fa-times-circle" style="color:#f87171;"></i> Account بعده ما انمنح صلاحية الـ Moderator';
+            btnEl.innerHTML = '<i class="fas fa-paper-plane ml-1"></i> طلب صلاحية الـ Moderator';
         }
     }
 
     // === طلب/تحقق من صلاحية الإشراف عبر الدالة الموحدة archive-comments (action=check-status) ===
     async function requestOrCheckModeratorStatus() {
-        if (!currentVideoId) { showToast('يجب فتح جلسة بث أولاً', 'error'); return; }
+        if (!currentVideoId) { showToast('لازم تفتح Session للبث أولاً', 'error'); return; }
         if (modCheckInProgress) return;
         const now = Date.now();
         if (now - lastModCheckAt < MOD_CHECK_COOLDOWN_MS) {
-            showToast('يرجى الانتظار قليلاً قبل التحقق مرة أخرى', 'info');
+            showToast('انتظر شوي قبل لا تتحقق مرة ثانية', 'info');
             return;
         }
 
@@ -1939,15 +1939,15 @@
             } catch(e) { /* تجاهل */ }
         }
         if (!effectiveLiveChatId) {
-            showToast('لم يتم العثور على شات مباشر لهذا البث بعد — تأكد أن البث نشط حالياً', 'error');
-            setModDebugLine('❌ لا يوجد live_chat_id مسجّل بقاعدة البيانات لهذا البث بعد.');
+            showToast('ما لكينا Live Chat لهذا البث بعد — تأكد البث شغال هسه', 'error');
+            setModDebugLine('❌ ماكو live_chat_id مسجّل بقاعدة البيانات لهذا البث بعد.');
             return;
         }
 
         modCheckInProgress = true; lastModCheckAt = now;
         const btnEl = document.getElementById('mod-status-btn');
         if (btnEl) { btnEl.disabled = true; btnEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; }
-        setModDebugLine('⏳ جارٍ إرسال طلب للدالة...');
+        setModDebugLine('⏳ دا نرسل الطلب للـ Function...');
         try {
             const { data, error } = await supabaseClient.functions.invoke('archive-comments', {
                 body: { action: 'check-status', stream_id: currentVideoId, live_chat_id: effectiveLiveChatId }
@@ -1958,33 +1958,33 @@
                 // FunctionsHttpError من supabase-js يحمل غالباً نص الرد الفعلي بـ error.context
                 let detail = error.message || 'unknown';
                 try { if (error.context) { const t = await error.context.text(); detail = t || detail; } } catch(_) {}
-                showToast('فشل الاتصال بالدالة — راجع السجل بالأسفل', 'error');
-                setModDebugLine(`❌ خطأ اتصال: ${detail}`);
+                showToast('فشل الاتصال بالـ Function — راجع الـ Log بالأسفل', 'error');
+                setModDebugLine(`❌ خطأ Error بالاتصال: ${detail}`);
                 return;
             }
             if (!data) {
-                showToast('لم يرجع أي رد من الدالة', 'error');
-                setModDebugLine('❌ الرد فارغ تماماً من الدالة (تحقق من اسم الدالة والنشر).');
+                showToast('الـ Function ما رجّعت أي رد', 'error');
+                setModDebugLine('❌ الرد فارغ تماماً من الـ Function (تأكد من اسمها وأنها منشورة).');
                 return;
             }
             if (data.error === 'no_bot_linked') {
-                showToast('لم يتم ربط حساب المراقب الذكي — افتح "حساب المراقب الذكي" وسجّل الدخول', 'error');
-                setModDebugLine('❌ no_bot_linked — جدول bot_account فارغ أو refresh_token مفقود.');
+                showToast('حساب الـ Smart Moderator مو مربوط — افتح "Smart Moderator" وسجّل الLogin', 'error');
+                setModDebugLine('❌ no_bot_linked — جدول bot_account فارغ أو الـ refresh_token مفقود.');
                 return;
             }
             if (data.error) {
-                showToast('تعذّر إرسال الرسالة لشات يوتيوب — راجع السجل بالأسفل', 'error');
+                showToast('ما قدرنا نرسل الرسالة لـ YouTube Chat — راجع الـ Log بالأسفل', 'error');
                 setModDebugLine(`❌ ${data.error}${data.detail ? ' — ' + data.detail : ''}`);
                 return;
             }
             currentIsModerator = data.is_moderator === true;
             renderModStatusUI();
-            setModDebugLine(currentIsModerator ? '✅ تم التأكد: الحساب مشرف الآن.' : '📨 تم إرسال رسالة الطلب فعلياً بالشات — الحساب ليس مشرفاً بعد.');
-            showToast(currentIsModerator ? 'الحساب مشرف الآن — الحماية الذكية مفعّلة ✅' : 'تم إرسال طلب الإشراف بالشات — بانتظار موافقة صاحب البث', currentIsModerator ? 'success' : 'info');
+            setModDebugLine(currentIsModerator ? '✅ تم التأكد: Account Moderator هسه.' : '📨 تم إرسال رسالة الطلب فعلياً بالشات — Account ليس Moderatorاً بعد.');
+            showToast(currentIsModerator ? 'Account Moderator هسه — الحماية الذكية مفعّلة ✅' : 'انرسل طلب الإشراف بالشات — هسه ننتظر موافقة صاحب البث', currentIsModerator ? 'success' : 'info');
         } catch(e) {
             console.error('mod check error:', e);
-            showToast('حدث خطأ أثناء التحقق', 'error');
-            setModDebugLine(`❌ استثناء بالمتصفح: ${e.message}`);
+            showToast('صار خطأ Error أثناء التحقق', 'error');
+            setModDebugLine(`❌ Browser Exception: ${e.message}`);
         } finally {
             modCheckInProgress = false;
             if (btnEl) { btnEl.disabled = false; renderModStatusUI(); }
@@ -2014,12 +2014,12 @@
         }
     }
  
-    // نقطة دخول موحّدة — لا مسارين متداخلين
+    // نقطة Login موحّدة — لا مسارين متداخلين
     // عند استدعائها بدون streamData (مثل handleNewRegister أو DOMContentLoaded)،
     // نحاول جلب السجل من saved_streams باستخدام videoId.
     async function startLiveStream(videoId) {
-        if (!videoId) { showToast('معرّف البث غير صالح', 'error'); return; }
-        if (isEnteringSession) { showToast('جارٍ الدخول لبث آخر، يرجى الانتظار...', 'info'); return; }
+        if (!videoId) { showToast('Video ID للبث مو صالح', 'error'); return; }
+        if (isEnteringSession) { showToast('دا ندخل لبث ثاني، انتظر شوي...', 'info'); return; }
  
         // محاولة جلب streamData من saved_streams (إن وُجد السجل)
         let streamData = null;
@@ -2038,7 +2038,7 @@
         return startLiveStreamWithOverlay(videoId, streamData);
     }
  
-    // محاولة اتصال YouTube مع إعادة المحاولة التلقائية بدون حظر الجلسة
+    // محاولة اتصال YouTube مع جرّب مرة ثانية Retry التلقائية بدون حظر الجلسة
     async function attemptYouTubeConnect(videoId) {
         if (!currentVideoId || currentVideoId !== videoId) return;
         youTubeConnectAttempt++;
@@ -2050,27 +2050,27 @@
                 const data = await resp.json();
                 if (!data.error) { vidData = data; currentKeyIndex = keyIndex; break; }
             }
-            if (!vidData) throw new Error('فشل في جلب بيانات الفيديو');
-            if (!vidData.items || vidData.items.length === 0) throw new Error('الفيديو غير موجود');
+            if (!vidData) throw new Error('فشل جلب بيانات الفيديو');
+            if (!vidData.items || vidData.items.length === 0) throw new Error('الفيديو مو موجود');
             const liveDetails = vidData.items[0].liveStreamingDetails;
-            if (!liveDetails) throw new Error('هذا الفيديو ليس بثاً مباشراً');
+            if (!liveDetails) throw new Error('هذا الفيديو مو Live');
             const newChatId = liveDetails.activeLiveChatId || liveDetails.liveChatId;
-            if (!newChatId) throw new Error('لا يوجد معرّف محادثة مباشرة لهذا البث');
+            if (!newChatId) throw new Error('ماكو Live Chat ID لهذا البث');
             // success — update liveChatId and start direct fetch if leader
             liveChatId = newChatId; youTubeConnectionOk = true; hideStreamWarning();
-            if (isLeader) { startYouTubePolling(); document.getElementById('status-text').textContent = 'قائد — جلب مباشر من يوتيوب'; autoCheckModeratorStatusIfNeeded(videoId); }
-            else { document.getElementById('status-text').textContent = 'متابع — بث مباشر'; }
+            if (isLeader) { startYouTubePolling(); document.getElementById('status-text').textContent = 'Leader — جلب Live من YouTube'; autoCheckModeratorStatusIfNeeded(videoId); }
+            else { document.getElementById('status-text').textContent = 'Follower — بث Live'; }
         } catch(e) {
             youTubeConnectionOk = false;
             // No error screen — only a soft warning banner; session stays active via Realtime
-            showStreamWarning('تعذّر الاتصال المباشر بيوتيوب — ستصل التعليقات عبر الأرشيف. ستتم إعادة المحاولة تلقائياً خلال 30 ثانية.');
-            document.getElementById('status-text').textContent = 'وضع الأرشيف (يوتيوب غير متاح)';
+            showStreamWarning('ما قدرنا نتصل Liveة بـ YouTube — التعليقات راح توصل عبر الـ Archive. راح نحاول مرة ثانية تلقائياً بعد 30 ثانية.');
+            document.getElementById('status-text').textContent = 'Archive Mode — YouTube غير متاح';
             // إخفاء الـ loading إذا لم تكن هناك تعليقات بعد
             if (commentsTotal === 0) {
                 document.getElementById('comments-loading').style.display = 'none';
                 document.getElementById('comments-empty').style.display = 'flex';
             }
-            // إعادة المحاولة تلقائياً بعد 30 ثانية
+            // جرّب مرة ثانية Retry تلقائياً بعد 30 ثانية
             if (youTubeReconnectTimer) clearTimeout(youTubeReconnectTimer);
             youTubeReconnectTimer = setTimeout(() => { if (currentVideoId === videoId) attemptYouTubeConnect(videoId); }, 30000);
         }
@@ -2078,7 +2078,7 @@
  
     function retryYouTubeConnection() {
         if (!currentVideoId) return;
-        showStreamWarning('جارٍ إعادة الاتصال بيوتيوب...');
+        showStreamWarning('دا نعيد الاتصال بـ YouTube...');
         attemptYouTubeConnect(currentVideoId);
     }
  
@@ -2095,16 +2095,16 @@
                 isLeader = true;
                 if (liveChatId && youTubeConnectionOk) {
                     startYouTubePolling();
-                    document.getElementById('status-text').textContent = 'قائد — جلب مباشر من يوتيوب';
+                    document.getElementById('status-text').textContent = 'Leader — جلب Live من YouTube';
                     autoCheckModeratorStatusIfNeeded(currentVideoId);
                 } else {
-                    document.getElementById('status-text').textContent = 'قائد — بانتظار يوتيوب...';
+                    document.getElementById('status-text').textContent = 'Leader — ننتظر YouTube...';
                 }
             } else if (!gotLeadership && isLeader) {
                 isLeader = false; stopYouTubePolling();
-                document.getElementById('status-text').textContent = 'متابع — بث مباشر';
+                document.getElementById('status-text').textContent = 'Follower — بث Live';
             } else if (!gotLeadership && !isLeader) {
-                document.getElementById('status-text').textContent = 'متابع — بث مباشر';
+                document.getElementById('status-text').textContent = 'Follower — بث Live';
                 if (commentsTotal === 0 && !youTubeConnectionOk) {
                     document.getElementById('comments-loading').style.display = 'none';
                     document.getElementById('comments-empty').style.display = 'flex';
@@ -2113,7 +2113,7 @@
         } catch(e) {
             console.error('Lock error:', e);
             // If lock failed, keep session active and rely on Realtime
-            document.getElementById('status-text').textContent = 'وضع الأرشيف';
+            document.getElementById('status-text').textContent = 'Archive Mode';
             if (commentsTotal === 0) {
                 document.getElementById('comments-loading').style.display = 'none';
                 document.getElementById('comments-empty').style.display = 'flex';
@@ -2126,7 +2126,7 @@
  
     async function fetchComments() {
         if (!liveChatId || !isLeader) return;
-        try { const currentApiKey = YOUTUBE_API_KEYS[currentKeyIndex]; let apiUrl = `https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId=${liveChatId}&part=snippet,authorDetails&maxResults=200&key=${currentApiKey}`; if (nextPageToken) apiUrl += `&pageToken=${nextPageToken}`; const resp = await fetch(apiUrl); const data = await resp.json(); if (data.error && (data.error.code === 403 || data.error.errors?.[0]?.reason === 'quotaExceeded')) { currentKeyIndex = (currentKeyIndex + 1) % YOUTUBE_API_KEYS.length; return fetchComments(); } if (data.error) throw new Error(data.error.message); if (data.nextPageToken) nextPageToken = data.nextPageToken; if (data.items && data.items.length > 0) { document.getElementById('comments-loading').style.display = 'none'; document.getElementById('comments-empty').style.display = 'none'; const sorted = [...data.items].sort((a, b) => new Date(a.snippet.publishedAt) - new Date(b.snippet.publishedAt)); await archiveCommentsToSupabase(sorted); sorted.forEach(item => { const newItem = { stream_id: currentVideoId, author_name: item.authorDetails?.displayName || 'مجهول', comment_text: item.snippet?.displayMessage || '', published_at: item.snippet?.publishedAt || new Date().toISOString() }; addCommentToUI(newItem, true); }); } } catch(e) { console.error('Fetch error:', e); }
+        try { const currentApiKey = YOUTUBE_API_KEYS[currentKeyIndex]; let apiUrl = `https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId=${liveChatId}&part=snippet,authorDetails&maxResults=200&key=${currentApiKey}`; if (nextPageToken) apiUrl += `&pageToken=${nextPageToken}`; const resp = await fetch(apiUrl); const data = await resp.json(); if (data.error && (data.error.code === 403 || data.error.errors?.[0]?.reason === 'quotaExceeded')) { currentKeyIndex = (currentKeyIndex + 1) % YOUTUBE_API_KEYS.length; return fetchComments(); } if (data.error) throw new Error(data.error.message); if (data.nextPageToken) nextPageToken = data.nextPageToken; if (data.items && data.items.length > 0) { document.getElementById('comments-loading').style.display = 'none'; document.getElementById('comments-empty').style.display = 'none'; const sorted = [...data.items].sort((a, b) => new Date(a.snippet.publishedAt) - new Date(b.snippet.publishedAt)); await archiveCommentsToSupabase(sorted); sorted.forEach(item => { const newItem = { stream_id: currentVideoId, author_name: item.authorDetails?.displayName || 'مستخدم مجهول', comment_text: item.snippet?.displayMessage || '', published_at: item.snippet?.publishedAt || new Date().toISOString() }; addCommentToUI(newItem, true); }); } } catch(e) { console.error('Fetch error:', e); }
     }
  
     // === ملاحظة: الحذف الفعلي صار يحصل بالكامل من السيرفر (داخل دورة الأرشفة كل ~2 ثانية)
@@ -2138,7 +2138,7 @@
         if (!supabaseClient || !currentVideoId) return;
         const batchData = comments.map(item => ({
             stream_id: currentVideoId,
-            author_name: item.authorDetails?.displayName || 'مجهول',
+            author_name: item.authorDetails?.displayName || 'مستخدم مجهول',
             comment_text: item.snippet?.displayMessage || '',
             published_at: item.snippet?.publishedAt || new Date().toISOString()
         })).filter(c => c.comment_text !== '');
@@ -2152,7 +2152,7 @@
  
     function addCommentToUI(item, countIncrement = false) {
         const uniqueId = item.stream_id + item.author_name + item.published_at + item.comment_text; if (renderedComments.has(uniqueId)) return; renderedComments.add(uniqueId);
-        const list = document.getElementById('comments-list'); const displayName = item.author_name || 'مجهول'; const message = item.comment_text || ''; const color = getAvatarColor(displayName);
+        const list = document.getElementById('comments-list'); const displayName = item.author_name || 'مستخدم مجهول'; const message = item.comment_text || ''; const color = getAvatarColor(displayName);
         const card = document.createElement('div'); card.className = 'comment-card'; card.style.setProperty('--c-accent', color);
         card.innerHTML = `<div class="comment-avatar" style="background: ${color};">${escapeHtml(displayName.charAt(0).toUpperCase())}</div><div style="flex:1; min-width:0;"><div class="flex items-center" style="margin-bottom:2px;"><span class="comment-username" style="color:${color};">${escapeHtml(displayName)}</span><span class="comment-time">${formatTime(item.published_at)}</span></div><div class="comment-text">${escapeHtml(message)}</div></div>`;
         list.appendChild(card); if (countIncrement) { commentsTotal++; document.getElementById('comments-count').textContent = `${commentsTotal} تعليق`; }
@@ -2163,8 +2163,8 @@
         if (isAtBottom) list.parentElement.scrollTop = list.parentElement.scrollHeight;
     }
  
-    // === نظام المراقب الذكي (Synced with Supabase) ===
-    // مودال الإشعارات يعرض السجل فقط. إدارة الكلمات أصبحت داخل شاشة الأرشيف (تبويب المراقب الذكي).
+    // === نظام المراقب الذكي Smart Moderator (Synced with Supabase) ===
+    // مودال Notifications يعرض السجل فقط. إدارة الكلمات أصبحت داخل شاشة Archive (تبويب المراقب الذكي Smart Moderator).
     function openNotificationsModal() {
         document.getElementById('notif-dot').classList.remove('show');
         document.getElementById('notifications-modal').classList.add('show');
@@ -2172,7 +2172,7 @@
     }
     function closeNotificationsModal() { document.getElementById('notifications-modal').classList.remove('show'); }
  
-    // تبديل تبويبات شاشة الأرشيف: 'archive' (الأرشيف) أو 'monitor' (المراقب الذكي)
+    // تبديل تبويبات شاشة Archive: 'archive' (Archive) أو 'monitor' (المراقب الذكي Smart Moderator)
     function switchArchiveTab(tabName) {
         const tabBtns = document.querySelectorAll('.archive-tab');
         const panes = document.querySelectorAll('.archive-pane');
@@ -2187,7 +2187,7 @@
             // default: archive
             document.getElementById('archive-tab-btn').classList.add('active');
             document.getElementById('archive-pane').classList.add('active');
-            // إن لم يكن الأرشيف محمّلاً بعد، حمّله
+            // إن لم يكن Archive محمّلاً بعد، حمّله
             if (!document.getElementById('archive-list').children.length) {
                 loadArchivedComments('', '');
             }
@@ -2202,7 +2202,7 @@
             await supabaseClient.from('monitor_keywords').insert([{ stream_id: currentVideoId, keyword: kw }]);
             input.value = '';
             renderKeywords();
-        } catch(e) { showToast('فشل إضافة الكلمة', 'error'); }
+        } catch(e) { showToast('إضافة الكلمة ما نجحت', 'error'); }
     }
  
     async function removeKeyword(kw) {
@@ -2210,16 +2210,16 @@
         try {
             await supabaseClient.from('monitor_keywords').delete().eq('stream_id', currentVideoId).eq('keyword', kw);
             renderKeywords();
-        } catch(e) { showToast('فشل الحذف', 'error'); }
+        } catch(e) { showToast('الحذف ما نجح', 'error'); }
     }
  
     async function renderKeywords() {
         const container = document.getElementById('keywords-list');
-        container.innerHTML = '<p class="text-xs" style="color: var(--text-muted);">جارٍ التحميل...</p>';
+        container.innerHTML = '<p class="text-xs" style="color: var(--text-muted);">دا يحمّل...</p>';
         if (!currentVideoId) return;
         const { data } = await supabaseClient.from('monitor_keywords').select('keyword').eq('stream_id', currentVideoId);
         container.innerHTML = '';
-        if (!data || data.length === 0) { container.innerHTML = '<p class="text-xs" style="color: var(--text-muted);">لا توجد كلمات مراقبة بعد.</p>'; return; }
+        if (!data || data.length === 0) { container.innerHTML = '<p class="text-xs" style="color: var(--text-muted);">ماكو كلمات مراقبة لحد هسه.</p>'; return; }
         data.forEach(k => {
             const tag = document.createElement('div');
             tag.className = 'flex items-center gap-2 px-3 py-1 rounded-full text-xs';
@@ -2235,7 +2235,7 @@
         if (!currentVideoId) return;
         const { data } = await supabaseClient.from('monitor_notifications').select('*').eq('stream_id', currentVideoId).order('created_at', { ascending: false }).limit(50);
         if (!data || data.length === 0) {
-            list.innerHTML = '<div class="empty-state" style="padding: 20px;"><i class="fas fa-bell-slash"></i><p style="color: var(--text-muted);">لا توجد إشعارات بعد.</p></div>';
+            list.innerHTML = '<div class="empty-state" style="padding: 20px;"><i class="fas fa-bell-slash"></i><p style="color: var(--text-muted);">ماكو Notifications لحد هسه.</p></div>';
             return;
         }
         list.innerHTML = '';
@@ -2250,9 +2250,9 @@
         });
     }
  
-    // === نظام المحادثة (Chat) ===
+    // === نظام Chat (Chat) ===
     function openChatScreen() {
-        if (!currentUser) { showToast('يجب تسجيل الدخول لاستخدام المحادثة', 'error'); openAuthModal(); return; }
+        if (!currentUser) { showToast('لازم تسجّل Login حتى تستخدم الـ Chat', 'error'); openAuthModal(); return; }
         showScreen('screen-chat'); loadChatMessages();
         if (chatChannel) supabaseClient.removeChannel(chatChannel);
         chatChannel = supabaseClient.channel('public:stream_messages').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'stream_messages', filter: `stream_id=eq.${currentVideoId}` }, payload => { addChatMessageToUI(payload.new); }).subscribe();
@@ -2276,9 +2276,9 @@
                 page++;
             }
             list.innerHTML = '';
-            if (allMessages.length === 0) { list.innerHTML = '<div class="empty-state"><i class="fas fa-comment-slash"></i><p style="color: var(--text-muted);">لا توجد رسائل بعد. كن أول من يبدأ الحديث!</p></div>'; return; }
+            if (allMessages.length === 0) { list.innerHTML = '<div class="empty-state"><i class="fas fa-comment-slash"></i><p style="color: var(--text-muted);">ماكو رسائل لحد هسه. كن أول واحد يبدأ الحچي!</p></div>'; return; }
             allMessages.forEach(msg => addChatMessageToUI(msg));
-        } catch(e) { console.error('Chat load error:', e); list.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>تعذّر تحميل المحادثة</p></div>'; }
+        } catch(e) { console.error('Chat load error:', e); list.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>ما قدرنا نحمّل الـ Chat</p></div>'; }
     }
  
     function addChatMessageToUI(msg) {
@@ -2311,8 +2311,8 @@
     async function sendChatMessage() {
         const input = document.getElementById('chat-input'); const text = input.value.trim();
         if (!text) return;
-        if (!currentUser) { showToast('يجب تسجيل الدخول', 'error'); openAuthModal(); return; }
-        if (!currentVideoId) { showToast('لا يوجد بث نشط', 'error'); return; }
+        if (!currentUser) { showToast('لازم تسجّل Login', 'error'); openAuthModal(); return; }
+        if (!currentVideoId) { showToast('ماكو بث نشط', 'error'); return; }
         input.value = '';
         try {
             const { error } = await supabaseClient.from('stream_messages').insert([{
@@ -2324,27 +2324,27 @@
             }]);
             if (error) {
                 console.error('Chat insert error:', error);
-                showToast('فشل الإرسال: ' + (error.message || 'خطأ غير معروف'), 'error');
+                showToast('الإرسال ما نجح: ' + (error.message || 'خطأ Error غير معروف'), 'error');
                 input.value = text;
             }
         } catch(e) {
             console.error('Chat send exception:', e);
-            showToast('فشل الإرسال: ' + (e.message || ''), 'error');
+            showToast('الإرسال ما نجح: ' + (e.message || ''), 'error');
             input.value = text;
         }
     }
  
-    // === الأرشيف والبحث ===
+    // === Archive والبحث ===
     function openArchiveScreen() { showScreen('screen-archive'); switchArchiveTab('archive'); }
     async function loadArchivedComments(searchTerm = '', searchUser = '') {
-        const list = document.getElementById('archive-list'); const status = document.getElementById('archive-status'); list.innerHTML = ''; status.textContent = 'جاري التحميل...';
+        const list = document.getElementById('archive-list'); const status = document.getElementById('archive-status'); list.innerHTML = ''; status.textContent = 'دا يحمّل...';
         try {
             let query = supabaseClient.from('archived_comments').select('*').eq('stream_id', currentVideoId);
             if (searchTerm) query = query.ilike('comment_text', `%${searchTerm}%`); if (searchUser) query = query.ilike('author_name', `%${searchUser}%`);
             query = query.order('published_at', { ascending: true }); const { data, error } = await query; if (error) throw error;
             if (data.length === 0) { 
-                status.innerHTML = '<i class="fas fa-inbox ml-1"></i> لا توجد نتائج مطابقة'; 
-                list.innerHTML = '<div class="empty-state"><i class="fas fa-folder-open" style="font-size:32px; opacity:0.3;"></i><p class="mt-3" style="color: var(--text-muted);">لا توجد تعليقات مؤرشفة تطابق بحثك</p></div>';
+                status.innerHTML = '<i class="fas fa-inbox ml-1"></i> ماكو نتائج مطابقة'; 
+                list.innerHTML = '<div class="empty-state"><i class="fas fa-folder-open" style="font-size:32px; opacity:0.3;"></i><p class="mt-3" style="color: var(--text-muted);">ماكو تعليقات مؤرشفة تطابق بحثك</p></div>';
                 return; 
             }
             status.innerHTML = `<i class="fas fa-list ml-1" style="color: var(--accent);"></i> ${data.length} تعليق مؤرشف`;
@@ -2365,7 +2365,7 @@
                 `; 
                 list.appendChild(card); 
             });
-        } catch(e) { status.innerHTML = '<i class="fas fa-exclamation-triangle ml-1" style="color:#f87171;"></i> فشل التحميل'; }
+        } catch(e) { status.innerHTML = '<i class="fas fa-exclamation-triangle ml-1" style="color:#f87171;"></i> التحميل فشل'; }
     }
     function searchArchivedComments() { clearTimeout(searchDebounce); const term = document.getElementById('search-archive-input').value.trim(); const user = document.getElementById('search-archive-user').value.trim(); searchDebounce = setTimeout(() => loadArchivedComments(term, user), 300); }
  
@@ -2387,7 +2387,7 @@
         showScreen('screen-welcome');
     }
  
-    function formatTime(iso) { if(!iso) return ''; const d = Math.floor((Date.now() - new Date(iso).getTime())/1000); if(d<10) return 'الآن'; if(d<60) return `منذ ${d} ث`; if(d<3600) return `منذ ${Math.floor(d/60)} د`; return `منذ ${Math.floor(d/3600)} س`; }
+    function formatTime(iso) { if(!iso) return ''; const d = Math.floor((Date.now() - new Date(iso).getTime())/1000); if(d<10) return 'هسه'; if(d<60) return `قبل ${d} ث`; if(d<3600) return `قبل ${Math.floor(d/60)} د`; return `قبل ${Math.floor(d/3600)} س`; }
     function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
     function retryFetchComments() { if (currentVideoId) startLiveStream(currentVideoId); }
  
@@ -2428,3 +2428,4 @@
 </body>
 </html>
  
+ِ
