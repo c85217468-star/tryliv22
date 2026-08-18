@@ -809,6 +809,15 @@
                     <div id="keywords-list" class="flex flex-wrap gap-2"></div>
                     <p class="text-xs mt-3" style="color: var(--text-muted);">إذا تطابقت أي كلمة ويا تعليق بالبث، راح تظهر إشارة على جرس <i class="fas fa-bell" style="color: var(--accent);"></i> في الأعلى. وإذا Account الرسمي صار Moderator بالبث، الرسالة المخالفة راح تنحذف تلقائياً من YouTube Chat.</p>
                 </div>
+                <div class="mb-4 p-4 rounded-xl" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border);">
+                    <h4 class="text-sm font-bold mb-3"><i class="fas fa-user-slash ml-1" style="color: var(--accent);"></i> المستخدمين المراقَبين لهذا البث</h4>
+                    <div class="flex gap-2 mb-3">
+                        <input id="username-input" type="text" class="input-field" placeholder="اكتب Username المستخدم بالضبط كما يظهر بالشات..." style="text-align: right;">
+                        <button class="btn-primary" style="width: auto; padding: 10px 20px;" onclick="addUsername()"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <div id="usernames-list" class="flex flex-wrap gap-2"></div>
+                    <p class="text-xs mt-3" style="color: var(--text-muted);">أي تعليق يوصل من مستخدم بهذي القائمة راح يُحذف فوراً بغض النظر عن محتوى الرسالة (بشرط Account الرسمي يكون Moderator بالبث). الاسم لازم يكون مطابق تماماً لاسم العرض بيوتيوب.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -941,7 +950,7 @@
 <script>
     const SUPABASE_URL = 'https://xfxjnevvgxwqrdqmixvi.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_Dldoa1XJCrlvmP24ra3AHQ_61HJJSZ9';
-
+ 
     // === إعدادات حساب المراقب الذكي Smart Moderator Smart Moderator (Google OAuth) ===
     // Client ID عام وآمن الوضع بالواجهة (بعكس Client Secret الذي يبقى فقط
     // داخل الـ Edge Function). أنشئه من Google Cloud Console → Credentials
@@ -952,115 +961,30 @@
     const GOOGLE_OAUTH_SCOPE = 'https://www.googleapis.com/auth/youtube';
     
     const YOUTUBE_API_KEYS = [
-  'AIzaSyCGI4VMJvCnoHBNafvcV7F78_Q89zKp-sU', 'AIzaSyAGlgZQYCqH1G444RIGukYkAMAJ1v0q3_w',
-  'AIzaSyAxwIl9DH1QddmcUMHTZyhECw2uax5si-k', 'AIzaSyCUJ6GTpUWolRui1lLI5k3SjK_VU5A-2D8',
-  'AIzaSyBsw1AoUisoR4lZBtGOXToR_pZCZYXqeDs', 'AIzaSyBMR1BaijCNXV_x_pihYgQCjExdKQDUh7Q',
-  'AIzaSyCzX3_-OPo7oiDpBNmUS5mLBdzBBSFDsfc', 'AIzaSyAwr2ZbhttD4ULqw42PaBJumTTgAaFJKgU',
-  'AIzaSyC24ppt2DAqw_I1CBqK41naR0MbdQiXZkA', 'AIzaSyBwFvUqBawzQpORTPnPvlRvDg1PJcEDu6g',
-  'AIzaSyCbM4KBisBwOeXsNwCCIYhfJQqDtv8gmbM', 'AIzaSyCeehXFLZJ3CcgReTbd3V5qrqgyJOiMpc0',
-  'AIzaSyDkbMN-4Xu8HOKHgMzW6QzJFkemkOvBEJw', 'AIzaSyBBZt22Mo1aUAfATmz6r6ZBoxemWxLZBFk',
-  'AIzaSyDvDeRtB-LopQ5WhiMIrLy1UITNunJ5t3M', 'AIzaSyDlFf8toYcLG3nEIsWgmLirg7ALZLN6SF4',
-  'AIzaSyAqtG1TUBToZz_Wv-COtEGU-zf4jBKVryU', 'AIzaSyAq4dwYebVqiQGRkGaEjuGSX6vLaDtL_0w',
-  'AIzaSyB2cJs59JAjb-9aPvU2iJJZ5_YQvuBiUAA', 'AIzaSyDL0Pysw8xbrt4RsC4VChTbrRLa0EcoXd4',
-  'AIzaSyAvVkHWkHktYO_8BCYpRZ-mHBcd0quECTU', 'AIzaSyCR91s-QU1qoW4WhGkPrK13YfM37vkGon8',
-  'AIzaSyDiT6xru-D7qigGIZedLhize1NkvoHZzoU', 'AIzaSyBtaw-wKdp_M4NCfStuuU5Yv2vyyXVwWPo',
-  'AIzaSyCi1_7OyRBqkVXHPQ85QmJkEhEgSepacfY', 'AIzaSyDIG3FhSoh5KdSUG5e1iwurz9lSJy1mFBU',
-  'AIzaSyB1bqvtt2wW3lh1sZiM4zkGVZgc3A8BAxo', 'AIzaSyAfbfCrJGPNzGc5qEhp5gzFR8pIKhMHFKg',
-  'AIzaSyCmIn_MqhFRzhSXOy49nNTiDKOi4UI6pew', 'AIzaSyDWE3x7a-v5hJFKfrRzUXITpEHp7unOG8A',
-  'AIzaSyDGxiGVJMz8kP-d2zKaeSP4IH32B3fnl54', 'AIzaSyB3RzG0txVtmSldwmvLO5XuqoSUCZEMi_A',
-  'AIzaSyBUiFJ45xjzCuSrKSoTOM6z2yQYpnzQDSs', 'AIzaSyDKIvjAn-7FDHPvMKSVBrxDYOy7l24E7_w',
-  'AIzaSyB73eC1eMqnU9mv3kkKnWheuRkONrg3LB0', 'AIzaSyA6-nYOOcNBvPjJ4CSueWYkuiFayTY2M8I',
-  'AIzaSyBjwhSfL7dgAnB_19VMEd-RRSiBQRpANxA', 'AIzaSyAKSOVM9FtTlgYTfOCiM1Ydq7kNOIKzLw8',
-  'AIzaSyCKiwiLZpzptvxGZvTbDCx4KGd2hcikoiQ', 'AIzaSyD24XfFbwWZYuzhFeTD9cOn2on7CLjPYTk',
-  'AIzaSyCnKUv79SkgtAtHfmeyNBh9R8FPX4bgmic', 'AIzaSyDYAjKF7rd58ap2Pbh6wm5Z_a7GSGrwUY4',
-  'AIzaSyBSag1jDBGC_8D1SmZwbMedy1hk1EIbwtM', 'AIzaSyArqLUE6Z4bcwzRwAm9IYiwPfUsXJRyef4',
-  'AIzaSyCMe_CHwtM00ZFRfn5lZtR6OZF1umywL1w', 'AIzaSyDSyQ9LedGSGDJtbXmLr5H7vMo6iTjhS1I',
-  'AIzaSyBEyPTV5ze4OBWP8XOFU3UcRDQJR2bBVaE', 'AIzaSyDUMAPA3II3RPwIsdbXawX_DFZeahYBGi8',
-  'AIzaSyCj5eaRy4_IBj7UyhzWZ915cc_IJq0qdyo', 'AIzaSyB8X5oaEKzkN7452-4oRMLsFHWjKuZWXx8',
-  'AIzaSyBDd-Q9_jxKrvaBua1PnlJXdGB7e4ljGpI', 'AIzaSyAWhzU8PnQSctAoprp_h385kxaNoslx6Ek',
-  'AIzaSyBPpZ8OHnQ4co8-pZUyAdBGflYClrJSHJ0', 'AIzaSyDMjufpiZLlf_DAXKfo3So_6JciaSeUAc8',
-  'AIzaSyBLV8gPAwtYMU88Mm_qzvN19bkq4mrTgOk', 'AIzaSyB9P3-3fCwNF-3ggGRxLVw1He1DekcYVk0',
-  'AIzaSyBhE-diJ84NoKyTdC2_o1nqSDBEl4YtnAM', 'AIzaSyBysAagECO2K-EXMPEcFKhQlOPBlaEu0dM',
-  'AIzaSyCxFkiQZxTWZ-jD_Q3W_dm1EtAR7xlTCrE', 'AIzaSyDfMwr_-zSXVZ9DXB68BfaZC5IDFnt-H3U',
-  'AIzaSyCdi3AN6sZKf5Q2xdlHAf9vIW9YfqyGRbg', 'AIzaSyBkoIKZnZZw4AFc6mEPjQJtir3yV1pPWes',
-  'AIzaSyBGiaEzqQfJdQSJFx1oMpveGjGz-3LX5Yo', 'AIzaSyBLvXiR3Ql327dlrUtLMsL-O1lAbPF4tHA',
-  'AIzaSyDIArpZVjYkUZGa9nomntGQ2gL353cVil8', 'AIzaSyAj4uOP0nw908soxurzmNTSN5lnJb1rRXE',
-  'AIzaSyDDUR7kUkSM7zGpkEBN1b1et3nqiKncZzM', 'AIzaSyCvwzmPUF_zrRhN4Iv8823slIJkxLNscbc',
-  'AIzaSyBfqrd-64JM_Y0GyZXApkYr_C46kZHQ3oQ', 'AIzaSyD4Bzow6c2ppB4Dc39aYItz3_Vzk9uBc7A',
-  'AIzaSyDZguIJ05Ldyxh5VHEAv09y4sj5GZ8ua5c', 'AIzaSyBYisyKCMh7GDAllya6j5T0_7kl8M5ttwo',
-  'AIzaSyCGD0gVOkvvm7qG72sR_pr-8cD_QDAssHk', 'AIzaSyCB6h_6QLH3JkBmciTbfWnFrxkH2xHwg0E',
-  'AIzaSyBUKJMkOt4xjDulSqkXDzN0PBPIyqIMZDc', 'AIzaSyCmjyg8RzHp8oW89BkDqcY-zmu4Jxolqrk',
-  'AIzaSyDJ0BZJcgNOI9_d1SiXQnj6KmAdzK-FfBw', 'AIzaSyCK7KfLmTtpGY43xf31QXlNTpPWpuOtRuw',
-  'AIzaSyCpf2ZfS0ZgG3O9pEOhTvxKa4pResRrOUw', 'AIzaSyDEoYKmawouLpngTYCzQ5MUICO9zPjXrXA',
-  'AIzaSyAKZZrAZMsmeybb0IxcRei9yJcCWs3uYFU', 'AIzaSyBYzktJRBTu3d6uDJfl-hY-a43UVRhLS9Q',
-  'AIzaSyCsFgwgpEC3UvjI4KpKK5Rmg6Y9xenQSzU', 'AIzaSyCN0ukK7jOfd1SWE497Cd-Ywaoa2Vf87s0',
-  'AIzaSyDVeMJNZBSJjswrD8hpiWvZKOdDXfRU9yk', 'AIzaSyD4jIe8ewkff9JQojH-_ccLIQBjWNF2bIU',
-  'AIzaSyCHRtX-axPpQhQ9axprstM4QAzGraL4U7g', 'AIzaSyC-pOtGR2tX-6HCfVWvh1kj_Qi5wUWFzvM',
-  'AIzaSyA1DKMQC5zN8e09V72SOaMIjq4P6n9RDko', 'AIzaSyA6GOeltEMKpwW5ktCbU_AhwrIg-dAYvSU',
-  'AIzaSyB57PXoErpx3n6S-iJZM219s_MRqC1RvGE', 'AIzaSyD0H-Jjpw8oAQBbPjoIZ7fusP-dvnQJDKo',
-  'AIzaSyDL3r-zSEy0ggg4ZydtpEliIIXMTSMmPxw', 'AIzaSyBybxlaIwe_UHK6zawj947CgiCJrvr74EA',
-  'AIzaSyCPRYJW_C9gT78dOMSlNHsvOsgrPlciQIY', 'AIzaSyCfA4kazMVRRMq-f2Foojeony-0JsnRdXE',
-  'AIzaSyCvBQbIipKAilx6s1tcM3kFaMWlhD6-g5o', 'AIzaSyA9IQVA7zjieBH7_hywnCBja1PaS32tdLY',
-  'AIzaSyBMNkYdqOvqnFehKz5S-1yvCb0a-v3xbnI', 'AIzaSyDux05kgQCTGi51-1V4z8w8-FERVj0v_GE',
-  'AIzaSyAAKbWOaFtb5gABTGBmmBV5TeDSKWi05Po', 'AIzaSyCpCKAH4hkEIXkCgaLODQUlCdskBSECr38',
-  'AIzaSyDc2iaxAN5qlohnR7b9bojtgrS5cm-pfgw', 'AIzaSyDK7-9nZotyFceW8Wq1OMPYGtJrMYlH504',
-  'AIzaSyCZxr0-rq_j_5GLdLe3UqA8wxZU7SchyA8', 'AIzaSyCABynq_z95ZTKrTHSwtxluULCIkUCNQF0',
-  'AIzaSyBWmIX0LpxqpVj-rh6QgTeeaIteCFIBvu8', 'AIzaSyDN8tpiLCnIhJ8KsGX_p2kI8lOyo2X0q2I',
-  'AIzaSyByUxF09_6D759V-pVRt_NpYJCwQG4LmCE', 'AIzaSyDIuWz3VezxOIvFfdalO-3uwHEzFEoKFzs',
-  'AIzaSyDhI6hsG0l_kLAfGHsZq3kRDdLix1FJx18', 'AIzaSyCQWAUX7-ATSZPY6jxyHligGCGqqqgebXM',
-  'AIzaSyCW5mu3TkEjFuSlAo9akc_BbM3b5xCRASg', 'AIzaSyCLRC1YEN3lvd1YJWyHWsPOr2EWG76sCW8',
-  'AIzaSyBR_JoNis5QOzhutGKmEkgHVQWAuE4HD4k', 'AIzaSyAVNx1WUCnclzqOqpIM5VYA96H6qp2j5bY',
-  'AIzaSyDdtHvWxuscU2miukF4KlMxn0W__2VUZI4', 'AIzaSyB4_z6CdYM0KVhx7ATbPJH1DXwNhc1YpEg',
-  'AIzaSyDcXdCnP8FNl2ESLM1E7IoLP5VlvjxLHz4', 'AIzaSyDqzt5Rt6syKg1tWu8me-Jq1HD6dX27_UE',
-  'AIzaSyApBINm-_grcHuCvzh6wGB-aMYSWWK0ORc', 'AIzaSyCWp3DmBRJ4EwDGvjRf-mcS87fS8fZiLd4',
-  'AIzaSyCTjNPp4c8JPrT7tElu7_muPGUYKWQzUdc', 'AIzaSyCbY0donzc3VD8D4WYHMNwifiKEdhumHwk',
-  'AIzaSyDm5jqtcnsihaQPjRdYqI3lekGmSl0gks4', 'AIzaSyA7sihOm52Yn2EBJCjUVSs-BOgUGNnc478',
-  'AIzaSyAo_rtJl_SqbH9isP2x8pqOCKf1Jx70P90', 'AIzaSyBZPJs4Gir5emKJQTGOTajW2M2Gehcb7iA',
-  'AIzaSyA4ILLM_Hljta7X8iYvg9sX-nHjDmYV-V8', 'AIzaSyAXngXiliXhPbjKMgjKOxMAYNFSHXllm38',
-  'AIzaSyDxF3J7QHRmVja7c701SJEezysbDUP30g8', 'AIzaSyBiNsOzBRNE0_nHeLWNDSqKDznHMSlEi-s',
-  'AIzaSyDixPHIQmvO746hkaWjl2bSxZqriafAn74', 'AIzaSyDLd8O4zDhEuCbh4FFqmv98vJ2gnuK5wh8',
-  'AIzaSyAGUlCTVEgzQgJzzi_CQ_iMBABEnY61K1c', 'AIzaSyBZwpGIVa-T0FoFaIBNIgftvloZMurAHRs',
-  'AIzaSyBGr7hpch8eeoa5AhRko_cyoWnO-hPh5Lo', 'AIzaSyBF6jXbsOdGKHAQIxEh8wPi5JzsceK6EEM',
-  'AIzaSyAUZomrWTB7tLMkwTQB2Onm64QZYJS5JCI', 'AIzaSyA5likqWJ4ZVjP2-KV8IcOjnUBhQSECwgk',
-  'AIzaSyBX3RrCcgGk0_rocyoQpBusmls4wGwrt8s', 'AIzaSyAZ5T8TZk3sz7waE6rVmG9uX9_ojc9h-Ho',
-  'AIzaSyBH8jxicvK8kmdC3x9CMyKghcHs7Y0gFmo', 'AIzaSyDAiQ6cRCrFnsPCwhFtO9GU3r5ydGWcALM',
-  'AIzaSyCWwX3xYFLei8dzCPod93cMwwYVEx0m7RQ', 'AIzaSyDw07QnJK-yUfHXaHI4nMDhcVhuEqyrmWI',
-  'AIzaSyCyJ7n8aGsLmWJ-lDCIjfD9UESLYpstNU0', 'AIzaSyCWoS-oZoM-xhkvrKA-GPwKnq01jnTM0Xs',
-  'AIzaSyC9FkWeAXLmStd9sqF-2IHIGawe41lEAJc', 'AIzaSyAJDP2SyKYF97SGRfIXyTzrH9ReY-2Pj9E',
-  'AIzaSyCPCQMSlgzd0RWQ0dxEoYSLC-YUAE9j9oE', 'AIzaSyCLFqCRy7efVwhoGHBeEZ_7zWjYwoipf6g',
-  'AIzaSyCexsWBL-CVEQLhf4lfk0gV_uU5s-vU0z8', 'AIzaSyALvYACPGwULe3qXOPZymGaU2jlnfg0e0s',
-  'AIzaSyA3yiEIxKWaYBH9airJ5nUKEXS0jIhOuz0', 'AIzaSyAC3Zf_rf8QjnKYquYRlleV-WYGW8olBOg',
-  'AIzaSyBqvlZ1PiS6lxkWZiRAseTAUPaCkoD3GVg', 'AIzaSyDtD5jDP0p8as8WpTVtLmYW80PJP4CF35c',
-  'AIzaSyAe9GDsx0HqX-M7hCw9PBrmOeHY6kYEU5A', 'AIzaSyD-QD9Oo8mHgyLx-UG98bHHwO0zWgWXzug',
-  'AIzaSyDKemhsQfy25xwwi2k313219IqfINWvOco', 'AIzaSyCgpPayEgPW-DRTNfrB1tF6HQ1cZ64eYlM',
-  'AIzaSyBz5QrvVA3FZBdcbfl38NmB6tAEdm7utbc', 'AIzaSyAgchho2SMMXZeZBwelaO1lTth2oLH-VfE',
-  'AIzaSyAGPUCIW5rOyzLQGqpBf_1hHFfPfNTRBb0', 'AIzaSyD-nJPJ7tgNRRae9fyhUngzRSnqD7wbbNM',
-  'AIzaSyCidvnqx5BIkvtXOm-twFlcQK0yt1Wmbw8', 'AIzaSyCiTDC1badlDoPLSYkk38GI9J1e6iWxChQ',
-  'AIzaSyDU6VcOCQCC8sjoyAc7F8DqXSzk4sSf7bA', 'AIzaSyDmDAjzqQRl6tHXL0ifSQdO8cvHh8SpR_M',
-  'AIzaSyAMONoHxmtz6XOMDL6WaI4YR5-VqRLK4p8', 'AIzaSyAsd1M44SnHk2KpLDyfVkO3ygLMoNtHCR0',
-  'AIzaSyDif0Q1gvmlZDYZ3MpSIaPqYyWI5YqoVYE', 'AIzaSyCjF0R-1qF-9UhC4WCE2exAkIytNi8KQcQ',
-  'AIzaSyADFr08Y2RwCiEy9zubLW3AVEX3KP-XH6U', 'AIzaSyCS_q0SQmw_cYBJ0KhBB3If2fA6OAWLo_M',
-  'AIzaSyDXNgO-ZE95GYRBxBdItatCTLJ6tUGiumI', 'AIzaSyCdEM_nFSl7wpMA0oDbwGei4MM2om2-9qc',
-  'AIzaSyCFOF5ZjrZpJpuMM04XhYZFx7YFaKL_lZ8', 'AIzaSyCLibgakkmEFsTwO7bFqDK4gJF5MA7WbwQ',
-  'AIzaSyBiKyjMX3gT8KjNEpiLmYm_QxCJfYd5IZY', 'AIzaSyD_IbU4mtEcNEdEaGMeNyBVA1qMqnLT15k',
-  'AIzaSyCNDfUyfBlusBY9cEZd_s2v1wW9UwnWiTc', 'AIzaSyBKuvvqboItysYv1aIeWD_ihHz_ntjbUTE',
-  'AIzaSyAtUDwA-Tum-bLYNdRsF8JH3qfpfa68zOs', 'AIzaSyBbDEpW55sG4agPOutIxOulqhJnXieUN50',
-  'AIzaSyBA-CQTf5m-UEqWCZlwrOy4o860PhuhCZo', 'AIzaSyARlkXEzHu66kdX4IItZwpHhplW26XQ39g',
-  'AIzaSyA5fRdrH0OrjFlSTIVPiDzgL6gL457E_D8', 'AIzaSyDs6I020y1V22wI4Pk3xVdRuFXKgMwsSgM',
-  'AIzaSyCbpAYOqJMryvFJxvlQQUuZeb7k536AFr0', 'AIzaSyCsr_McDQdSeOYGM53GSrZhSGabB8MGM9Y',
-  'AIzaSyBIrrJt1Q2rs9QnOotXkW-xuAd_ZIJla8o', 'AIzaSyDLQkYsrKgKIQUiIqVI8wN-v3cxUk_RwJo',
-  'AIzaSyCmpcmn97LB54sBzQKCwIvkUFynx4qFfg0', 'AIzaSyBkRENJRnnZoqUEVtyiw7e2Xw5UAa6N0t0',
-  'AIzaSyDHxiInxgmBmANnPAMROnvVNuM7_h8AEbo', 'AIzaSyAdWpxqZBHmcrDDUAuLb2QZ6quGsGdxoCU',
-  'AIzaSyDJBtY7DZ31BoNOrPUWz3_C8vgtrPviK0o', 'AIzaSyAyvk0ohA1MM_P3dHPoIFr5vZVO5ntWwCg',
-  'AIzaSyDGUPbluPaU19Lpj_RuI09aS9LxL-XDHIU', 'AIzaSyCdEnBicuEm04p-UHHgi5PcxV-1CJ5G4Zk',
-  'AIzaSyDoe4hft1tlJatsMkZCc5XVW9Tm4DJm-qc', 'AIzaSyB0FaDhWfReFRWegci_ddBQJq4JtmK5MZk',
-  'AIzaSyAksfl6uhMGqJEnR4CykACF57W0KPypvd0', 'AIzaSyA1hrk91VkMeEgleoCx_mfwtrzAyKjH7pM',
-  'AIzaSyDD49SmYg5eH3i5ky_lYLY5zVeh3xNe-yQ', 'AIzaSyAGyXQAokJ9gvzA_sAETfgviTug4mkfcvw',
-  'AIzaSyBwRucveIKa7ZvbPVFg-TdoguDs0O5UrpA', 'AIzaSyAi7h6OOEoea6avxfhZR887QaLBSIjavD4',
-  'AIzaSyCw1_5vZMoRoRKiZ-UC5GyGghdygbNI4Tg', 'AIzaSyCCYz6jpI7x1B-6NT8BlDjXg9L6c7at_Tk',
-  'AIzaSyCmQxNwRzixgKbjuT_-PoF49RPPaq0botA', 'AIzaSyCNpUASI7x1iHK-tb-5hRqdPoe_r5cSqyM',
-  'AIzaSyBvASbJBcPhkQS6aRml9HUT06yQLFHjY3I', 'AIzaSyAKqkj1T1gMKd41LuC7imRCVEKQdhwQ9Do',
-  'AIzaSyAWtfTmUuEzhf0s4aFQKEkOpYYsm8vH02c'
+  'AIzaSyDux05kgQCTGi51-1V4z8w8-FERVj0v_GE',
+  'AIzaSyAAKbWOaFtb5gABTGBmmBV5TeDSKWi05Po',
+  'AIzaSyCpCKAH4hkEIXkCgaLODQUlCdskBSECr38',
+  'AIzaSyDc2iaxAN5qlohnR7b9bojtgrS5cm-pfgw',
+  'AIzaSyDK7-9nZotyFceW8Wq1OMPYGtJrMYlH504',
+  'AIzaSyCZxr0-rq_j_5GLdLe3UqA8wxZU7SchyA8',
+  'AIzaSyCABynq_z95ZTKrTHSwtxluULCIkUCNQF0',
+  'AIzaSyBWmIX0LpxqpVj-rh6QgTeeaIteCFIBvu8',
+  'AIzaSyDN8tpiLCnIhJ8KsGX_p2kI8lOyo2X0q2I',
+  'AIzaSyByUxF09_6D759V-pVRt_NpYJCwQG4LmCE',
+  'AIzaSyDIuWz3VezxOIvFfdalO-3uwHEzFEoKFzs',
+  'AIzaSyDhI6hsG0l_kLAfGHsZq3kRDdLix1FJx18',
+  'AIzaSyDtD5jDP0p8as8WpTVtLmYW80PJP4CF35c',
+  'AIzaSyAe9GDsx0HqX-M7hCw9PBrmOeHY6kYEU5A',
+  'AIzaSyD-QD9Oo8mHgyLx-UG98bHHwO0zWgWXzug',
+  'AIzaSyDKemhsQfy25xwwi2k313219IqfINWvOco',
+  'AIzaSyBz5QrvVA3FZBdcbfl38NmB6tAEdm7utbc',
+  'AIzaSyAgchho2SMMXZeZBwelaO1lTth2oLH-VfE',
+  'AIzaSyAGPUCIW5rOyzLQGqpBf_1hHFfPfNTRBb0',
+  'AIzaSyD-nJPJ7tgNRRae9fyhUngzRSnqD7wbbNM',
+  'AIzaSyCidvnqx5BIkvtXOm-twFlcQK0yt1Wmbw8',
+  'AIzaSyCiTDC1badlDoPLSYkk38GI9J1e6iWxChQ',
+  'AIzaSyDU6VcOCQCC8sjoyAc7F8DqXSzk4sSf7bA',
+  'AIzaSyDmDAjzqQRl6tHXL0ifSQdO8cvHh8SpR_M'
 ];
     let currentKeyIndex = 0;
  
@@ -1086,10 +1010,11 @@
     let currentAuthMode = 'signin';
     let renderedComments = new Set();
     let renderedChats = new Set();
-
+ 
     // === حالة المراقب الذكي Smart Moderator (Smart Moderator) ===
     let modChannel = null;               // قناة Realtime لجدول stream_moderator_status
     let keywordsChannel = null;          // قناة Realtime لجدول monitor_keywords (لتحديث الكاش)
+    let usernamesChannel = null;         // قناة Realtime لجدول monitor_usernames (لتحديث الكاش)
     let modDeletedChannel = null;        // قناة Realtime لجدول moderator_deleted_messages (تأكيد حذف السيرفر)
     let modDebugChannel = null;          // قناة Realtime لجدول mod_debug_log (سجل تشخيصي Live)
     let currentIsModerator = false;      // هل Account الرسمي Moderator بالبث الحالي؟
@@ -1291,7 +1216,7 @@
  
     function openAdminModal() { document.getElementById('admin-user-input').value = ''; document.getElementById('admin-pass-input').value = ''; document.getElementById('admin-modal').classList.add('show'); }
     function closeAdminModal() { document.getElementById('admin-modal').classList.remove('show'); }
-
+ 
     // === مودال حساب المراقب الذكي Smart Moderator Smart Moderator الرسمي ===
     function openBotModal() { document.getElementById('bot-modal').classList.add('show'); loadBotAccountStatus(); }
     function closeBotModal() { document.getElementById('bot-modal').classList.remove('show'); }
@@ -1333,7 +1258,7 @@
             box.innerHTML = '<p class="text-xs" style="color:#f87171;">ما قدرنا نتحقق من حالة الربط.</p>';
         }
     }
-
+ 
     function startBotOAuth() {
         if (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID.includes('ضع_هنا')) {
             showToast('GOOGLE_CLIENT_ID بعده ما متضبط بالكود', 'error');
@@ -1349,7 +1274,7 @@
         });
         window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
     }
-
+ 
     // معالجة الرجوع من Google بعد الربط (?bot_link=success|error)
     function handleBotLinkRedirect() {
         const params = new URLSearchParams(window.location.search);
@@ -1396,12 +1321,13 @@
                     supabaseClient.from('archived_comments').delete().eq('stream_id', videoId),
                     supabaseClient.from('stream_messages').delete().eq('stream_id', videoId),
                     supabaseClient.from('monitor_keywords').delete().eq('stream_id', videoId),
+                    supabaseClient.from('monitor_usernames').delete().eq('stream_id', videoId),
                     supabaseClient.from('monitor_notifications').delete().eq('stream_id', videoId),
                     supabaseClient.from('stream_locks').delete().eq('stream_id', videoId),
                 ]);
                 
                 // Log failures (non-blocking)
-                const tables = ['archived_comments', 'stream_messages', 'monitor_keywords', 'monitor_notifications', 'stream_locks'];
+                const tables = ['archived_comments', 'stream_messages', 'monitor_keywords', 'monitor_usernames', 'monitor_notifications', 'stream_locks'];
                 const failedTables = deleteResults
                     .map((r, i) => r.status === 'rejected' ? tables[i] : null)
                     .filter(Boolean);
@@ -1760,6 +1686,7 @@
         if (notifChannel) { try { supabaseClient.removeChannel(notifChannel); } catch(e) {} notifChannel = null; }
         if (modChannel) { try { supabaseClient.removeChannel(modChannel); } catch(e) {} modChannel = null; }
         if (keywordsChannel) { try { supabaseClient.removeChannel(keywordsChannel); } catch(e) {} keywordsChannel = null; }
+        if (usernamesChannel) { try { supabaseClient.removeChannel(usernamesChannel); } catch(e) {} usernamesChannel = null; }
         if (modDeletedChannel) { try { supabaseClient.removeChannel(modDeletedChannel); } catch(e) {} modDeletedChannel = null; }
         if (modDebugChannel) { try { supabaseClient.removeChannel(modDebugChannel); } catch(e) {} modDebugChannel = null; }
         currentIsModerator = false;
@@ -1796,7 +1723,7 @@
                 showToast(`Monitor: الكلمة "${notif.keyword}" ظهرت بتعليق من ${notif.author_name}`, 'info');
                 if (document.getElementById('notifications-modal').classList.contains('show')) renderNotifications();
             }).subscribe();
-
+ 
         // قناة حالة الإشراف — تحدّث الشارة لحظياً عند تغيّر is_moderator بهذا البث
         if (modChannel) { try { supabaseClient.removeChannel(modChannel); } catch(e) {} modChannel = null; }
         modChannel = supabaseClient.channel('public:stream_moderator_status')
@@ -1805,7 +1732,7 @@
                 currentIsModerator = payload.new?.is_moderator === true;
                 renderModStatusUI();
             }).subscribe();
-
+ 
         // قناة كلمات المراقبة — تحدّث الكاش المحلي المستخدم بفحص الحذف التلقائي
         if (keywordsChannel) { try { supabaseClient.removeChannel(keywordsChannel); } catch(e) {} keywordsChannel = null; }
         keywordsChannel = supabaseClient.channel('public:monitor_keywords')
@@ -1813,7 +1740,15 @@
                 if (myToken !== sessionToken) return;
                 loadKeywordsCache(videoId);
             }).subscribe();
-
+ 
+        // قناة أسماء المستخدمين المراقَبين — تحدّث قائمة العرض لحظياً إذا كان لوح المراقب مفتوح
+        if (usernamesChannel) { try { supabaseClient.removeChannel(usernamesChannel); } catch(e) {} usernamesChannel = null; }
+        usernamesChannel = supabaseClient.channel('public:monitor_usernames')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'monitor_usernames', filter: `stream_id=eq.${videoId}` }, payload => {
+                if (myToken !== sessionToken) return;
+                if (document.getElementById('monitor-pane')?.classList.contains('active')) renderUsernames();
+            }).subscribe();
+ 
         // قناة تأكيد الحذف الفعلي — يحذف السيرفر Liveة، وهذي فقط تعرض إشعار فوري بذلك
         if (modDeletedChannel) { try { supabaseClient.removeChannel(modDeletedChannel); } catch(e) {} modDeletedChannel = null; }
         modDeletedChannel = supabaseClient.channel('public:moderator_deleted_messages')
@@ -1823,7 +1758,7 @@
                 setModDebugLine(`🗑️ حذف السيرفر رسالة مخالفة من ${d.author_name} (كلمة: ${d.matched_keyword})`);
                 showToast(`انحذفت رسالة مخالفة من ${d.author_name}`, 'success');
             }).subscribe();
-
+ 
         // قناة السجل التشخيصي الLive — تعرض كل قرار يتخذه السيرفر لحظياً (نجاح/فشل/تخطي مع السبب)
         if (modDebugChannel) { try { supabaseClient.removeChannel(modDebugChannel); } catch(e) {} modDebugChannel = null; }
         modDebugChannel = supabaseClient.channel('public:mod_debug_log')
@@ -1832,12 +1767,12 @@
                 appendModLog(payload.new.message, payload.new.created_at);
             }).subscribe();
         loadModDebugHistory(videoId);
-
+ 
         // تحميل أولي لحالة الإشراف والكاش
         loadModStatus(videoId);
         loadKeywordsCache(videoId);
     }
-
+ 
     // === تحميل حالة الإشراف الحالية من قاعدة البيانات (بدون فحص حي) ===
     async function loadModStatus(videoId) {
         try {
@@ -1847,7 +1782,7 @@
         } catch(e) { currentIsModerator = false; window.__lastModCheckedAt = null; }
         renderModStatusUI();
     }
-
+ 
     // === تحقق تلقائي مرة واحدة لكل جلسة قيادة (بدون إزعاج الشات كل دقيقتين) ===
     // يُستدعى فقط من القائد بعد اتصال يوتيوب بنجاح. إن كان Account Moderatorاً مسبقاً
     // لا نرسل أي رسالة اختبار جديدة. إن لم يكن Moderatorاً، نتحقق تلقائياً بحد أقصى
@@ -1858,7 +1793,7 @@
         if (Date.now() - last < 5 * 60 * 1000) return;
         await requestOrCheckModeratorStatus();
     }
-
+ 
     // === تحميل كاش كلمات المراقبة (نصوص lowercase) للفحص السريع أثناء استقبال الرسائل ===
     async function loadKeywordsCache(videoId) {
         try {
@@ -1866,7 +1801,7 @@
             currentKeywordsCache = (data || []).map(k => k.keyword.toLowerCase());
         } catch(e) { currentKeywordsCache = []; }
     }
-
+ 
     // === سطر سجل مرئي يعرض تفاصيل آخر عملية إرسال/تحقق بدون الحاجة لأدوات المطوّر ===
     function setModDebugLine(msg) {
         const el = document.getElementById('mod-debug-line');
@@ -1874,7 +1809,7 @@
         el.textContent = msg;
         el.style.display = msg ? 'block' : 'none';
     }
-
+ 
     // === سجل تراكمي (آخر 10 أحداث) يعرض بدقة سبب نجاح/فشل كل عملية حذف من السيرفر ===
     function appendModLog(msg, ts) {
         const box = document.getElementById('mod-log-box');
@@ -1889,7 +1824,7 @@
         list.insertBefore(line, list.firstChild);
         while (list.children.length > 10) list.removeChild(list.lastChild);
     }
-
+ 
     // === تحميل آخر 10 سجلات تشخيصية موجودة مسبقاً لهذا البث عند فتح التبويب ===
     async function loadModDebugHistory(videoId) {
         try {
@@ -1902,7 +1837,7 @@
             }
         } catch(e) { /* تجاهل — الجدول قد لا يكون مطبَّقاً بعد */ }
     }
-
+ 
     // === عرض حالة الإشراف داخل لوح المراقب الذكي Smart Moderator ===
     function renderModStatusUI() {
         const textEl = document.getElementById('mod-status-text');
@@ -1916,7 +1851,7 @@
             btnEl.innerHTML = '<i class="fas fa-paper-plane ml-1"></i> طلب صلاحية الـ Moderator';
         }
     }
-
+ 
     // === طلب/تحقق من صلاحية الإشراف عبر الدالة الموحدة archive-comments (action=check-status) ===
     async function requestOrCheckModeratorStatus() {
         if (!currentVideoId) { showToast('لازم تفتح Session للبث أولاً', 'error'); return; }
@@ -1926,7 +1861,7 @@
             showToast('انتظر شوي قبل لا تتحقق مرة ثانية', 'info');
             return;
         }
-
+ 
         // liveChatId قد لا يكون محلياً متوفراً إلا بمتصفح "القائد" (اللي يجلب من يوتيوب فعلياً).
         // لذلك نعتمد أولاً على القيمة المخزّنة بقاعدة البيانات (saved_streams) لأنها تُحدَّث
         // بشكل دوري بواسطة الروبوت بغض النظر عن أي متصفح مفتوح حالياً.
@@ -1943,7 +1878,7 @@
             setModDebugLine('❌ ماكو live_chat_id مسجّل بقاعدة البيانات لهذا البث بعد.');
             return;
         }
-
+ 
         modCheckInProgress = true; lastModCheckAt = now;
         const btnEl = document.getElementById('mod-status-btn');
         if (btnEl) { btnEl.disabled = true; btnEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; }
@@ -1953,7 +1888,7 @@
                 body: { action: 'check-status', stream_id: currentVideoId, live_chat_id: effectiveLiveChatId }
             });
             console.log('[mod-check] raw response:', { data, error });
-
+ 
             if (error) {
                 // FunctionsHttpError من supabase-js يحمل غالباً نص الرد الفعلي بـ error.context
                 let detail = error.message || 'unknown';
@@ -2182,6 +2117,7 @@
             document.getElementById('monitor-tab-btn').classList.add('active');
             document.getElementById('monitor-pane').classList.add('active');
             renderKeywords();
+            renderUsernames();
             renderModStatusUI();
         } else {
             // default: archive
@@ -2229,6 +2165,44 @@
         });
     }
  
+    // === إدارة أسماء المستخدمين المراقَبين (نفس نمط الكلمات المفتاحية بالضبط) ===
+    async function addUsername() {
+        const input = document.getElementById('username-input');
+        const uname = input.value.trim();
+        if (!uname || !currentVideoId) return;
+        try {
+            await supabaseClient.from('monitor_usernames').insert([{ stream_id: currentVideoId, username: uname }]);
+            input.value = '';
+            renderUsernames();
+            showToast(`تمت إضافة "${uname}" لقائمة المراقَبين`, 'success');
+        } catch(e) { showToast('إضافة المستخدم ما نجحت', 'error'); }
+    }
+ 
+    async function removeUsername(uname) {
+        if (!currentVideoId) return;
+        try {
+            await supabaseClient.from('monitor_usernames').delete().eq('stream_id', currentVideoId).eq('username', uname);
+            renderUsernames();
+        } catch(e) { showToast('الحذف ما نجح', 'error'); }
+    }
+ 
+    async function renderUsernames() {
+        const container = document.getElementById('usernames-list');
+        if (!container) return;
+        container.innerHTML = '<p class="text-xs" style="color: var(--text-muted);">دا يحمّل...</p>';
+        if (!currentVideoId) return;
+        const { data } = await supabaseClient.from('monitor_usernames').select('username').eq('stream_id', currentVideoId);
+        container.innerHTML = '';
+        if (!data || data.length === 0) { container.innerHTML = '<p class="text-xs" style="color: var(--text-muted);">ماكو مستخدمين مراقَبين لحد هسه.</p>'; return; }
+        data.forEach(u => {
+            const tag = document.createElement('div');
+            tag.className = 'flex items-center gap-2 px-3 py-1 rounded-full text-xs';
+            tag.style.background = 'rgba(239, 68, 68, 0.1)'; tag.style.border = '1px solid rgba(239, 68, 68, 0.2)'; tag.style.color = '#f87171';
+            tag.innerHTML = `<i class="fas fa-user-slash" style="font-size:10px;"></i><span>${escapeHtml(u.username)}</span><button onclick="removeUsername('${u.username.replace(/'/g, "")}')" style="background:none;border:none;color:#f87171;cursor:pointer;font-size:14px;">&times;</button>`;
+            container.appendChild(tag);
+        });
+    }
+ 
     async function renderNotifications() {
         const list = document.getElementById('notifications-list');
         list.innerHTML = '<div class="empty-state" style="padding: 20px;"><i class="fas fa-spinner fa-spin"></i></div>';
@@ -2241,11 +2215,18 @@
         list.innerHTML = '';
         data.forEach(notif => {
             const color = getAvatarColor(notif.author_name);
-            const highlightedMsg = escapeHtml(notif.comment_text).replace(new RegExp(escapeHtml(notif.keyword), 'gi'), `<span class="keyword-highlight">$&</span>`);
+            // إذا الكلمة المطابقة هي نفس اسم صاحب التعليق، فالتطابق كان بسبب "مستخدم مراقَب" مو كلمة بمحتوى الرسالة
+            const isUsernameMatch = notif.keyword && notif.keyword.toLowerCase() === (notif.author_name || '').toLowerCase();
+            const highlightedMsg = isUsernameMatch
+                ? escapeHtml(notif.comment_text)
+                : escapeHtml(notif.comment_text).replace(new RegExp(escapeHtml(notif.keyword), 'gi'), `<span class="keyword-highlight">$&</span>`);
+            const badge = isUsernameMatch
+                ? `<span class="keyword-highlight" style="margin-right:6px;"><i class="fas fa-user-slash" style="font-size:9px;"></i> مستخدم مراقَب</span>`
+                : '';
             const card = document.createElement('div');
             card.className = 'comment-card';
             card.style.setProperty('--c-accent', color);
-            card.innerHTML = `<div class="comment-avatar" style="background: ${color};">${notif.author_name.charAt(0).toUpperCase()}</div><div style="flex:1; min-width:0;"><div class="flex items-center"><span class="comment-username" style="color:${color};">${escapeHtml(notif.author_name)}</span><span class="comment-time">${formatTime(notif.created_at)}</span></div><div class="comment-text">${highlightedMsg}</div></div>`;
+            card.innerHTML = `<div class="comment-avatar" style="background: ${color};">${notif.author_name.charAt(0).toUpperCase()}</div><div style="flex:1; min-width:0;"><div class="flex items-center"><span class="comment-username" style="color:${color};">${escapeHtml(notif.author_name)}</span><span class="comment-time">${formatTime(notif.created_at)}</span>${badge}</div><div class="comment-text">${highlightedMsg}</div></div>`;
             list.appendChild(card);
         });
     }
@@ -2422,10 +2403,10 @@
         document.getElementById('admin-pass-input').addEventListener('keydown', e => { if (e.key === 'Enter') handleAdminDelete(); });
         document.getElementById('chat-input').addEventListener('keydown', e => { if (e.key === 'Enter') sendChatMessage(); });
         document.getElementById('keyword-input').addEventListener('keydown', e => { if (e.key === 'Enter') addKeyword(); });
+        document.getElementById('username-input').addEventListener('keydown', e => { if (e.key === 'Enter') addUsername(); });
         const container = document.getElementById('comments-container'); container.addEventListener('scroll', () => { isAtBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 100; });
     });
 </script>
 </body>
 </html>
  
-ِ
