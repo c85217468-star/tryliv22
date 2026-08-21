@@ -654,6 +654,127 @@
         .replay-deleted-tag { display:inline-flex; align-items:center; gap:4px; margin-top:5px; font-size:10.5px; color: var(--hx-live); background: rgba(181,69,69,0.1); border:1px solid rgba(181,69,69,0.25); padding:2px 8px; border-radius:20px; width:fit-content; font-family: 'Tajawal', sans-serif; }
 
         .custom-period-box { width:100%; max-width: 420px; margin: 14px auto 0; padding:14px 16px; border-radius:14px; background: rgba(255,255,255,0.03); border:1px solid var(--border); }
+
+
+        /* ===================================================================
+           === Stream Sidebar Navigation — داخل جلسة البث فقط ===
+           =================================================================== */
+        .stream-nav-backdrop {
+            position: fixed; inset: 0; z-index: 260;
+            background: rgba(0,0,0,0.46);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            opacity: 0; pointer-events: none;
+            transition: opacity .22s ease;
+        }
+        .stream-nav-backdrop.open { opacity: 1; pointer-events: all; }
+
+        .stream-sidebar {
+            position: fixed; top: 0; bottom: 0; right: 0;
+            width: min(330px, 88vw);
+            z-index: 270;
+            display: flex; flex-direction: column;
+            background: #0d0f16;
+            border-left: 1px solid #2a2d3a;
+            box-shadow: -24px 0 70px rgba(0,0,0,.42);
+            transform: translateX(110%);
+            transition: transform .28s cubic-bezier(.22,.61,.36,1);
+            direction: rtl;
+        }
+        .stream-sidebar.open { transform: translateX(0); }
+        .stream-sidebar-head {
+            display:flex; align-items:center; justify-content:space-between; gap:12px;
+            padding:18px 16px 14px;
+            border-bottom:1px solid #222531;
+            flex-shrink:0;
+        }
+        .stream-sidebar-title {
+            display:flex; align-items:center; gap:10px; min-width:0;
+        }
+        .stream-sidebar-title .mark {
+            width:34px; height:34px; border-radius:10px;
+            display:flex; align-items:center; justify-content:center;
+            background:rgba(168,176,192,.08);
+            border:1px solid #2a2d3a;
+            color:#a8b0c0;
+            flex-shrink:0;
+        }
+        .stream-sidebar-title strong {
+            font-size:14px; color:#d4d5dc; font-weight:800;
+        }
+        .stream-sidebar-title span {
+            display:block; margin-top:2px;
+            font-size:10.5px; color:#565a68;
+        }
+        .stream-sidebar-close {
+            width:34px; height:34px; border-radius:10px;
+            display:flex; align-items:center; justify-content:center;
+            background:transparent; border:1px solid #2a2d3a;
+            color:#8a8d9a; cursor:pointer; transition:all .18s ease;
+        }
+        .stream-sidebar-close:hover {
+            background:#181924; color:#d4d5dc; border-color:#a8b0c0;
+        }
+        .stream-sidebar-nav {
+            padding:14px 12px; overflow-y:auto; flex:1;
+        }
+        .stream-nav-label {
+            padding:6px 10px 8px;
+            color:#565a68; font-size:10px; font-weight:800;
+            letter-spacing:.6px; text-transform:uppercase;
+        }
+        .stream-nav-item {
+            width:100%; display:flex; align-items:center; gap:12px;
+            padding:11px 12px; margin-bottom:4px;
+            border-radius:10px; border:1px solid transparent;
+            background:transparent; color:#8a8d9a;
+            font-family:'Tajawal',sans-serif; font-size:13px; font-weight:600;
+            text-align:right; cursor:pointer;
+            transition:all .18s ease;
+            position:relative;
+        }
+        .stream-nav-item i { width:18px; text-align:center; font-size:14px; flex-shrink:0; }
+        .stream-nav-item .nav-copy { flex:1; min-width:0; }
+        .stream-nav-item .nav-copy strong { display:block; font-size:13px; font-weight:700; color:inherit; }
+        .stream-nav-item .nav-copy span { display:block; margin-top:2px; font-size:10px; color:#565a68; font-weight:500; }
+        .stream-nav-item:hover {
+            background:#181924; color:#d4d5dc; border-color:#252938;
+        }
+        .stream-nav-item.active {
+            background:#171a23; color:#dce0e8; border-color:#303543;
+        }
+        .stream-nav-item.active::before {
+            content:''; position:absolute; right:-1px; top:8px; bottom:8px;
+            width:3px; border-radius:3px; background:#a8b0c0;
+        }
+        .stream-nav-item.danger { color:#9b6262; }
+        .stream-nav-item.danger:hover { color:#d8a0a0; background:rgba(181,69,69,.08); border-color:rgba(181,69,69,.18); }
+        .stream-nav-badge {
+            min-width:18px; height:18px; padding:0 5px; border-radius:999px;
+            display:inline-flex; align-items:center; justify-content:center;
+            font-size:9px; font-weight:800;
+            background:#d04545; color:#fff;
+        }
+        .stream-sidebar-footer {
+            padding:12px; border-top:1px solid #222531; flex-shrink:0;
+        }
+        .stream-menu-trigger {
+            width:38px; height:38px; border-radius:10px;
+            display:flex; align-items:center; justify-content:center;
+            background:transparent; border:1px solid var(--hx-border);
+            color:var(--hx-fg-dim); cursor:pointer;
+            transition:all .18s ease;
+        }
+        .stream-menu-trigger:hover {
+            background:var(--hx-bg-soft); color:var(--hx-fg); border-color:var(--hx-accent);
+        }
+        .stream-section-header {
+            display:flex; align-items:center; gap:8px;
+        }
+        @media (max-width: 640px) {
+            .stream-sidebar { width:min(320px, 92vw); }
+            .stream-sidebar-head { padding:16px 14px 12px; }
+        }
     </style>
 </head>
 <body>
@@ -731,34 +852,12 @@
         </div>
     </div>
 
-    <!-- شاشة اختيار وضع الجلسة: بث مباشر أو إعادة عرض -->
-    <div id="screen-mode-picker" class="screen">
-        <div class="w-full max-w-md text-center">
-            <button class="back-btn mb-6" onclick="cancelModePicker()"><i class="fas fa-arrow-right"></i> رجوع</button>
-            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-5" style="background: var(--accent-glow); border: 1px solid rgba(232,168,56,0.15);">
-                <i class="fas fa-play text-2xl" style="color: var(--accent);"></i>
-            </div>
-            <h2 class="text-2xl font-black mb-2">كيف تريد تتابع هذا البث؟</h2>
-            <p class="text-sm mb-8" style="color: var(--text-muted);">اختر المتابعة المباشرة الآن، أو أعد عرض فترة سابقة بنفس توقيتها الأصلي.</p>
-            <div class="mode-grid">
-                <div class="mode-card" onclick="chooseLiveModeFromPicker()">
-                    <div class="mode-icon" style="background: rgba(208,69,69,0.12);"><i class="fas fa-satellite-dish" style="color:#d04545;"></i></div>
-                    <h3>بث مباشر الآن</h3>
-                    <p>تابع التعليقات لحظة وصولها الفعلية، زي ما هو الوضع الطبيعي.</p>
-                </div>
-                <div class="mode-card" onclick="showScreen('screen-replay-period')">
-                    <div class="mode-icon" style="background: rgba(125,139,168,0.12);"><i class="fas fa-history" style="color:#7d8ba8;"></i></div>
-                    <h3>إعادة عرض الأرشيف</h3>
-                    <p>شوف فترة سابقة تتكشف تعليق بتعليق، بنفس سرعة وتوقيت حدوثها فعلياً — حتى الرسائل المحذوفة تظهر بلحظتها.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- تم إلغاء شاشة اختيار Live/Replay عند الدخول؛ Replay أصبح قسمًا داخل Sidebar. -->
 
     <!-- شاشة اختيار الفترة الزمنية لإعادة العرض -->
     <div id="screen-replay-period" class="screen">
         <div class="w-full max-w-md text-center">
-            <button class="back-btn mb-6" onclick="showScreen('screen-mode-picker')"><i class="fas fa-arrow-right"></i> رجوع</button>
+            <button class="back-btn mb-6" onclick="navigateStreamSection('live')"><i class="fas fa-arrow-right"></i> رجوع للبث</button>
             <h2 class="text-2xl font-black mb-2">من وين نبدأ إعادة العرض؟</h2>
             <p class="text-sm mb-6" style="color: var(--text-muted);">اختر فترة، وراح نعرضلك كل شي صار خلالها بنفس توقيته بالضبط.</p>
             <div class="period-grid">
@@ -787,7 +886,7 @@
                 <span class="replay-badge-dot"></span>
                 <span class="text-xs font-bold" style="color:#a8b0c0; letter-spacing: 0.5px;">إعادة عرض</span>
             </div>
-            <div style="width:38px;"></div>
+            <button class="stream-menu-trigger" onclick="openStreamSidebar()" title="قائمة البث"><i class="fas fa-bars"></i></button>
         </header>
         <div class="replay-topbar">
             <div class="flex items-center justify-between mb-2">
@@ -817,29 +916,74 @@
         </div>
     </div>
  
+    <!-- ===================================================================
+         === Sidebar موحدة للتنقل داخل جلسة البث ===
+         =================================================================== -->
+    <div id="stream-nav-backdrop" class="stream-nav-backdrop" onclick="closeStreamSidebar()"></div>
+    <aside id="stream-sidebar" class="stream-sidebar" aria-hidden="true">
+        <div class="stream-sidebar-head">
+            <div class="stream-sidebar-title">
+                <div class="mark"><i class="fas fa-satellite-dish"></i></div>
+                <div>
+                    <strong>قائمة البث</strong>
+                    <span>تنقل سريع داخل الجلسة</span>
+                </div>
+            </div>
+            <button class="stream-sidebar-close" onclick="closeStreamSidebar()" title="إغلاق القائمة"><i class="fas fa-xmark"></i></button>
+        </div>
+
+        <div class="stream-sidebar-nav">
+            <div class="stream-nav-label">أقسام البث</div>
+
+            <button class="stream-nav-item active" data-stream-section="live" onclick="navigateStreamSection('live')">
+                <i class="fas fa-satellite-dish"></i>
+                <span class="nav-copy"><strong>البث الحي</strong><span>التعليقات المباشرة</span></span>
+            </button>
+
+            <button class="stream-nav-item" data-stream-section="chat" onclick="navigateStreamSection('chat')">
+                <i class="fas fa-comment-dots"></i>
+                <span class="nav-copy"><strong>الرسائل</strong><span>دردشة البث</span></span>
+            </button>
+
+            <button class="stream-nav-item" data-stream-section="archive" onclick="navigateStreamSection('archive')">
+                <i class="fas fa-folder-open"></i>
+                <span class="nav-copy"><strong>الأرشيف</strong><span>التعليقات المؤرشفة</span></span>
+            </button>
+
+            <button class="stream-nav-item" data-stream-section="replay" onclick="navigateStreamSection('replay')">
+                <i class="fas fa-clock-rotate-left"></i>
+                <span class="nav-copy"><strong>إعادة عرض الأرشيف</strong><span>تشغيل فترة سابقة</span></span>
+            </button>
+
+            <button class="stream-nav-item" data-stream-section="notifications" onclick="navigateStreamSection('notifications')">
+                <i class="fas fa-bell"></i>
+                <span class="nav-copy"><strong>الإشعارات</strong><span>تنبيهات المراقب الذكي</span></span>
+                <span id="notif-dot" class="stream-nav-badge" style="display:none;">!</span>
+            </button>
+
+            <button class="stream-nav-item" data-stream-section="account" onclick="navigateStreamSection('account')">
+                <i id="sidebar-user-icon" class="fas fa-user"></i>
+                <span class="nav-copy"><strong id="sidebar-account-title">الحساب</strong><span id="sidebar-account-subtitle">تسجيل الدخول وإدارة الحساب</span></span>
+            </button>
+        </div>
+
+        <div class="stream-sidebar-footer">
+            <button class="stream-nav-item danger" data-stream-section="exit" onclick="navigateStreamSection('exit')" style="margin-bottom:0;">
+                <i class="fas fa-arrow-right-from-bracket"></i>
+                <span class="nav-copy"><strong>الخروج من البث</strong><span>إنهاء جلسة البث والعودة للقائمة</span></span>
+            </button>
+        </div>
+    </aside>
+
     <!-- شاشة التعليقات الحية (واجهة تيرمينال رمادية — بدون موارد شبكة) -->
     <div id="screen-comments" class="screen screen-comments">
         <header class="w-full flex items-center justify-between px-4 py-3" style="background: var(--hx-bg); border-bottom: 1px solid var(--hx-border);">
-            <button class="back-btn" onclick="handleExit()" title="خروج"><i class="fas fa-arrow-right"></i></button>
-            <div class="flex items-center gap-2">
+            <button class="back-btn" onclick="handleExit()" title="خروج من البث"><i class="fas fa-arrow-right"></i></button>
+            <div class="stream-section-header">
                 <span class="live-dot"></span>
                 <span class="text-xs font-bold" style="color: var(--hx-live); letter-spacing: 0.5px;">Live</span>
             </div>
-            <div class="flex items-center gap-1.5">
-                <button class="icon-btn notif-btn" onclick="openNotificationsModal()" title="Notifications">
-                    <i class="fas fa-bell"></i>
-                    <span class="notif-badge" id="notif-dot"></span>
-                </button>
-                <button class="icon-btn" onclick="openArchiveScreen()" title="Archive">
-                    <i class="fas fa-folder-open"></i>
-                </button>
-                <button class="icon-btn" onclick="openChatScreen()" title="Chat">
-                    <i class="fas fa-comment-dots"></i>
-                </button>
-                <button id="user-circle-btn" class="icon-btn user-icon-btn" onclick="handleUserCircleClick()" title="Account">
-                    <i class="fas fa-user" id="user-circle-icon"></i>
-                </button>
-            </div>
+            <button class="stream-menu-trigger" onclick="openStreamSidebar()" title="فتح قائمة البث"><i class="fas fa-bars"></i></button>
         </header>
         <div id="comments-container" class="comments-container">
             <div id="stream-warning" style="display:none; margin-bottom:12px; padding:10px 14px; border-radius:2px; background:var(--hx-bg); border:1px solid var(--hx-warn); color:var(--hx-warn); font-size:12px; align-items:center; gap:10px; font-family: var(--hx-mono);">
@@ -866,7 +1010,7 @@
                 <i class="fas fa-comment-dots" style="color: var(--hx-fg-dim); font-size: 14px;"></i>
                 <span class="text-xs font-bold" style="color: var(--hx-fg); letter-spacing: 0.4px;">Chat البث</span>
             </div>
-            <div style="width: 38px;"></div>
+            <button class="stream-menu-trigger" onclick="openStreamSidebar()" title="قائمة البث"><i class="fas fa-bars"></i></button>
         </header>
         <div id="chat-container" class="comments-container">
             <div id="chat-list"></div>
@@ -887,7 +1031,7 @@
                 <i class="fas fa-folder-open" style="color: var(--hx-fg-dim); font-size: 14px;"></i>
                 <span class="text-xs font-bold" style="color: var(--hx-fg); letter-spacing: 0.4px;">Archive & Smart Moderator</span>
             </div>
-            <div style="width: 38px;"></div>
+            <button class="stream-menu-trigger" onclick="openStreamSidebar()" title="قائمة البث"><i class="fas fa-bars"></i></button>
         </header>
  
         <!-- تبويبات Archive: Archive / المراقب الذكي Smart Moderator -->
@@ -1151,25 +1295,108 @@
     function getAvatarColor(name) { let hash = 0; for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash); return AVATAR_COLORS[Math.abs(hash) % AVATAR_COLORS.length]; }
     function getVideoId(url) { if (!url) return null; const patterns = [/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/live\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/, /^([a-zA-Z0-9_-]{11})$/]; for (const pattern of patterns) { const match = url.match(pattern); if (match) return match[1]; } return null; }
  
-    function showScreen(screenId) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); const target = document.getElementById(screenId); if (target) target.classList.add('active'); }
+    function showScreen(screenId) {
+        closeStreamSidebar();
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        const target = document.getElementById(screenId);
+        if (target) target.classList.add('active');
+        updateStreamSidebarActive(screenId);
+    }
+
+    function openStreamSidebar() {
+        if (!currentVideoId) return;
+        const sidebar = document.getElementById('stream-sidebar');
+        const backdrop = document.getElementById('stream-nav-backdrop');
+        if (!sidebar || !backdrop) return;
+        sidebar.classList.add('open');
+        backdrop.classList.add('open');
+        sidebar.setAttribute('aria-hidden', 'false');
+        updateStreamSidebarActive(document.querySelector('.screen.active')?.id || 'screen-comments');
+    }
+
+    function closeStreamSidebar() {
+        const sidebar = document.getElementById('stream-sidebar');
+        const backdrop = document.getElementById('stream-nav-backdrop');
+        if (sidebar) {
+            sidebar.classList.remove('open');
+            sidebar.setAttribute('aria-hidden', 'true');
+        }
+        if (backdrop) backdrop.classList.remove('open');
+    }
+
+    function updateStreamSidebarActive(screenId) {
+        const map = {
+            'screen-comments': 'live',
+            'screen-chat': 'chat',
+            'screen-archive': 'archive',
+            'screen-replay-period': 'replay',
+            'screen-replay-player': 'replay'
+        };
+        const activeSection = map[screenId] || null;
+        document.querySelectorAll('.stream-nav-item[data-stream-section]').forEach(item => {
+            item.classList.toggle('active', !!activeSection && item.dataset.streamSection === activeSection);
+        });
+    }
+
+    function navigateStreamSection(section) {
+        closeStreamSidebar();
+        if (!currentVideoId && section !== 'exit') {
+            showToast('ماكو بث نشط حالياً', 'error');
+            return;
+        }
+
+        switch (section) {
+            case 'live':
+                showScreen('screen-comments');
+                break;
+            case 'chat':
+                openChatScreen();
+                break;
+            case 'archive':
+                openArchiveScreen();
+                break;
+            case 'replay':
+                openReplayPeriodScreen();
+                break;
+            case 'notifications':
+                openNotificationsModal();
+                break;
+            case 'account':
+                handleUserCircleClick();
+                break;
+            case 'exit':
+                handleExit();
+                break;
+        }
+    }
+
+    function openReplayPeriodScreen() {
+        if (!currentVideoId) { showToast('ماكو بث نشط حالياً', 'error'); return; }
+        document.getElementById('custom-replay-datetime').value = '';
+        showScreen('screen-replay-period');
+    }
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeStreamSidebar();
+    });
+
     function showToast(message, type = 'info') { const container = document.getElementById('toast-container'); const toast = document.createElement('div'); const icons = { success: 'check-circle', error: 'exclamation-circle', info: 'info-circle' }; toast.className = `toast toast-${type}`; toast.innerHTML = `<i class="fas fa-${icons[type] || 'info-circle'}"></i><span>${message}</span>`; container.appendChild(toast); requestAnimationFrame(() => toast.classList.add('show')); setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 350); }, 3500); }
  
     // === نظام Profile وLogin ===
     function updateUserCircle() {
-        const btn = document.getElementById('user-circle-btn');
-        if (!btn) return;
+        const icon = document.getElementById('sidebar-user-icon');
+        const title = document.getElementById('sidebar-account-title');
+        const subtitle = document.getElementById('sidebar-account-subtitle');
+        if (!icon) return;
         if (currentUser) {
-            btn.innerHTML = `<span style="font-weight:700; font-size:14px;">${escapeHtml(currentUser.display_name.charAt(0).toUpperCase())}</span>`;
-            btn.style.background = 'var(--hx-bg-soft)';
-            btn.style.borderColor = 'var(--hx-accent)';
-            btn.style.color = 'var(--hx-fg)';
-            btn.title = `هلا ${currentUser.display_name} — اضغط هنا حتى تدير حسابك`;
+            icon.className = 'fas fa-user-check';
+            icon.style.color = '#a8b0c0';
+            if (title) title.textContent = currentUser.display_name || 'الحساب';
+            if (subtitle) subtitle.textContent = 'إدارة الملف الشخصي والحساب';
         } else {
-            btn.innerHTML = '<i class="fas fa-user"></i>';
-            btn.style.background = 'transparent';
-            btn.style.borderColor = 'var(--hx-border)';
-            btn.style.color = 'var(--hx-fg-dim)';
-            btn.title = 'Login';
+            icon.className = 'fas fa-user';
+            icon.style.color = '';
+            if (title) title.textContent = 'الحساب';
+            if (subtitle) subtitle.textContent = 'تسجيل الدخول وإدارة الحساب';
         }
     }
  
@@ -1505,8 +1732,9 @@
         closePasswordModal();
         if (btn) { btn.disabled = false; btn.innerHTML = originalText; }
  
-        // === المرحلة 2: اختيار وضع الجلسة (بث مباشر الآن أو إعادة عرض) قبل الدخول فعلياً ===
-        openSessionModePicker(videoId, streamData);
+        // === الدخول المباشر إلى جلسة البث ===
+        // Replay أصبح قسمًا داخل Sidebar ولا يظهر كخيار إجباري قبل الدخول.
+        startLiveStreamWithOverlay(videoId, streamData);
     }
 
     // =====================================================================================
@@ -1525,40 +1753,26 @@
     let replayVirtualElapsedAtLastResume = 0;
     let replayResumeWallClock = 0;
     let replayRenderedNodes = {};
-    let pendingModePickerData = null;
-
-    function openSessionModePicker(videoId, streamData) {
-        pendingModePickerData = { videoId, streamData };
-        showScreen('screen-mode-picker');
-    }
-    function cancelModePicker() {
-        pendingModePickerData = null;
-        showScreen('screen-list');
-    }
-    function chooseLiveModeFromPicker() {
-        if (!pendingModePickerData) return;
-        const { videoId, streamData } = pendingModePickerData;
-        pendingModePickerData = null;
-        startLiveStreamWithOverlay(videoId, streamData);
-    }
 
     function selectReplayPeriod(minutes) {
-        if (!pendingModePickerData) return;
+        const videoId = currentVideoId || replayVideoId;
+        if (!videoId) { showToast('ماكو بث نشط حالياً', 'error'); return; }
         const start = new Date(Date.now() - minutes * 60 * 1000);
-        launchReplay(pendingModePickerData.videoId, start);
+        launchReplay(videoId, start);
     }
+
     function selectCustomReplayStart() {
-        if (!pendingModePickerData) return;
+        const videoId = currentVideoId || replayVideoId;
+        if (!videoId) { showToast('ماكو بث نشط حالياً', 'error'); return; }
         const val = document.getElementById('custom-replay-datetime').value;
         if (!val) { showToast('اختر تاريخ ووقت أولاً', 'error'); return; }
         const start = new Date(val);
         if (isNaN(start.getTime()) || start.getTime() > Date.now()) { showToast('الوقت المحدد غير صالح', 'error'); return; }
-        launchReplay(pendingModePickerData.videoId, start);
+        launchReplay(videoId, start);
     }
 
     async function launchReplay(videoId, startDate) {
         replayVideoId = videoId;
-        pendingModePickerData = null;
         showScreen('screen-replay-player');
         document.getElementById('replay-comments-list').innerHTML = '';
         document.getElementById('replay-empty').style.display = 'none';
@@ -1736,8 +1950,11 @@
 
     function exitReplay() {
         pauseReplayInternal();
-        replayEvents = []; replayVideoId = null; replayRenderedNodes = {};
-        showScreen('screen-list');
+        replayEvents = []; replayRenderedNodes = {};
+        const returnToLive = currentVideoId;
+        replayVideoId = null;
+        if (returnToLive) showScreen('screen-comments');
+        else showScreen('screen-list');
     }
  
     // === البث الحي والمراقب الذكي Smart Moderator ===
@@ -1882,6 +2099,7 @@
         hideStreamWarning();
  
         showScreen('screen-comments');
+        updateStreamSidebarActive('screen-comments');
         const steps = [
             'تهيئة الـ Session',
             'تحميل الـ Archive (بالخلفية)',
@@ -2589,6 +2807,7 @@
     function searchArchivedComments() { clearTimeout(searchDebounce); const term = document.getElementById('search-archive-input').value.trim(); const user = document.getElementById('search-archive-user').value.trim(); searchDebounce = setTimeout(() => loadArchivedComments(term, user), 300); }
  
     function handleExit() {
+        closeStreamSidebar();
         sessionToken++;
         isEnteringSession = false;
         tempLoginData = null;
