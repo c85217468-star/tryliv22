@@ -797,6 +797,140 @@
         @media(max-width:640px){.screen-comments header{min-height:54px;padding-left:10px!important;padding-right:10px!important}.screen-comments .comments-container{padding:8px!important}.screen-comments .comment-card{padding:7px 8px!important}.screen-comments .comment-text{font-size:13.5px!important}.screen-comments .archive-tabs{padding:8px!important}.screen-comments .archive-tab{font-size:11.5px!important;padding:9px 8px!important}.screen-comments .chat-wrapper.me{padding-left:4px!important}.screen-comments .chat-wrapper.other{padding-right:4px!important}.screen-comments .chat-card{max-width:92%!important}#screen-chat>.status-bar{padding-left:8px!important;padding-right:8px!important}#chat-input{min-width:0;font-size:14px!important}.stream-sidebar{width:min(310px,90vw)!important}}
         @media(prefers-reduced-motion:reduce){.screen-comments *,.stream-sidebar,.stream-nav-backdrop{animation:none!important;transition:none!important}}
 
+    
+        /* ================================================================
+           VRTICS PREMIUM CUTE — BLACK / GRAY / SOFT PINK OVERRIDES
+           Performance-first: limited shadows, transforms and blur.
+        ================================================================ */
+        :root {
+            --accent: #f472b6 !important;
+            --border-focus: #f472b6 !important;
+            --accent-glow: rgba(244,114,182,.12) !important;
+            --pink: #f472b6;
+            --pink-soft: #fb8fc4;
+            --pink-glow: rgba(244,114,182,.18);
+            --pink-bg: rgba(244,114,182,.08);
+            --bg: #07080a !important;
+            --card: rgba(17,19,24,.92) !important;
+            --card-hover: rgba(24,26,32,.98) !important;
+            --border: rgba(255,255,255,.075) !important;
+            --text: #eceff2 !important;
+            --text-muted: #7f878e !important;
+        }
+        body { background:#07080a; }
+        .bg-orb-1 { background:radial-gradient(circle, #f472b6, transparent 70%) !important; opacity:.07 !important; }
+        .bg-orb-2 { background:radial-gradient(circle, #8d6a83, transparent 70%) !important; opacity:.05 !important; }
+        .glass-card { border-color:rgba(255,255,255,.07); background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.018)); }
+        .glass-card-hover:hover { border-color:rgba(244,114,182,.24); box-shadow:0 10px 30px rgba(244,114,182,.08); transform:translateY(-2px); }
+        .btn-primary { background:linear-gradient(135deg,#f472b6,#ec6aae) !important; color:#160a10 !important; box-shadow:0 6px 22px rgba(244,114,182,.12) !important; }
+        .btn-primary:hover { box-shadow:0 8px 24px rgba(244,114,182,.18) !important; }
+        .btn-ghost:hover,.input-field:focus { border-color:rgba(244,114,182,.5) !important; color:#f7c1db !important; }
+        .input-field:focus { box-shadow:0 0 0 3px rgba(244,114,182,.09) !important; }
+        .screen-comments { --hx-accent:#f472b6 !important; --hx-live:#f472b6 !important; }
+        .screen-comments header { background:#090b0e !important; border-bottom:1px solid #1d2228 !important; }
+        .screen-comments .stream-live-title { color:#f7bdd9 !important; letter-spacing:.2px !important; }
+        .screen-comments .live-dot { width:7px !important; height:7px !important; background:#f472b6 !important; box-shadow:0 0 0 3px rgba(244,114,182,.08) !important; }
+        .screen-comments .status-bar { color:#70777f !important; }
+        #screen-comments #status-text { display:none !important; }
+        .screen-comments .comment-username { color:#f1bdd3 !important; }
+        .screen-comments .chat-card.me { background:linear-gradient(135deg,rgba(244,114,182,.10),rgba(17,21,26,.98)) !important; border-color:rgba(244,114,182,.22) !important; }
+        .screen-comments .chat-card.me .chat-username { color:#f5a8cd !important; }
+        .screen-comments .keyword-highlight { background:rgba(244,114,182,.12) !important; color:#f7a9cc !important; }
+        .screen-comments .archive-tab.active { background:rgba(244,114,182,.09) !important; border-color:rgba(244,114,182,.35) !important; color:#f4bdd7 !important; }
+        .screen-comments .btn-primary { background:linear-gradient(135deg,#f472b6,#ec6aae) !important; border-color:#f472b6 !important; }
+        .screen-comments .icon-btn:hover,.screen-comments .stream-menu-trigger:hover { border-color:rgba(244,114,182,.40) !important; color:#f3b8d2 !important; }
+        .stream-sidebar { background:#0a0c0f !important; border-left:1px solid rgba(244,114,182,.14) !important; box-shadow:-24px 0 60px rgba(0,0,0,.42) !important; }
+        .stream-sidebar-head,.stream-sidebar-footer { background:#0a0c0f !important; border-color:#1a1f24 !important; }
+        .stream-sidebar-title .mark { background:rgba(244,114,182,.08) !important; border-color:rgba(244,114,182,.18) !important; color:#f08bb8 !important; }
+        .stream-sidebar-title strong { color:#f1f2f4 !important; }
+        .stream-sidebar-title span { color:#757c83 !important; }
+        .stream-sidebar-close { background:#101318 !important; border-color:#2a3037 !important; color:#9ca3aa !important; }
+        .stream-sidebar-close:hover { background:rgba(244,114,182,.10) !important; color:#f6b7d4 !important; border-color:rgba(244,114,182,.42) !important; }
+        .stream-nav-label { color:#727980 !important; }
+        .stream-nav-item { min-height:52px !important; border-radius:13px !important; color:#91989f !important; }
+        .stream-nav-item i { color:#818990; }
+        .stream-nav-item:hover { background:rgba(244,114,182,.06) !important; color:#eceff2 !important; border-color:rgba(244,114,182,.08) !important; }
+        .stream-nav-item.active { background:rgba(244,114,182,.09) !important; border-color:rgba(244,114,182,.18) !important; color:#f3d6e3 !important; }
+        .stream-nav-item.active i { color:#f472b6 !important; }
+        .stream-nav-item.active::before { background:#f472b6 !important; box-shadow:0 0 10px rgba(244,114,182,.22); }
+        .stream-nav-item .nav-copy span { color:#646b72 !important; }
+        .stream-nav-badge { background:#f472b6 !important; color:#190b12 !important; }
+        .stream-menu-trigger { background:#0d1014 !important; border-color:#22272d !important; }
+        .archive-pane { min-height:0 !important; }
+        #monitor-pane.monitor-pane-scroll { flex:1 1 0 !important; min-height:0 !important; overflow-y:auto !important; overflow-x:hidden !important; overscroll-behavior:contain; scrollbar-width:thin; scrollbar-color:rgba(244,114,182,.34) transparent; }
+        #monitor-pane.monitor-pane-scroll .monitor-pane-inner { min-height:min-content; padding-bottom:28px !important; }
+        #monitor-pane.monitor-pane-scroll::-webkit-scrollbar { width:8px; }
+        #monitor-pane.monitor-pane-scroll::-webkit-scrollbar-thumb { background:rgba(244,114,182,.22); border-radius:10px; }
+        #monitor-pane.monitor-pane-scroll::-webkit-scrollbar-thumb:hover { background:rgba(244,114,182,.38); }
+        #monitor-pane .btn-primary { background:linear-gradient(135deg,#f472b6,#ec6aae) !important; }
+        #monitor-pane .btn-ghost:hover { border-color:rgba(244,114,182,.4) !important; }
+        #monitor-pane [id$="-list"] > p { color:#727980 !important; }
+        #monitor-pane .keyword-chip,#monitor-pane .username-chip { border-color:rgba(244,114,182,.2) !important; background:rgba(244,114,182,.08) !important; color:#f3b3d0 !important; }
+        .modal-overlay { background:rgba(0,0,0,.78) !important; backdrop-filter:blur(4px); }
+        .modal-content { background:#0d1014 !important; border-color:rgba(244,114,182,.14) !important; box-shadow:0 20px 60px rgba(0,0,0,.45); }
+        .modal-close-x { width:36px; height:36px; border-radius:12px; display:flex; align-items:center; justify-content:center; background:#11151a; border:1px solid #252b31; color:#f08bb8; cursor:pointer; transition:all .18s ease; }
+        .modal-close-x:hover { background:rgba(244,114,182,.10); border-color:rgba(244,114,182,.38); transform:scale(1.02); }
+        .profile-modal-content { max-width:520px; padding:22px; }
+        .profile-modal-head,.notifications-head { display:flex; align-items:center; gap:12px; justify-content:space-between; margin-bottom:18px; }
+        .profile-modal-head > div:nth-child(2),.notifications-title-wrap > div:last-child { flex:1; min-width:0; }
+        .profile-modal-head h3,.notifications-head h3 { font-size:18px; font-weight:800; color:#f1f3f5; margin:0 0 3px; }
+        .profile-modal-head p,.notifications-head p { font-size:12px; color:#777f87; margin:0; line-height:1.6; }
+        .profile-avatar,.notifications-icon { width:44px; height:44px; border-radius:14px; display:flex; align-items:center; justify-content:center; flex:0 0 auto; background:rgba(244,114,182,.10); border:1px solid rgba(244,114,182,.18); color:#f28ab7; }
+        .profile-field-card { padding:13px; border:1px solid #20262c; border-radius:15px; background:#101318; margin-bottom:10px; }
+        .profile-field-label { display:flex; align-items:center; gap:7px; color:#7d858d; font-size:11px; font-weight:700; margin-bottom:8px; }
+        .profile-field-label i { color:#f08bb8; }
+        .profile-value { min-height:20px; color:#eceff2; font-size:14px; word-break:break-word; }
+        .profile-password-row { display:flex; gap:8px; align-items:center; }
+        .profile-password-input { margin:0; background:#0b0e11 !important; }
+        .profile-eye-btn { width:44px; padding:0 !important; height:44px; display:flex; align-items:center; justify-content:center; }
+        .profile-actions { display:flex; gap:8px; margin-top:14px; flex-wrap:wrap; }
+        .profile-actions > button { flex:1 1 140px; min-height:44px; }
+        .profile-note { display:flex; align-items:flex-start; gap:8px; font-size:11px; line-height:1.6; color:#7c848b; padding:10px 12px; border:1px dashed #2a3036; border-radius:12px; background:#0c0f13; margin-top:4px; }
+        .profile-note i { color:#f08bb8; margin-top:3px; }
+        .profile-edit-btn { background:rgba(244,114,182,.10) !important; border:1px solid rgba(244,114,182,.28) !important; color:#f3b3d0 !important; box-shadow:none !important; }
+        .profile-logout-btn { min-width:120px; }
+        .notifications-modal-content { max-width:640px; padding:20px; }
+        .notifications-title-wrap { display:flex; align-items:center; gap:11px; flex:1; }
+        .notifications-info { display:flex; align-items:flex-start; gap:8px; padding:11px 12px; margin-bottom:12px; border-radius:12px; background:rgba(244,114,182,.06); border:1px solid rgba(244,114,182,.12); color:#969da5; font-size:11px; line-height:1.6; }
+        .notifications-info i { color:#f08bb8; }
+        .notifications-list { max-height:min(62vh,520px); overflow-y:auto; padding:3px 2px 5px; overscroll-behavior:contain; scrollbar-width:thin; scrollbar-color:rgba(244,114,182,.28) transparent; }
+        .notifications-list::-webkit-scrollbar { width:8px; }
+        .notifications-list::-webkit-scrollbar-thumb { background:rgba(244,114,182,.22); border-radius:10px; }
+        .notification-card { position:relative; display:flex; gap:11px; padding:13px; margin-bottom:8px; border-radius:15px; border:1px solid #20262c; background:#0f1216; overflow:hidden; }
+        .notification-accent { position:absolute; top:0; bottom:0; right:0; width:3px; background:linear-gradient(180deg,#f472b6,#8e566f); opacity:.85; }
+        .notification-avatar { width:34px; height:34px; border-radius:11px; display:flex; align-items:center; justify-content:center; flex:0 0 auto; background:rgba(244,114,182,.08); color:#f08bb8; border:1px solid rgba(244,114,182,.12); }
+        .notification-body { min-width:0; flex:1; }
+        .notification-meta { display:flex; align-items:center; gap:8px; margin-bottom:5px; }
+        .notification-meta strong { color:#eceff2; font-size:12px; }
+        .notification-meta span { color:#686f76; font-size:10px; }
+        .notification-text { color:#d0d5d9; font-size:13px; line-height:1.7; word-break:break-word; }
+        .notification-tag { display:inline-flex; align-items:center; gap:5px; margin-top:8px; padding:4px 8px; border-radius:999px; background:rgba(244,114,182,.07); border:1px solid rgba(244,114,182,.12); color:#db9dbb; font-size:9px; }
+        .welcome-footer { margin-top:24px; padding-top:18px; border-top:1px solid rgba(255,255,255,.06); color:#6f767d; }
+        .welcome-footer-brand { font-weight:900; letter-spacing:1.3px; color:#dfe3e6; font-size:12px; }
+        .welcome-footer-brand span { color:#f472b6; }
+        .welcome-footer-text { font-size:10.5px; margin-top:5px; }
+        .welcome-footer nav { display:flex; justify-content:center; flex-wrap:wrap; gap:10px 14px; margin-top:10px; }
+        .welcome-footer a { color:#888f96; font-size:10.5px; text-decoration:none; }
+        .welcome-footer a:hover { color:#f3a6c7; }
+        #screen-list > header { background:#090b0e !important; border-color:#1d2228 !important; }
+        #screen-list .btn-admin { background:rgba(244,114,182,.06) !important; border-color:rgba(244,114,182,.16) !important; color:#e6a6c4 !important; }
+        #screen-list .btn-admin:hover { background:rgba(244,114,182,.10) !important; }
+        #streams-list-container .glass-card { border-radius:16px !important; background:#0f1216 !important; border-color:#20262c !important; transition:border-color .18s ease, background .18s ease, transform .18s ease; }
+        #streams-list-container .glass-card:hover { border-color:rgba(244,114,182,.22) !important; background:#11151a !important; transform:translateY(-2px); }
+        #streams-list-container .glass-card .btn-ghost { border-color:#2a3037 !important; color:#9ba2a9 !important; }
+        #streams-list-container .glass-card .btn-ghost:hover { border-color:rgba(244,114,182,.35) !important; color:#f2b1cf !important; background:rgba(244,114,182,.07) !important; }
+        @media(max-width:640px) {
+            .profile-modal-content,.notifications-modal-content { padding:16px; }
+            .profile-modal-head h3,.notifications-head h3 { font-size:16px; }
+            .profile-actions { flex-direction:column; }
+            .profile-actions > button { width:100%; flex:1 1 auto; }
+            .stream-sidebar { width:min(320px,90vw) !important; }
+            .notifications-list { max-height:60vh; }
+        }
+        @media(prefers-reduced-motion:reduce) {
+            .modal-close-x,.glass-card-hover:hover { transform:none !important; }
+        }
+
     </style>
 </head>
 <body>
@@ -828,6 +962,16 @@
                     </div>
                     <h3 class="font-bold text-lg mb-2">البثوث المحفوظة Saved Streams</h3>
                 </div>
+            </div>
+            <div class="welcome-footer">
+                <div class="welcome-footer-brand">VRTICS <span>♡</span></div>
+                <div class="welcome-footer-text">منصة لإدارة وأرشفة جلسات البث والتعليقات.</div>
+                <nav aria-label="روابط الموقع">
+                    <a href="#" onclick="return false;">من نحن</a>
+                    <a href="#" onclick="return false;">سياسة الخصوصية</a>
+                    <a href="#" onclick="return false;">شروط الاستخدام</a>
+                    <a href="#" onclick="return false;">تواصل ويانا</a>
+                </nav>
             </div>
         </div>
     </div>
@@ -989,21 +1133,14 @@
             </button>
         </div>
 
-        <div class="stream-sidebar-footer">
-            <button class="stream-nav-item danger" data-stream-section="exit" onclick="navigateStreamSection('exit')" style="margin-bottom:0;">
-                <i class="fas fa-arrow-right-from-bracket"></i>
-                <span class="nav-copy"><strong>الخروج من البث</strong><span>إنهاء جلسة البث والعودة للقائمة</span></span>
-            </button>
-        </div>
     </aside>
 
     <!-- شاشة التعليقات الحية (واجهة تيرمينال رمادية — بدون موارد شبكة) -->
     <div id="screen-comments" class="screen screen-comments">
         <header class="w-full flex items-center justify-between px-4 py-3" style="background: var(--hx-bg); border-bottom: 1px solid var(--hx-border);">
-            <button class="back-btn" onclick="handleExit()" title="خروج من البث"><i class="fas fa-arrow-right"></i></button>
-            <div class="stream-section-header">
+            <div class="stream-section-header" aria-label="حالة البث">
                 <span class="live-dot"></span>
-                <span class="text-xs font-bold" style="color: var(--hx-live); letter-spacing: 0.5px;">Live</span>
+                <span class="text-xs font-bold stream-live-title">هنا البث ♡</span>
             </div>
             <button class="stream-menu-trigger" onclick="openStreamSidebar()" title="فتح قائمة البث"><i class="fas fa-bars"></i></button>
         </header>
@@ -1051,7 +1188,7 @@
             <button class="icon-btn" onclick="showScreen('screen-comments')" title="الرجوع للبث"><i class="fas fa-arrow-right"></i></button>
             <div class="flex items-center gap-2">
                 <i class="fas fa-folder-open" style="color: var(--hx-fg-dim); font-size: 14px;"></i>
-                <span class="text-xs font-bold" style="color: var(--hx-fg); letter-spacing: 0.4px;">Archive & Smart Moderator</span>
+                <span class="text-xs font-bold" style="color: var(--hx-fg); letter-spacing: 0.4px;">الأرشيف والمراقب الذكي</span>
             </div>
             <button class="stream-menu-trigger" onclick="openStreamSidebar()" title="قائمة البث"><i class="fas fa-bars"></i></button>
         </header>
@@ -1079,8 +1216,8 @@
         </div>
  
         <!-- لوح المراقب الذكي Smart Moderator: إدارة الكلمات المفتاحية -->
-        <div id="monitor-pane" class="archive-pane">
-            <div class="w-full p-4 max-w-2xl mx-auto">
+        <div id="monitor-pane" class="archive-pane monitor-pane-scroll">
+            <div class="monitor-pane-inner w-full p-4 max-w-2xl mx-auto">
                 <div id="mod-status-box" class="mb-4 p-4 rounded-xl" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border);">
                     <h4 class="text-sm font-bold mb-3"><i class="fas fa-user-shield ml-1" style="color: var(--accent);"></i> صلاحية الـ Moderator بهذا البث</h4>
                     <div id="mod-status-content" class="flex items-center justify-between gap-3">
@@ -1130,57 +1267,79 @@
         </div>
     </div>
  
-    <!-- مودال Profile (Profile) -->
+    <!-- مودال Profile — Cute Premium -->
     <div id="profile-modal" class="modal-overlay">
-        <div class="modal-content">
-            <h3 class="text-lg font-bold mb-1">Profile</h3>
-            <p class="text-sm mb-5" style="color: var(--text-muted);">إدارة بيانات حسابك.</p>
-            
-            <div id="profile-view">
-                <div class="space-y-3 mb-6">
-                    <div class="input-field" id="profile-name-display" style="cursor: default; background: rgba(255,255,255,0.02);"></div>
-                    <div class="input-field" id="profile-user-display" style="cursor: default; background: rgba(255,255,255,0.02);"></div>
-                    <div class="flex items-center gap-2">
-                        <input type="password" id="profile-pass-display" class="input-field" style="cursor: default; background: rgba(255,255,255,0.02);" disabled>
-                        <button class="btn-ghost" onclick="togglePassVisibility()"><i class="fas fa-eye"></i></button>
+        <div class="modal-content profile-modal-content">
+            <div class="profile-modal-head">
+                <div class="profile-avatar"><i class="fas fa-user"></i></div>
+                <div>
+                    <h3>إدارة الملف الشخصي ♡</h3>
+                    <p>هنا تگدر تشوف وتعدّل بيانات حسابك.</p>
+                </div>
+                <button class="modal-close-x" onclick="closeProfileModal()" title="إغلاق"><i class="fas fa-xmark"></i></button>
+            </div>
+
+            <div id="profile-view" class="profile-view-panel">
+                <div class="profile-field-card">
+                    <span class="profile-field-label"><i class="fas fa-signature"></i> الاسم الظاهر</span>
+                    <div class="profile-value" id="profile-name-display"></div>
+                </div>
+                <div class="profile-field-card">
+                    <span class="profile-field-label"><i class="fas fa-at"></i> Username</span>
+                    <div class="profile-value" id="profile-user-display"></div>
+                </div>
+                <div class="profile-field-card">
+                    <span class="profile-field-label"><i class="fas fa-lock"></i> Password</span>
+                    <div class="profile-password-row">
+                        <input type="password" id="profile-pass-display" class="input-field profile-password-input" disabled>
+                        <button class="btn-ghost profile-eye-btn" onclick="togglePassVisibility()" title="إظهار كلمة المرور"><i class="fas fa-eye"></i></button>
                     </div>
                 </div>
-                <div class="flex gap-3">
-                    <button class="btn-ghost flex-1" onclick="closeProfileModal()">سدّها</button>
-                    <button class="btn-primary flex-1" style="width: auto; background: transparent; border: 1px solid var(--accent); color: var(--accent);" onclick="toggleEditMode(true)">تعديل Edit</button>
-                    <button class="btn-danger flex-1" style="width: auto;" onclick="handleLogout()">Logout</button>
+                <div class="profile-actions">
+                    <button class="btn-ghost" onclick="closeProfileModal()">سدّها</button>
+                    <button class="btn-primary profile-edit-btn" onclick="toggleEditMode(true)">تعديل البيانات ♡</button>
+                    <button class="btn-danger profile-logout-btn" onclick="handleLogout()">تسجيل خروج</button>
                 </div>
             </div>
- 
-            <div id="profile-edit" style="display: none;">
-                <div class="space-y-3 mb-6">
-                    <input type="text" id="edit-name" class="input-field" placeholder="الاسم الجديد">
-                    <input type="text" id="edit-user" class="input-field" placeholder="Username الجديد">
-                    <p class="text-xs" style="color: var(--text-muted);">* ما تگدر تغيّر الـ Password من هنا.</p>
+
+            <div id="profile-edit" class="profile-edit-panel" style="display:none;">
+                <div class="profile-field-card">
+                    <span class="profile-field-label"><i class="fas fa-signature"></i> الاسم الجديد</span>
+                    <input type="text" id="edit-name" class="input-field" placeholder="اكتب الاسم الجديد">
                 </div>
-                <div class="flex gap-3">
-                    <button class="btn-ghost flex-1" onclick="toggleEditMode(false)">خليها، إلغاء</button>
-                    <button class="btn-primary flex-1" style="width: auto;" onclick="saveProfileChanges()">حفظ التغييرات</button>
+                <div class="profile-field-card">
+                    <span class="profile-field-label"><i class="fas fa-at"></i> Username الجديد</span>
+                    <input type="text" id="edit-user" class="input-field" placeholder="اكتب Username الجديد">
+                </div>
+                <div class="profile-note"><i class="fas fa-circle-info"></i> حالياً تغيير الـPassword مو متاح من هنا.</div>
+                <div class="profile-actions">
+                    <button class="btn-ghost" onclick="toggleEditMode(false)">خليها، إلغاء</button>
+                    <button class="btn-primary" onclick="saveProfileChanges()">حفظ التغييرات ♡</button>
                 </div>
             </div>
         </div>
     </div>
- 
-    <!-- مودال Notifications (يعرض سجل إشعارات الكلمات المفتاحية فقط) -->
+
+    <!-- مودال Notifications — Premium Notification Center -->
     <div id="notifications-modal" class="modal-overlay">
-        <div class="modal-content" style="max-width: 600px;">
-            <div class="flex items-center justify-between mb-5">
-                <h3 class="text-lg font-bold"><i class="fas fa-bell ml-1"></i> Notifications</h3>
-                <button onclick="closeNotificationsModal()" style="background:none;border:none;color:var(--text-muted);font-size:20px;"><i class="fas fa-times"></i></button>
+        <div class="modal-content notifications-modal-content">
+            <div class="notifications-head">
+                <div class="notifications-title-wrap">
+                    <div class="notifications-icon"><i class="fas fa-bell"></i></div>
+                    <div>
+                        <h3>الإشعارات ♡</h3>
+                        <p>التنبيهات اللي التقطها المراقب الذكي.</p>
+                    </div>
+                </div>
+                <button class="modal-close-x" onclick="closeNotificationsModal()" title="إغلاق"><i class="fas fa-xmark"></i></button>
             </div>
-            <p class="text-xs mb-4" style="color: var(--text-muted);">هنا راح تطلع التعليقات اللي تطابق كلمات المراقبة مالك. تگدر تدير الكلمات من شاشة <i class="fas fa-archive"></i> Archive ← تبويب <i class="fas fa-eye"></i> المراقب الذكي Smart Moderator.</p>
-            <h4 class="text-sm font-bold mb-3">سجل Notifications</h4>
-            <div id="notifications-list" style="max-height: 400px; overflow-y: auto;">
-                <div class="empty-state" style="padding: 20px;"><i class="fas fa-bell-slash"></i><p style="color: var(--text-muted);">ماكو Notifications لحد هسه.</p></div>
+            <div class="notifications-info"><i class="fas fa-sparkles"></i> راح تظهر هنا التعليقات اللي تطابق كلمات المراقبة أو المستخدمين المراقَبين.</div>
+            <div id="notifications-list" class="notifications-list">
+                <div class="empty-state" style="padding:30px 20px;"><i class="fas fa-bell-slash"></i><p>ماكو إشعارات جديدة ♡</p></div>
             </div>
         </div>
     </div>
- 
+
     <!-- مودال Password للبث المحفوظ -->
     <div id="password-modal" class="modal-overlay">
         <div class="modal-content">
@@ -1328,6 +1487,36 @@
     function pruneChatDOM(limit=CHAT_DOM_LIMIT){const list=document.getElementById('chat-list');if(!list)return;while(list.children.length>limit)list.removeChild(list.firstElementChild);}
     function appendChatBatch(items){const list=document.getElementById('chat-list');if(!list||!items?.length)return;const frag=document.createDocumentFragment();const nearBottom=(list.parentElement.scrollHeight-list.parentElement.scrollTop-list.parentElement.clientHeight)<48;for(const msg of items){const id=`chat_${msg.id}`;if(renderedChats.has(id))continue;renderedChats.add(id);const me=currentUser&&msg.user_id===currentUser.id,color=getAvatarColor(msg.display_name||'مستخدم'),initial=(msg.display_name||'مستخدم').charAt(0).toUpperCase(),w=document.createElement('div');w.className=`chat-wrapper ${me?'me':'other'}`;const card=document.createElement('div');card.className=`chat-card ${me?'me':'other'}`;card.innerHTML=`<div class="chat-card-header"><div class="chat-avatar" style="background:${color};">${escapeHtml(initial)}</div><span class="chat-username">${escapeHtml(msg.display_name||'مستخدم')}</span><span class="chat-time">${formatTime(msg.created_at)}</span></div><div class="chat-text">${escapeHtml(msg.message_text||'')}</div>`;w.appendChild(card);frag.appendChild(w);}list.appendChild(frag);list.querySelector('.empty-state')?.remove();pruneChatDOM();if(nearBottom)scheduleScrollToBottom(list.parentElement,'chatScroll');}
 
+    let streamHistoryGuardActive = false;
+    let streamHistoryMarker = null;
+    let suppressNextPopstate = false;
+
+    function activateStreamHistoryGuard() {
+        if (streamHistoryGuardActive) return;
+        streamHistoryGuardActive = true;
+        streamHistoryMarker = { vrticsStream: true, id: Date.now() };
+        history.pushState(streamHistoryMarker, '', location.href);
+    }
+
+    function deactivateStreamHistoryGuard() {
+        if (!streamHistoryGuardActive) return;
+        streamHistoryGuardActive = false;
+        streamHistoryMarker = null;
+        try {
+            history.replaceState(null, '', location.href);
+        } catch (_) {}
+    }
+
+    function requestStreamExit() {
+        if (!currentVideoId) return;
+        const shouldExit = window.confirm('تريد تطلع من جلسة البث؟\n\nإذا طلعت راح ترجع للصفحة الرئيسية.');
+        if (!shouldExit) {
+            activateStreamHistoryGuard();
+            return;
+        }
+        handleExit();
+    }
+
     function showScreen(screenId) {
         closeStreamSidebar();
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -1398,7 +1587,7 @@
                 handleUserCircleClick();
                 break;
             case 'exit':
-                handleExit();
+                requestStreamExit();
                 break;
         }
     }
@@ -1422,9 +1611,9 @@
         if (!icon) return;
         if (currentUser) {
             icon.className = 'fas fa-user-check';
-            icon.style.color = '#a8b0c0';
+            icon.style.color = '#f08bb8';
             if (title) title.textContent = currentUser.display_name || 'الحساب';
-            if (subtitle) subtitle.textContent = 'إدارة الملف الشخصي والحساب';
+            if (subtitle) subtitle.textContent = 'إدارة الملف الشخصي ♡';
         } else {
             icon.className = 'fas fa-user';
             icon.style.color = '';
@@ -1435,8 +1624,8 @@
  
     function handleUserCircleClick() {
         if (currentUser) {
-            document.getElementById('profile-name-display').value = currentUser.display_name;
-            document.getElementById('profile-user-display').value = currentUser.username;
+            document.getElementById('profile-name-display').textContent = currentUser.display_name || '';
+            document.getElementById('profile-user-display').textContent = currentUser.username || '';
             document.getElementById('profile-pass-display').value = currentUser.password;
             toggleEditMode(false);
             document.getElementById('profile-modal').classList.add('show');
@@ -1663,7 +1852,15 @@
         const streamUser = document.getElementById('admin-user-input').value.trim(); const adminPass = document.getElementById('admin-pass-input').value.trim();
         if (!streamUser || !adminPass) { showToast('عبّي كل الحقول', 'error'); return; }
         
-        if (!confirm(`⚠️ سيانحذف البث "${streamUser}" وكل البيانات المرتبطة به نهائياً:\n\n• التعليقات المؤرشفة\n• رسائل Chat\n• كلمات المراقبة\n• Notifications\n• أقفال الانتخاب\n\nهل أنت متأكد؟`)) return;
+        if (!confirm(`⚠️ سيانحذف البث "${streamUser}" وكل البيانات المرتبطة به نهائياً:
+
+• التعليقات المؤرشفة
+• رسائل Chat
+• كلمات المراقبة
+• Notifications
+• أقفال الانتخاب
+
+هل أنت متأكد؟`)) return;
         
         try {
             const { data: settings, error: settingsError } = await supabaseClient.from('app_settings').select('admin_password').eq('id', 1).single();
@@ -2114,6 +2311,7 @@
         cleanupPreviousSession();
  
         currentVideoId = effectiveVideoId;
+        activateStreamHistoryGuard();
         localStorage.setItem('vrtx_last_stream', effectiveVideoId);
         commentsTotal = 0;
         nextPageToken = streamData.next_page_token || '';
@@ -2506,8 +2704,8 @@
             const newChatId = liveDetails.activeLiveChatId || liveDetails.liveChatId;
             if (!newChatId) throw new Error('ماكو Live Chat ID لهذا البث');
             liveChatId = newChatId; youTubeConnectionOk = true; hideStreamWarning();
-            if (isLeader) { startYouTubePolling(); document.getElementById('status-text').textContent = 'Leader — جلب Live من YouTube'; autoCheckModeratorStatusIfNeeded(videoId); }
-            else { document.getElementById('status-text').textContent = 'Follower — بث Live'; }
+            if (isLeader) { startYouTubePolling(); document.getElementById('status-text').textContent = 'متصل'; autoCheckModeratorStatusIfNeeded(videoId); }
+            else { document.getElementById('status-text').textContent = 'متصل'; }
         } catch(e) {
             youTubeConnectionOk = false;
             showStreamWarning('ما قدرنا نتصل Liveة بـ YouTube — التعليقات راح توصل عبر الـ Archive. راح نحاول مرة ثانية تلقائياً بعد 30 ثانية.');
@@ -2538,16 +2736,16 @@
                 isLeader = true;
                 if (liveChatId && youTubeConnectionOk) {
                     startYouTubePolling();
-                    document.getElementById('status-text').textContent = 'Leader — جلب Live من YouTube';
+                    document.getElementById('status-text').textContent = 'متصل';
                     autoCheckModeratorStatusIfNeeded(currentVideoId);
                 } else {
                     document.getElementById('status-text').textContent = 'Leader — ننتظر YouTube...';
                 }
             } else if (!gotLeadership && isLeader) {
                 isLeader = false; stopYouTubePolling();
-                document.getElementById('status-text').textContent = 'Follower — بث Live';
+                document.getElementById('status-text').textContent = 'متصل';
             } else if (!gotLeadership && !isLeader) {
-                document.getElementById('status-text').textContent = 'Follower — بث Live';
+                document.getElementById('status-text').textContent = 'متصل';
                 if (commentsTotal === 0 && !youTubeConnectionOk) {
                     document.getElementById('comments-loading').style.display = 'none';
                     document.getElementById('comments-empty').style.display = 'flex';
@@ -2692,31 +2890,40 @@
  
     async function renderNotifications() {
         const list = document.getElementById('notifications-list');
-        list.innerHTML = '<div class="empty-state" style="padding: 20px;"><i class="fas fa-spinner fa-spin"></i></div>';
+        list.innerHTML = '<div class="empty-state" style="padding:30px 20px;"><i class="fas fa-spinner fa-spin"></i><p>دا نحمّل الإشعارات...</p></div>';
         if (!currentVideoId) return;
-        const { data } = await supabaseClient.from('monitor_notifications').select('*').eq('stream_id', currentVideoId).order('created_at', { ascending: false }).limit(50);
-        if (!data || data.length === 0) {
-            list.innerHTML = '<div class="empty-state" style="padding: 20px;"><i class="fas fa-bell-slash"></i><p style="color: var(--text-muted);">ماكو Notifications لحد هسه.</p></div>';
-            return;
+        try {
+            const { data, error } = await supabaseClient.from('monitor_notifications').select('*').eq('stream_id', currentVideoId).order('created_at', { ascending: false }).limit(50);
+            if (error) throw error;
+            if (!data || data.length === 0) {
+                list.innerHTML = '<div class="empty-state" style="padding:34px 20px;"><i class="fas fa-bell-slash"></i><p>ماكو إشعارات جديدة ♡</p><span>المراقب الذكي ما لقى شي يحتاج تنبيه لحد هسه.</span></div>';
+                return;
+            }
+            list.innerHTML = '';
+            data.forEach(notif => {
+                const isUsernameMatch = notif.keyword && notif.keyword.toLowerCase() === (notif.author_name || '').toLowerCase();
+                const safeText = escapeHtml(notif.comment_text || '');
+                const rawKeyword = notif.keyword || '';
+                const keyword = escapeHtml(rawKeyword);
+                const keywordRegex = rawKeyword ? rawKeyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') : '';
+                const highlightedMsg = isUsernameMatch ? safeText : (keywordRegex ? safeText.replace(new RegExp(keywordRegex, 'gi'), `<span class="keyword-highlight">$&</span>`) : safeText);
+                const card = document.createElement('article');
+                card.className = 'notification-card';
+                card.innerHTML = `
+                    <div class="notification-accent"></div>
+                    <div class="notification-avatar"><i class="fas ${isUsernameMatch ? 'fa-user-slash' : 'fa-bell'}"></i></div>
+                    <div class="notification-body">
+                        <div class="notification-meta"><strong>${escapeHtml(notif.author_name || 'مستخدم')}</strong><span>${formatTime(notif.created_at)}</span></div>
+                        <div class="notification-text">${highlightedMsg}</div>
+                        <div class="notification-tag"><i class="fas ${isUsernameMatch ? 'fa-user-slash' : 'fa-key'}"></i>${isUsernameMatch ? 'مستخدم مراقَب' : (keyword ? `مطابقة: ${keyword}` : 'تنبيه المراقب الذكي')}</div>
+                    </div>`;
+                list.appendChild(card);
+            });
+        } catch (e) {
+            list.innerHTML = '<div class="empty-state" style="padding:30px 20px;"><i class="fas fa-circle-exclamation"></i><p>ما قدرنا نحمّل الإشعارات هسه.</p></div>';
         }
-        list.innerHTML = '';
-        data.forEach(notif => {
-            const color = getAvatarColor(notif.author_name);
-            const isUsernameMatch = notif.keyword && notif.keyword.toLowerCase() === (notif.author_name || '').toLowerCase();
-            const highlightedMsg = isUsernameMatch
-                ? escapeHtml(notif.comment_text)
-                : escapeHtml(notif.comment_text).replace(new RegExp(escapeHtml(notif.keyword), 'gi'), `<span class="keyword-highlight">$&</span>`);
-            const badge = isUsernameMatch
-                ? `<span class="keyword-highlight" style="margin-right:6px;"><i class="fas fa-user-slash" style="font-size:9px;"></i> مستخدم مراقَب</span>`
-                : '';
-            const card = document.createElement('div');
-            card.className = 'comment-card';
-            card.style.setProperty('--c-accent', color);
-            card.innerHTML = `<div class="comment-avatar" style="background: ${color};">${notif.author_name.charAt(0).toUpperCase()}</div><div style="flex:1; min-width:0;"><div class="flex items-center"><span class="comment-username" style="color:${color};">${escapeHtml(notif.author_name)}</span><span class="comment-time">${formatTime(notif.created_at)}</span>${badge}</div><div class="comment-text">${highlightedMsg}</div></div>`;
-            list.appendChild(card);
-        });
     }
- 
+
     function openChatScreen() {
         if (!currentUser) { showToast('لازم تسجّل Login حتى تستخدم الـ Chat', 'error'); openAuthModal(); return; }
         showScreen('screen-chat'); loadChatMessages();
@@ -2816,6 +3023,7 @@
  
     function handleExit() {
         closeStreamSidebar();
+        deactivateStreamHistoryGuard();
         sessionToken++;
         isEnteringSession = false;
         tempLoginData = null;
@@ -2823,14 +3031,17 @@
         cleanupPreviousSession();
         if (youTubeReconnectTimer) { clearTimeout(youTubeReconnectTimer); youTubeReconnectTimer = null; }
         localStorage.removeItem('vrtx_last_stream');
-        document.getElementById('comments-list').innerHTML = '';
-        document.getElementById('archive-list').innerHTML = '';
-        document.getElementById('chat-list').innerHTML = '';
+        const comments = document.getElementById('comments-list');
+        const archive = document.getElementById('archive-list');
+        const chat = document.getElementById('chat-list');
+        if (comments) comments.innerHTML = '';
+        if (archive) archive.innerHTML = '';
+        if (chat) chat.innerHTML = '';
         hideStreamWarning();
         hideEntryOverlay();
         showScreen('screen-welcome');
     }
- 
+
     function formatTime(iso) { if(!iso) return ''; const d = Math.floor((Date.now() - new Date(iso).getTime())/1000); if(d<10) return 'هسه'; if(d<60) return `قبل ${d} ث`; if(d<3600) return `قبل ${Math.floor(d/60)} د`; return `قبل ${Math.floor(d/3600)} س`; }
     function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
     function retryFetchComments() { if (currentVideoId) startLiveStream(currentVideoId); }
@@ -2855,6 +3066,12 @@
         }
     }
  
+    window.addEventListener('popstate', (event) => {
+        if (!currentVideoId || !streamHistoryGuardActive) return;
+        history.pushState(streamHistoryMarker || { vrticsStream: true }, '', location.href);
+        requestStreamExit();
+    });
+
     document.addEventListener('DOMContentLoaded', () => {
         updateUserCircle(); const lastStream = localStorage.getItem('vrtx_last_stream'); if (lastStream) { startLiveStream(lastStream); }
         syncAdminPanelVisibility();
