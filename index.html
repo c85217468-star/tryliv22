@@ -799,10 +799,10 @@
         .stream-sidebar-head,.stream-sidebar-footer{background:#0a0c0f!important;border-color:#1a1f24!important}.stream-sidebar-nav{overscroll-behavior:contain}.stream-nav-item{min-height:48px;margin-bottom:3px!important;border-radius:11px!important;background:transparent!important;border-color:transparent!important;color:#8d949b!important}.stream-nav-item:hover{background:#11151a!important;color:#dfe3e6!important}.stream-nav-item.active{background:#12161b!important;border-color:#222930!important;color:#e7eaed!important}.stream-nav-item.active::before{background:#b8bec4!important}.stream-nav-item.danger{color:#8f6363!important}.stream-nav-item.danger:hover{background:#170f11!important;color:#c99191!important}
         .screen-comments .archive-tabs{max-width:900px!important;width:100%;padding:10px 14px!important;gap:6px!important;background:#07080a!important;border-bottom:1px solid #191e23!important}.screen-comments .archive-tab{min-height:42px;background:#0b0e11!important;border:1px solid #1e242a!important;color:#7f878e!important}.screen-comments .archive-tab.active{background:#15191e!important;border-color:#3a424a!important;color:#e5e8eb!important}
         .screen-comments .input-field{background:#0b0e11!important;border:1px solid #20262c!important;color:#e6e9ec!important;box-shadow:none!important}.screen-comments .input-field:focus{border-color:#3b434b!important;box-shadow:0 0 0 3px #bec6cd0d!important}.screen-comments .btn-primary{background:#dfe3e7!important;color:#080a0c!important;border:1px solid #dfe3e7!important;box-shadow:none!important}.screen-comments .btn-primary:hover{background:#f2f4f5!important;box-shadow:none!important;transform:none!important}.screen-comments .btn-ghost,.screen-comments .icon-btn{background:#0b0e11!important;border:1px solid #20262c!important;color:#8d949b!important;box-shadow:none!important}.screen-comments .btn-ghost:hover,.screen-comments .icon-btn:hover{background:#13171c!important;border-color:#394149!important;color:#e7eaed!important}
-        .screen-comments .chat-wrapper{margin-bottom:7px!important;contain:layout paint}.screen-comments .chat-card{max-width:min(760px,88%)!important;background:#0c0f13!important;border:1px solid #1c2228!important;box-shadow:none!important;border-radius:12px!important;padding:10px 12px!important;animation:none!important;contain:content}.screen-comments .chat-card.me{background:#11151a!important;border-color:#2a3037!important}.screen-comments .chat-card.other{background:#0c0f13!important;border-color:#1c2228!important}.screen-comments .chat-avatar{box-shadow:none!important;filter:grayscale(1)}.screen-comments .chat-text{color:#d5d9dd!important;font-size:14px!important;line-height:1.65!important}
+        .screen-comments .chat-wrapper{margin-bottom:7px!important}.screen-comments .chat-card{max-width:min(760px,88%)!important;background:#0c0f13!important;border:1px solid #1c2228!important;box-shadow:none!important;border-radius:12px!important;padding:10px 12px!important;animation:none!important}.screen-comments .chat-card.me{background:#11151a!important;border-color:#2a3037!important}.screen-comments .chat-card.other{background:#0c0f13!important;border-color:#1c2228!important}.screen-comments .chat-avatar{box-shadow:none!important;filter:grayscale(1)}.screen-comments .chat-text{color:#d5d9dd!important;font-size:14px!important;line-height:1.65!important}
         #screen-chat>#chat-container{padding-bottom:10px!important}#screen-chat>.status-bar{position:sticky!important;bottom:0;z-index:4;background:#090b0e!important;padding:8px 12px max(8px,env(safe-area-inset-bottom))!important}#screen-chat>.status-bar>.flex{max-width:900px;width:100%;margin:0 auto}
         #screen-replay-player .replay-topbar,#screen-replay-player .replay-controls{background:#090b0e!important}#screen-replay-player .replay-topbar,#screen-replay-player .replay-controls{border-color:#1b2025!important}#screen-replay-player .replay-play-btn,#screen-replay-player .replay-speed-btn{background:#0d1014!important;border-color:#222830!important;color:#8b939a!important}#screen-replay-player .replay-speed-btn.active{background:#161a1f!important;border-color:#414a53!important;color:#e4e8eb!important}#screen-replay-player .replay-scrub-track{background:#20262c!important}#screen-replay-player .replay-scrub-fill{background:#b8bec5!important}#screen-replay-player .replay-scrub-handle{background:#e1e5e8!important;box-shadow:0 0 0 3px #e1e5e814!important}
-        #screen-archive .comments-container{contain:strict}#screen-archive #archive-list .comment-card{content-visibility:auto;contain:content}
+        #screen-archive .comments-container{contain:none}#screen-archive #archive-list .comment-card{content-visibility:auto;contain:paint}
         @media(max-width:640px){.screen-comments header{min-height:54px;padding-left:10px!important;padding-right:10px!important}.screen-comments .comments-container{padding:8px!important}.screen-comments .comment-card{padding:7px 8px!important}.screen-comments .comment-text{font-size:13.5px!important}.screen-comments .archive-tabs{padding:8px!important}.screen-comments .archive-tab{font-size:11.5px!important;padding:9px 8px!important}.screen-comments .chat-wrapper.me{padding-left:4px!important}.screen-comments .chat-wrapper.other{padding-right:4px!important}.screen-comments .chat-card{max-width:92%!important}#screen-chat>.status-bar{padding-left:8px!important;padding-right:8px!important}#chat-input{min-width:0;font-size:14px!important}.stream-sidebar{width:min(310px,90vw)!important}}
         @media(prefers-reduced-motion:reduce){.screen-comments *,.stream-sidebar,.stream-nav-backdrop{animation:none!important;transition:none!important}}
 
@@ -1121,6 +1121,23 @@ window.addEventListener('DOMContentLoaded', () => {
  .session-header-actions{gap:5px;}
  .session-header-actions .session-notification-btn,.session-header-actions .stream-menu-trigger{width:42px!important;height:42px!important;min-width:42px!important;min-height:42px!important;}
 }
+
+        /* VRTICS performance layer: fewer paints, less blur, no perpetual background work */
+        .bg-orb-1,.bg-orb-2{animation:none!important;filter:none!important;opacity:.035!important;will-change:auto!important}
+        .glass-card{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+        .toast{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+        .modal-overlay,#entry-overlay{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+        .screen-comments .glass-card,.screen-comments .toast{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+        .screen-comments header{box-shadow:none!important}
+        .stream-sidebar{box-shadow:-18px 0 36px rgba(0,0,0,.28)!important}
+        .modal-content{box-shadow:0 14px 36px rgba(0,0,0,.30)!important}
+        .glass-card-hover:hover,.btn-primary:hover,.btn-danger:hover,.user-circle:hover{transform:none!important;box-shadow:none!important}
+        @media(prefers-reduced-motion:reduce){.bg-orb-1,.bg-orb-2{display:none!important}}
+        html.low-performance .bg-scene,html.low-performance .notif-badge.show,html.low-performance .notif-dot.show,html.low-performance .live-dot,.low-performance .replay-badge-dot{animation:none!important}
+        html.low-performance .bg-scene{display:none!important}
+        html.low-performance *{scroll-behavior:auto!important}
+        html.low-performance .glass-card,.low-performance .modal-overlay,.low-performance #entry-overlay{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+        html.low-performance .glass-card-hover:hover,html.low-performance .btn-primary:hover,html.low-performance .btn-danger:hover{transform:none!important;box-shadow:none!important}
 </style>
 </head>
 <body>
@@ -1680,6 +1697,14 @@ window.addEventListener('DOMContentLoaded', () => {
     let nextPageToken = '';
     let youtubePollTimer = null;
     let leaderCheckTimer = null;
+    let youtubePollingActive = false;
+    let youtubePollInFlight = false;
+    let archiveFlushTimer = null;
+    let archiveWriteInFlight = false;
+    const archiveWriteQueue = new Map();
+    const youtubeDefaultPollMs = 5000;
+    const youtubeMinPollMs = 1000;
+    const youtubeMaxPollMs = 12000;
     let realtimeChannel = null;
     let chatChannel = null;
     let notifChannel = null;
@@ -1711,15 +1736,73 @@ window.addEventListener('DOMContentLoaded', () => {
     function getVideoId(url) { if (!url) return null; const patterns = [/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/live\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/, /^([a-zA-Z0-9_-]{11})$/]; for (const pattern of patterns) { const match = url.match(pattern); if (match) return match[1]; } return null; }
  
 
-    // === Session performance: keep the DOM bounded and batch high-frequency updates ===
-    const SESSION_DOM_LIMIT = 650;
-    const CHAT_DOM_LIMIT = 500;
+    // === Session performance: bounded DOM + bounded ID caches + frame-coalesced scroll ===
+    const SESSION_DOM_LIMIT = 250;
+    const CHAT_DOM_LIMIT = 250;
+    const RENDERED_ID_CACHE_LIMIT = 800;
     const perfState = {};
     function scheduleScrollToBottom(container,key='scroll'){if(!container||perfState[key])return;perfState[key]=true;requestAnimationFrame(()=>{perfState[key]=false;container.scrollTop=container.scrollHeight;});}
+    function rememberRenderedId(cache,id){
+        if(cache.has(id)) return false;
+        cache.add(id);
+        while(cache.size > RENDERED_ID_CACHE_LIMIT){
+            const first=cache.values().next().value;
+            if(first===undefined) break;
+            cache.delete(first);
+        }
+        return true;
+    }
     function pruneLiveCommentDOM(limit=SESSION_DOM_LIMIT){const list=document.getElementById('comments-list');if(!list)return;while(list.children.length>limit)list.removeChild(list.firstElementChild);}
-    function renderCommentBatch(items,countIncrement=false){const list=document.getElementById('comments-list');if(!list||!items?.length)return 0;const frag=document.createDocumentFragment();let added=0;const nearBottom=(list.parentElement.scrollHeight-list.parentElement.scrollTop-list.parentElement.clientHeight)<48;for(const item of items){const uniqueId=item.stream_id+item.author_name+item.published_at+item.comment_text;if(renderedComments.has(uniqueId))continue;renderedComments.add(uniqueId);const name=item.author_name||'مستخدم مجهول',msg=item.comment_text||'',color=getAvatarColor(name),card=document.createElement('div');card.className='comment-card';card.style.setProperty('--c-accent',color);card.innerHTML=`<div class="comment-avatar" style="background:${color};">${escapeHtml(name.charAt(0).toUpperCase())}</div><div style="flex:1;min-width:0;"><div class="flex items-center" style="margin-bottom:2px;"><span class="comment-username">${escapeHtml(name)}</span><span class="comment-time">${formatTime(item.published_at)}</span></div><div class="comment-text">${escapeHtml(msg)}</div></div>`;frag.appendChild(card);added++;}if(added){list.appendChild(frag);if(countIncrement){commentsTotal+=added;const c=document.getElementById('comments-count');if(c)c.textContent=`${commentsTotal} تعليق`;}const l=document.getElementById('comments-loading'),e=document.getElementById('comments-empty'),er=document.getElementById('comments-error');if(l)l.style.display='none';if(e)e.style.display='none';if(er)er.style.display='none';pruneLiveCommentDOM();if(nearBottom||isAtBottom)scheduleScrollToBottom(list.parentElement,'commentScroll');}return added;}
+    function renderCommentBatch(items,countIncrement=false){
+        const list=document.getElementById('comments-list');
+        if(!list||!items?.length)return 0;
+        const parent=list.parentElement;
+        const nearBottom=parent ? (parent.scrollHeight-parent.scrollTop-parent.clientHeight)<48 : true;
+        const frag=document.createDocumentFragment();
+        let added=0;
+        for(const item of items){
+            const uniqueId=[item.stream_id,item.author_name,item.published_at,item.comment_text].join('|');
+            if(!rememberRenderedId(renderedComments,uniqueId)) continue;
+            const name=item.author_name||'مستخدم مجهول',msg=item.comment_text||'',color=getAvatarColor(name),card=document.createElement('div');
+            card.className='comment-card';
+            card.style.setProperty('--c-accent',color);
+            card.innerHTML=`<div class="comment-avatar" style="background:${color};">${escapeHtml(name.charAt(0).toUpperCase())}</div><div style="flex:1;min-width:0;"><div class="flex items-center" style="margin-bottom:2px;"><span class="comment-username">${escapeHtml(name)}</span><span class="comment-time">${formatTime(item.published_at)}</span></div><div class="comment-text">${escapeHtml(msg)}</div></div>`;
+            frag.appendChild(card);
+            added++;
+        }
+        if(!added)return 0;
+        list.appendChild(frag);
+        if(countIncrement){commentsTotal+=added;const c=document.getElementById('comments-count');if(c)c.textContent=`${commentsTotal} تعليق`;}
+        document.getElementById('comments-loading')?.style.setProperty('display','none');
+        document.getElementById('comments-empty')?.style.setProperty('display','none');
+        document.getElementById('comments-error')?.style.setProperty('display','none');
+        pruneLiveCommentDOM();
+        if((nearBottom||isAtBottom)&&parent)scheduleScrollToBottom(parent,'commentScroll');
+        return added;
+    }
     function pruneChatDOM(limit=CHAT_DOM_LIMIT){const list=document.getElementById('chat-list');if(!list)return;while(list.children.length>limit)list.removeChild(list.firstElementChild);}
-    function appendChatBatch(items){const list=document.getElementById('chat-list');if(!list||!items?.length)return;const frag=document.createDocumentFragment();const nearBottom=(list.parentElement.scrollHeight-list.parentElement.scrollTop-list.parentElement.clientHeight)<48;for(const msg of items){const id=`chat_${msg.id}`;if(renderedChats.has(id))continue;renderedChats.add(id);const me=currentUser&&msg.user_id===currentUser.id,color=getAvatarColor(msg.display_name||'مستخدم'),initial=(msg.display_name||'مستخدم').charAt(0).toUpperCase(),w=document.createElement('div');w.className=`chat-wrapper ${me?'me':'other'}`;const card=document.createElement('div');card.className=`chat-card ${me?'me':'other'}`;card.innerHTML=`<div class="chat-card-header"><div class="chat-avatar" style="background:${color};">${escapeHtml(initial)}</div><span class="chat-username">${escapeHtml(msg.display_name||'مستخدم')}</span><span class="chat-time">${formatTime(msg.created_at)}</span></div><div class="chat-text">${escapeHtml(msg.message_text||'')}</div>`;w.appendChild(card);frag.appendChild(w);}list.appendChild(frag);list.querySelector('.empty-state')?.remove();pruneChatDOM();if(nearBottom)scheduleScrollToBottom(list.parentElement,'chatScroll');}
+    function appendChatBatch(items){
+        const list=document.getElementById('chat-list');
+        if(!list||!items?.length)return;
+        const parent=list.parentElement;
+        const nearBottom=parent ? (parent.scrollHeight-parent.scrollTop-parent.clientHeight)<48 : true;
+        const frag=document.createDocumentFragment();
+        for(const msg of items){
+            const id=`chat_${msg.id}`;
+            if(!rememberRenderedId(renderedChats,id))continue;
+            const me=currentUser&&msg.user_id===currentUser.id,color=getAvatarColor(msg.display_name||'مستخدم'),initial=(msg.display_name||'مستخدم').charAt(0).toUpperCase(),w=document.createElement('div');
+            w.className=`chat-wrapper ${me?'me':'other'}`;
+            const card=document.createElement('div');
+            card.className=`chat-card ${me?'me':'other'}`;
+            card.innerHTML=`<div class="chat-card-header"><div class="chat-avatar" style="background:${color};">${escapeHtml(initial)}</div><span class="chat-username">${escapeHtml(msg.display_name||'مستخدم')}</span><span class="chat-time">${formatTime(msg.created_at)}</span></div><div class="chat-text">${escapeHtml(msg.message_text||'')}</div>`;
+            w.appendChild(card);frag.appendChild(w);
+        }
+        if(!frag.childNodes.length)return;
+        list.appendChild(frag);
+        list.querySelector('.empty-state')?.remove();
+        pruneChatDOM();
+        if(nearBottom&&parent)scheduleScrollToBottom(parent,'chatScroll');
+    }
 
     let streamHistoryGuardActive = false;
     let streamHistoryMarker = null;
@@ -1761,6 +1844,18 @@ window.addEventListener('DOMContentLoaded', () => {
         const target = document.getElementById(screenId);
         if (target) target.classList.add('active');
         updateStreamSidebarActive(screenId);
+        syncLiveWorkWithScreen(screenId);
+    }
+
+    function syncLiveWorkWithScreen(screenId){
+        const liveVisible=screenId==='screen-comments' && !!currentVideoId && document.visibilityState==='visible';
+        if(liveVisible){
+            startLeaderElection();
+            if(isLeader && liveChatId && youTubeConnectionOk) startYouTubePolling();
+        }else{
+            stopYouTubePolling();
+            stopLeaderElection();
+        }
     }
 
     function openStreamSidebar() {
@@ -2731,6 +2826,7 @@ window.addEventListener('DOMContentLoaded', () => {
         if (searchDebounce) { clearTimeout(searchDebounce); searchDebounce = null; }
         if (leaderCheckTimer) { clearInterval(leaderCheckTimer); leaderCheckTimer = null; }
         if (youTubeReconnectTimer) { clearTimeout(youTubeReconnectTimer); youTubeReconnectTimer = null; }
+        if (archiveFlushTimer) { clearTimeout(archiveFlushTimer); archiveFlushTimer = null; }
         if (realtimeChannel) { try { supabaseClient.removeChannel(realtimeChannel); } catch(e) {} realtimeChannel = null; }
         if (chatChannel) { try { supabaseClient.removeChannel(chatChannel); } catch(e) {} chatChannel = null; }
         if (notifChannel) { try { supabaseClient.removeChannel(notifChannel); } catch(e) {} notifChannel = null; }
@@ -2739,6 +2835,11 @@ window.addEventListener('DOMContentLoaded', () => {
         if (usernamesChannel) { try { supabaseClient.removeChannel(usernamesChannel); } catch(e) {} usernamesChannel = null; }
         if (modDeletedChannel) { try { supabaseClient.removeChannel(modDeletedChannel); } catch(e) {} modDeletedChannel = null; }
         if (modDebugChannel) { try { supabaseClient.removeChannel(modDebugChannel); } catch(e) {} modDebugChannel = null; }
+        stopLeaderElection();
+        stopYouTubePolling();
+        flushArchiveWriteQueue();
+        renderedComments.clear();
+        renderedChats.clear();
         currentIsModerator = false;
         currentKeywordsCache = [];
         currentVideoId = null;
@@ -2966,7 +3067,7 @@ window.addEventListener('DOMContentLoaded', () => {
             if (!data || data.length === 0) return 0;
             document.getElementById('comments-loading').style.display = 'none';
             document.getElementById('comments-empty').style.display = 'none';
-            data.forEach(item => addCommentToUI(item, true));
+            renderCommentBatch(data, true);
             return data.length;
         } catch(e) {
             console.error('Load existing error:', e);
@@ -3032,22 +3133,27 @@ window.addEventListener('DOMContentLoaded', () => {
         attemptYouTubeConnect(currentVideoId);
     }
  
-    function startLeaderElection() { if (leaderCheckTimer) clearInterval(leaderCheckTimer); checkLeadership(); leaderCheckTimer = setInterval(checkLeadership, 5000); }
-    async function checkLeadership() {
-        if (!currentVideoId) return;
+    function stopLeaderElection(){
+        if(leaderCheckTimer){clearInterval(leaderCheckTimer);leaderCheckTimer=null;}
+    }
+    function startLeaderElection(){
+        stopLeaderElection();
+        if(!currentVideoId||document.visibilityState!=='visible'||document.querySelector('.screen.active')?.id!=='screen-comments')return;
+        checkLeadership();
+        leaderCheckTimer=setInterval(()=>{
+            if(document.visibilityState==='visible' && currentVideoId && document.querySelector('.screen.active')?.id==='screen-comments') checkLeadership();
+        },7000);
+    }
+    async function checkLeadership(){
+        if(!currentVideoId || document.visibilityState!=='visible' || document.querySelector('.screen.active')?.id!=='screen-comments') return;
         try {
             const { data, error } = await supabaseClient.rpc('try_acquire_lock', { p_stream_id: currentVideoId, p_client_id: clientId });
             if (error) throw error;
             const gotLeadership = data === true;
             if (gotLeadership && !isLeader) {
                 isLeader = true;
-                if (liveChatId && youTubeConnectionOk) {
-                    startYouTubePolling();
-                    document.getElementById('status-text').textContent = 'متصل';
-                    
-                } else {
-                    document.getElementById('status-text').textContent = 'Leader — ننتظر YouTube...';
-                }
+                if (liveChatId && youTubeConnectionOk) startYouTubePolling();
+                document.getElementById('status-text').textContent = 'متصل';
             } else if (!gotLeadership && isLeader) {
                 isLeader = false; stopYouTubePolling();
                 document.getElementById('status-text').textContent = 'متصل';
@@ -3067,33 +3173,93 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
- 
-    function startYouTubePolling() { if (youtubePollTimer) clearInterval(youtubePollTimer); fetchComments(); youtubePollTimer = setInterval(fetchComments, 2000); }
-    function stopYouTubePolling() { if (youtubePollTimer) { clearInterval(youtubePollTimer); youtubePollTimer = null; } }
- 
-    let youtubeFetchInFlight = false;
-    async function fetchComments() {
-        if (!liveChatId || !isLeader || youtubeFetchInFlight) return;
-        youtubeFetchInFlight = true;
-        try { const currentApiKey = YOUTUBE_API_KEYS[currentKeyIndex]; let apiUrl = `https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId=${liveChatId}&part=snippet,authorDetails&maxResults=200&key=${currentApiKey}`; if (nextPageToken) apiUrl += `&pageToken=${nextPageToken}`; const resp = await fetch(apiUrl); const data = await resp.json(); if (data.error && (data.error.code === 403 || data.error.errors?.[0]?.reason === 'quotaExceeded')) { currentKeyIndex = (currentKeyIndex + 1) % YOUTUBE_API_KEYS.length; return fetchComments(); } if (data.error) throw new Error(data.error.message); if (data.nextPageToken) nextPageToken = data.nextPageToken; if (data.items && data.items.length > 0) { document.getElementById('comments-loading').style.display = 'none'; document.getElementById('comments-empty').style.display = 'none'; const sorted = [...data.items].sort((a, b) => new Date(a.snippet.publishedAt) - new Date(b.snippet.publishedAt)); await archiveCommentsToSupabase(sorted); const batch=sorted.map(item=>({stream_id:currentVideoId,author_name:item.authorDetails?.displayName||'مستخدم مجهول',comment_text:item.snippet?.displayMessage||'',published_at:item.snippet?.publishedAt||new Date().toISOString()})); renderCommentBatch(batch,true); } } catch(e) { console.error('Fetch error:', e); }
+
+    function scheduleYouTubePoll(delay=3000){
+        if(youtubePollTimer) clearTimeout(youtubePollTimer);
+        youtubePollTimer=setTimeout(()=>{
+            youtubePollTimer=null;
+            fetchComments();
+        },Math.max(youtubeMinPollMs,Math.min(youtubeMaxPollMs,delay)));
     }
- 
-    async function archiveCommentsToSupabase(comments) {
-        if (!supabaseClient || !currentVideoId) return;
-        const batchData = comments.map(item => ({
-            stream_id: currentVideoId,
-            author_name: item.authorDetails?.displayName || 'مستخدم مجهول',
-            comment_text: item.snippet?.displayMessage || '',
-            published_at: item.snippet?.publishedAt || new Date().toISOString()
-        })).filter(c => c.comment_text !== '');
-        if (batchData.length === 0) return;
+    function startYouTubePolling(){
+        if(!currentVideoId||!isLeader||!liveChatId||!youTubeConnectionOk||document.visibilityState!=='visible'||document.querySelector('.screen.active')?.id!=='screen-comments')return;
+        youtubePollingActive=true;
+        if(!youtubePollTimer) fetchComments();
+    }
+    function stopYouTubePolling(){
+        youtubePollingActive=false;
+        if(youtubePollTimer){clearTimeout(youtubePollTimer);youtubePollTimer=null;}
+    }
+
+    async function fetchComments(){
+        if(!liveChatId||!isLeader||!youtubePollingActive||youtubeFetchInFlight||document.visibilityState!=='visible'||document.querySelector('.screen.active')?.id!=='screen-comments')return;
+        youtubeFetchInFlight=true;
         try {
-            const { error } = await supabaseClient.from('archived_comments')
-                .upsert(batchData, { onConflict: 'stream_id,author_name,published_at,comment_text', ignoreDuplicates: true });
-            if (error) console.error('Archive upsert error:', error);
-        } catch (e) { console.error('Archive upsert exception:', e); }
+            const currentApiKey=YOUTUBE_API_KEYS[currentKeyIndex];
+            let apiUrl=`https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId=${liveChatId}&part=snippet,authorDetails&maxResults=200&key=${currentApiKey}`;
+            if(nextPageToken) apiUrl += `&pageToken=${nextPageToken}`;
+            const resp=await fetch(apiUrl,{cache:'no-store'});
+            const data=await resp.json();
+            if(data.error && (data.error.code===403 || data.error.errors?.[0]?.reason==='quotaExceeded')){
+                currentKeyIndex=(currentKeyIndex+1)%YOUTUBE_API_KEYS.length;
+                scheduleYouTubePoll(5000);
+                return;
+            }
+            if(data.error) throw new Error(data.error.message);
+            if(data.nextPageToken) nextPageToken=data.nextPageToken;
+            if(data.items?.length){
+                document.getElementById('comments-loading').style.display='none';
+                document.getElementById('comments-empty').style.display='none';
+                const sorted=[...data.items].sort((a,b)=>new Date(a.snippet.publishedAt)-new Date(b.snippet.publishedAt));
+                archiveCommentsToSupabase(sorted);
+                const batch=sorted.map(item=>({stream_id:currentVideoId,author_name:item.authorDetails?.displayName||'مستخدم مجهول',comment_text:item.snippet?.displayMessage||'',published_at:item.snippet?.publishedAt||new Date().toISOString()}));
+                renderCommentBatch(batch,true);
+            }
+            const serverDelay=Number(data.pollingIntervalMillis)||youtubeDefaultPollMs;
+            scheduleYouTubePoll(serverDelay);
+        } catch(e){
+            console.error('Fetch error:',e);
+            scheduleYouTubePoll(5000);
+        } finally {
+            youtubeFetchInFlight=false;
+        }
     }
- 
+
+    function scheduleArchiveFlush(delay=1200){
+        if(archiveFlushTimer)return;
+        archiveFlushTimer=setTimeout(()=>{archiveFlushTimer=null;flushArchiveWriteQueue();},delay);
+    }
+    async function flushArchiveWriteQueue(){
+        if(archiveWriteInFlight||archiveWriteQueue.size===0||!supabaseClient)return;
+        archiveWriteInFlight=true;
+        const rows=[...archiveWriteQueue.values()];
+        archiveWriteQueue.clear();
+        try{
+            const {error}=await supabaseClient.from('archived_comments').upsert(rows,{onConflict:'stream_id,author_name,published_at,comment_text',ignoreDuplicates:true});
+            if(error)console.error('Archive upsert error:',error);
+        }catch(e){
+            console.error('Archive upsert exception:',e);
+            for(const row of rows){
+                const key=[row.stream_id,row.author_name,row.published_at,row.comment_text].join('|');
+                archiveWriteQueue.set(key,row);
+            }
+        }finally{
+            archiveWriteInFlight=false;
+            if(archiveWriteQueue.size)scheduleArchiveFlush(1500);
+        }
+    }
+    function archiveCommentsToSupabase(comments){
+        if(!supabaseClient||!currentVideoId||!comments?.length)return;
+        for(const item of comments){
+            const row={stream_id:currentVideoId,author_name:item.authorDetails?.displayName||'مستخدم مجهول',comment_text:item.snippet?.displayMessage||'',published_at:item.snippet?.publishedAt||new Date().toISOString()};
+            if(!row.comment_text)continue;
+            const key=[row.stream_id,row.author_name,row.published_at,row.comment_text].join('|');
+            archiveWriteQueue.set(key,row);
+        }
+        if(archiveWriteQueue.size>=25) flushArchiveWriteQueue();
+        else scheduleArchiveFlush();
+    }
+
     function addCommentToUI(item, countIncrement = false) {
         return renderCommentBatch([item], countIncrement);
     }
@@ -3324,23 +3490,16 @@ window.addEventListener('DOMContentLoaded', () => {
                 return; 
             }
             status.innerHTML = `<i class="fas fa-list ml-1" style="color: var(--accent);"></i> ${data.length} تعليق مؤرشف`;
-            data.forEach(item => { 
-                const color = getAvatarColor(item.author_name); 
-                const card = document.createElement('div'); 
-                card.className = 'comment-card archived'; 
-                card.style.setProperty('--c-accent', color); 
-                card.innerHTML = `
-                    <div class="comment-avatar" style="background: ${color};">${item.author_name.charAt(0).toUpperCase()}</div>
-                    <div style="flex:1; min-width:0;">
-                        <div class="flex items-center" style="gap: 6px;">
-                            <span class="comment-username" style="color:${color};">${escapeHtml(item.author_name)}</span>
-                            <span class="comment-time"><i class="far fa-clock ml-1" style="opacity:0.5;"></i>${new Date(item.published_at).toLocaleTimeString('ar-EG', {hour:'2-digit',minute:'2-digit'})}</span>
-                        </div>
-                        <div class="comment-text" style="margin-top:3px;">${escapeHtml(item.comment_text)}</div>
-                    </div>
-                `; 
-                list.appendChild(card); 
-            });
+            const frag=document.createDocumentFragment();
+            for(const item of data){
+                const color=getAvatarColor(item.author_name);
+                const card=document.createElement('div');
+                card.className='comment-card archived';
+                card.style.setProperty('--c-accent',color);
+                card.innerHTML=`<div class="comment-avatar" style="background:${color};">${item.author_name.charAt(0).toUpperCase()}</div><div style="flex:1;min-width:0;"><div class="flex items-center" style="gap:6px;"><span class="comment-username" style="color:${color};">${escapeHtml(item.author_name)}</span><span class="comment-time"><i class="far fa-clock ml-1" style="opacity:.5;"></i>${new Date(item.published_at).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'})}</span></div><div class="comment-text" style="margin-top:3px;">${escapeHtml(item.comment_text)}</div></div>`;
+                frag.appendChild(card);
+            }
+            list.appendChild(frag);
         } catch(e) { status.innerHTML = '<i class="fas fa-exclamation-triangle ml-1" style="color:#f87171;"></i> التحميل فشل'; }
     }
     function searchArchivedComments() { clearTimeout(searchDebounce); const term = document.getElementById('search-archive-input').value.trim(); const user = document.getElementById('search-archive-user').value.trim(); searchDebounce = setTimeout(() => loadArchivedComments(term, user), 300); }
@@ -3390,6 +3549,16 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
  
+    document.addEventListener('visibilitychange', () => {
+        const active=document.querySelector('.screen.active')?.id;
+        if(document.visibilityState==='hidden'){
+            stopYouTubePolling();
+            stopLeaderElection();
+        }else if(currentVideoId){
+            syncLiveWorkWithScreen(active);
+        }
+    }, { passive: true });
+
     window.addEventListener('popstate', (event) => {
         if (!currentVideoId || !streamHistoryGuardActive || exitDialogOpen) return;
         const activeId = document.querySelector('.screen.active')?.id;
@@ -3398,6 +3567,14 @@ window.addEventListener('DOMContentLoaded', () => {
         if (activeId === 'screen-replay-period') { showScreen('screen-comments'); return; }
         requestStreamExit();
     });
+
+    (() => {
+        const reduced=window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+        const cores=navigator.hardwareConcurrency||8;
+        const memory=navigator.deviceMemory||8;
+        const saveData=!!navigator.connection?.saveData;
+        if(reduced||saveData||cores<=4||memory<=4)document.documentElement.classList.add('low-performance');
+    })();
 
     document.addEventListener('DOMContentLoaded', () => {
         updateUserCircle(); const lastStream = localStorage.getItem('vrtx_last_stream'); if (lastStream) { startLiveStream(lastStream); }
