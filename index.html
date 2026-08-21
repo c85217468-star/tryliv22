@@ -775,6 +775,28 @@
             .stream-sidebar { width:min(320px, 92vw); }
             .stream-sidebar-head { padding:16px 14px 12px; }
         }
+    
+        /* ===== VRTICS PREMIUM SESSION: BLACK / GRAY / PERFORMANCE ===== */
+        .screen-comments{--hx-bg:#07080a!important;--hx-bg-soft:#0d0f12!important;--hx-fg:#eceff2!important;--hx-fg-dim:#9aa1a8!important;--hx-fg-mute:#626970!important;--hx-border:#1e2329!important;--hx-border-soft:#15191e!important;--hx-accent:#d9dde1!important;--hx-warn:#a78b5b!important;--hx-err:#b96b6b!important;--hx-live:#cf5c5c!important;color-scheme:dark;contain:layout style paint}
+        #screen-comments,#screen-chat,#screen-archive,#screen-replay-player{background:#07080a!important;background-image:none!important}
+        .screen-comments header{min-height:56px;padding:max(8px,env(safe-area-inset-top)) 14px 8px!important;background:#07080af5!important;border-bottom:1px solid #1a1e23!important;box-shadow:0 8px 24px #0000002e!important}
+        .screen-comments .comments-container{background:#07080a!important;overscroll-behavior:contain;contain:strict;content-visibility:auto}
+        .screen-comments .comment-card{background:transparent!important;border-right:1px solid #171b20!important;border-radius:8px!important;margin:0!important;padding:8px 12px!important;box-shadow:none!important;animation:none!important;content-visibility:auto;contain:content}
+        .screen-comments .comment-card:hover{background:#0d1014!important}.screen-comments .comment-username{color:#d7dbe0!important;font-weight:650!important}.screen-comments .comment-text{color:#c4c9ce!important;font-size:14px!important;line-height:1.7!important}.screen-comments .comment-time{color:#565c62!important}
+        .screen-comments .status-bar{min-height:42px;padding:8px 12px max(8px,env(safe-area-inset-bottom))!important;background:#090b0e!important;border-top:1px solid #1a1e23!important;color:#757c83!important}
+        .stream-menu-trigger{width:40px!important;height:40px!important;border-radius:11px!important;background:#0d1014!important;border:1px solid #22272d!important;color:#b6bdc4!important;box-shadow:none!important}.stream-menu-trigger:hover{background:#13171c!important;border-color:#343b43!important;color:#f1f3f5!important}
+        .stream-nav-backdrop{background:#00000094!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;transition:opacity .18s ease!important}
+        .stream-sidebar{width:min(320px,88vw)!important;background:#0a0c0f!important;border-left:1px solid #20252b!important;box-shadow:-26px 0 55px #00000061!important;transition:transform .18s cubic-bezier(.2,.7,.2,1)!important;contain:layout paint}
+        .stream-sidebar-head,.stream-sidebar-footer{background:#0a0c0f!important;border-color:#1a1f24!important}.stream-sidebar-nav{overscroll-behavior:contain}.stream-nav-item{min-height:48px;margin-bottom:3px!important;border-radius:11px!important;background:transparent!important;border-color:transparent!important;color:#8d949b!important}.stream-nav-item:hover{background:#11151a!important;color:#dfe3e6!important}.stream-nav-item.active{background:#12161b!important;border-color:#222930!important;color:#e7eaed!important}.stream-nav-item.active::before{background:#b8bec4!important}.stream-nav-item.danger{color:#8f6363!important}.stream-nav-item.danger:hover{background:#170f11!important;color:#c99191!important}
+        .screen-comments .archive-tabs{max-width:900px!important;width:100%;padding:10px 14px!important;gap:6px!important;background:#07080a!important;border-bottom:1px solid #191e23!important}.screen-comments .archive-tab{min-height:42px;background:#0b0e11!important;border:1px solid #1e242a!important;color:#7f878e!important}.screen-comments .archive-tab.active{background:#15191e!important;border-color:#3a424a!important;color:#e5e8eb!important}
+        .screen-comments .input-field{background:#0b0e11!important;border:1px solid #20262c!important;color:#e6e9ec!important;box-shadow:none!important}.screen-comments .input-field:focus{border-color:#3b434b!important;box-shadow:0 0 0 3px #bec6cd0d!important}.screen-comments .btn-primary{background:#dfe3e7!important;color:#080a0c!important;border:1px solid #dfe3e7!important;box-shadow:none!important}.screen-comments .btn-primary:hover{background:#f2f4f5!important;box-shadow:none!important;transform:none!important}.screen-comments .btn-ghost,.screen-comments .icon-btn{background:#0b0e11!important;border:1px solid #20262c!important;color:#8d949b!important;box-shadow:none!important}.screen-comments .btn-ghost:hover,.screen-comments .icon-btn:hover{background:#13171c!important;border-color:#394149!important;color:#e7eaed!important}
+        .screen-comments .chat-wrapper{margin-bottom:7px!important;contain:layout paint}.screen-comments .chat-card{max-width:min(760px,88%)!important;background:#0c0f13!important;border:1px solid #1c2228!important;box-shadow:none!important;border-radius:12px!important;padding:10px 12px!important;animation:none!important;contain:content}.screen-comments .chat-card.me{background:#11151a!important;border-color:#2a3037!important}.screen-comments .chat-card.other{background:#0c0f13!important;border-color:#1c2228!important}.screen-comments .chat-avatar{box-shadow:none!important;filter:grayscale(1)}.screen-comments .chat-text{color:#d5d9dd!important;font-size:14px!important;line-height:1.65!important}
+        #screen-chat>#chat-container{padding-bottom:10px!important}#screen-chat>.status-bar{position:sticky!important;bottom:0;z-index:4;background:#090b0e!important;padding:8px 12px max(8px,env(safe-area-inset-bottom))!important}#screen-chat>.status-bar>.flex{max-width:900px;width:100%;margin:0 auto}
+        #screen-replay-player .replay-topbar,#screen-replay-player .replay-controls{background:#090b0e!important}#screen-replay-player .replay-topbar,#screen-replay-player .replay-controls{border-color:#1b2025!important}#screen-replay-player .replay-play-btn,#screen-replay-player .replay-speed-btn{background:#0d1014!important;border-color:#222830!important;color:#8b939a!important}#screen-replay-player .replay-speed-btn.active{background:#161a1f!important;border-color:#414a53!important;color:#e4e8eb!important}#screen-replay-player .replay-scrub-track{background:#20262c!important}#screen-replay-player .replay-scrub-fill{background:#b8bec5!important}#screen-replay-player .replay-scrub-handle{background:#e1e5e8!important;box-shadow:0 0 0 3px #e1e5e814!important}
+        #screen-archive .comments-container{contain:strict}#screen-archive #archive-list .comment-card{content-visibility:auto;contain:content}
+        @media(max-width:640px){.screen-comments header{min-height:54px;padding-left:10px!important;padding-right:10px!important}.screen-comments .comments-container{padding:8px!important}.screen-comments .comment-card{padding:7px 8px!important}.screen-comments .comment-text{font-size:13.5px!important}.screen-comments .archive-tabs{padding:8px!important}.screen-comments .archive-tab{font-size:11.5px!important;padding:9px 8px!important}.screen-comments .chat-wrapper.me{padding-left:4px!important}.screen-comments .chat-wrapper.other{padding-right:4px!important}.screen-comments .chat-card{max-width:92%!important}#screen-chat>.status-bar{padding-left:8px!important;padding-right:8px!important}#chat-input{min-width:0;font-size:14px!important}.stream-sidebar{width:min(310px,90vw)!important}}
+        @media(prefers-reduced-motion:reduce){.screen-comments *,.stream-sidebar,.stream-nav-backdrop{animation:none!important;transition:none!important}}
+
     </style>
 </head>
 <body>
@@ -1295,6 +1317,17 @@
     function getAvatarColor(name) { let hash = 0; for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash); return AVATAR_COLORS[Math.abs(hash) % AVATAR_COLORS.length]; }
     function getVideoId(url) { if (!url) return null; const patterns = [/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/live\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/, /^([a-zA-Z0-9_-]{11})$/]; for (const pattern of patterns) { const match = url.match(pattern); if (match) return match[1]; } return null; }
  
+
+    // === Session performance: keep the DOM bounded and batch high-frequency updates ===
+    const SESSION_DOM_LIMIT = 650;
+    const CHAT_DOM_LIMIT = 500;
+    const perfState = {};
+    function scheduleScrollToBottom(container,key='scroll'){if(!container||perfState[key])return;perfState[key]=true;requestAnimationFrame(()=>{perfState[key]=false;container.scrollTop=container.scrollHeight;});}
+    function pruneLiveCommentDOM(limit=SESSION_DOM_LIMIT){const list=document.getElementById('comments-list');if(!list)return;while(list.children.length>limit)list.removeChild(list.firstElementChild);}
+    function renderCommentBatch(items,countIncrement=false){const list=document.getElementById('comments-list');if(!list||!items?.length)return 0;const frag=document.createDocumentFragment();let added=0;const nearBottom=(list.parentElement.scrollHeight-list.parentElement.scrollTop-list.parentElement.clientHeight)<48;for(const item of items){const uniqueId=item.stream_id+item.author_name+item.published_at+item.comment_text;if(renderedComments.has(uniqueId))continue;renderedComments.add(uniqueId);const name=item.author_name||'مستخدم مجهول',msg=item.comment_text||'',color=getAvatarColor(name),card=document.createElement('div');card.className='comment-card';card.style.setProperty('--c-accent',color);card.innerHTML=`<div class="comment-avatar" style="background:${color};">${escapeHtml(name.charAt(0).toUpperCase())}</div><div style="flex:1;min-width:0;"><div class="flex items-center" style="margin-bottom:2px;"><span class="comment-username">${escapeHtml(name)}</span><span class="comment-time">${formatTime(item.published_at)}</span></div><div class="comment-text">${escapeHtml(msg)}</div></div>`;frag.appendChild(card);added++;}if(added){list.appendChild(frag);if(countIncrement){commentsTotal+=added;const c=document.getElementById('comments-count');if(c)c.textContent=`${commentsTotal} تعليق`;}const l=document.getElementById('comments-loading'),e=document.getElementById('comments-empty'),er=document.getElementById('comments-error');if(l)l.style.display='none';if(e)e.style.display='none';if(er)er.style.display='none';pruneLiveCommentDOM();if(nearBottom||isAtBottom)scheduleScrollToBottom(list.parentElement,'commentScroll');}return added;}
+    function pruneChatDOM(limit=CHAT_DOM_LIMIT){const list=document.getElementById('chat-list');if(!list)return;while(list.children.length>limit)list.removeChild(list.firstElementChild);}
+    function appendChatBatch(items){const list=document.getElementById('chat-list');if(!list||!items?.length)return;const frag=document.createDocumentFragment();const nearBottom=(list.parentElement.scrollHeight-list.parentElement.scrollTop-list.parentElement.clientHeight)<48;for(const msg of items){const id=`chat_${msg.id}`;if(renderedChats.has(id))continue;renderedChats.add(id);const me=currentUser&&msg.user_id===currentUser.id,color=getAvatarColor(msg.display_name||'مستخدم'),initial=(msg.display_name||'مستخدم').charAt(0).toUpperCase(),w=document.createElement('div');w.className=`chat-wrapper ${me?'me':'other'}`;const card=document.createElement('div');card.className=`chat-card ${me?'me':'other'}`;card.innerHTML=`<div class="chat-card-header"><div class="chat-avatar" style="background:${color};">${escapeHtml(initial)}</div><span class="chat-username">${escapeHtml(msg.display_name||'مستخدم')}</span><span class="chat-time">${formatTime(msg.created_at)}</span></div><div class="chat-text">${escapeHtml(msg.message_text||'')}</div>`;w.appendChild(card);frag.appendChild(w);}list.appendChild(frag);list.querySelector('.empty-state')?.remove();pruneChatDOM();if(nearBottom)scheduleScrollToBottom(list.parentElement,'chatScroll');}
+
     function showScreen(screenId) {
         closeStreamSidebar();
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -1883,8 +1916,9 @@
         card.innerHTML = `<div class="comment-avatar" style="background:${color};">${escapeHtml(displayName.charAt(0).toUpperCase())}</div><div style="flex:1; min-width:0;"><div class="flex items-center" style="margin-bottom:2px;"><span class="comment-username" style="color:${color};">${escapeHtml(displayName)}</span><span class="comment-time">${new Date(item.published_at).toLocaleTimeString('ar-EG')}</span></div><div class="comment-text">${escapeHtml(message)}</div></div>`;
         list.appendChild(card);
         replayRenderedNodes[item._matchId] = card;
+        while (list.children.length > SESSION_DOM_LIMIT) { const first=list.firstElementChild; if (!first) break; const id=first.dataset.matchId; if(id) delete replayRenderedNodes[id]; list.removeChild(first); }
         const container = document.getElementById('replay-comments-container');
-        container.scrollTop = container.scrollHeight;
+        if (container) scheduleScrollToBottom(container,'replayScroll');
     }
 
     function markReplayCommentDeleted(matchId, deleteTimeMs) {
@@ -2534,7 +2568,7 @@
  
     async function fetchComments() {
         if (!liveChatId || !isLeader) return;
-        try { const currentApiKey = YOUTUBE_API_KEYS[currentKeyIndex]; let apiUrl = `https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId=${liveChatId}&part=snippet,authorDetails&maxResults=200&key=${currentApiKey}`; if (nextPageToken) apiUrl += `&pageToken=${nextPageToken}`; const resp = await fetch(apiUrl); const data = await resp.json(); if (data.error && (data.error.code === 403 || data.error.errors?.[0]?.reason === 'quotaExceeded')) { currentKeyIndex = (currentKeyIndex + 1) % YOUTUBE_API_KEYS.length; return fetchComments(); } if (data.error) throw new Error(data.error.message); if (data.nextPageToken) nextPageToken = data.nextPageToken; if (data.items && data.items.length > 0) { document.getElementById('comments-loading').style.display = 'none'; document.getElementById('comments-empty').style.display = 'none'; const sorted = [...data.items].sort((a, b) => new Date(a.snippet.publishedAt) - new Date(b.snippet.publishedAt)); await archiveCommentsToSupabase(sorted); sorted.forEach(item => { const newItem = { stream_id: currentVideoId, author_name: item.authorDetails?.displayName || 'مستخدم مجهول', comment_text: item.snippet?.displayMessage || '', published_at: item.snippet?.publishedAt || new Date().toISOString() }; addCommentToUI(newItem, true); }); } } catch(e) { console.error('Fetch error:', e); }
+        try { const currentApiKey = YOUTUBE_API_KEYS[currentKeyIndex]; let apiUrl = `https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId=${liveChatId}&part=snippet,authorDetails&maxResults=200&key=${currentApiKey}`; if (nextPageToken) apiUrl += `&pageToken=${nextPageToken}`; const resp = await fetch(apiUrl); const data = await resp.json(); if (data.error && (data.error.code === 403 || data.error.errors?.[0]?.reason === 'quotaExceeded')) { currentKeyIndex = (currentKeyIndex + 1) % YOUTUBE_API_KEYS.length; return fetchComments(); } if (data.error) throw new Error(data.error.message); if (data.nextPageToken) nextPageToken = data.nextPageToken; if (data.items && data.items.length > 0) { document.getElementById('comments-loading').style.display = 'none'; document.getElementById('comments-empty').style.display = 'none'; const sorted = [...data.items].sort((a, b) => new Date(a.snippet.publishedAt) - new Date(b.snippet.publishedAt)); await archiveCommentsToSupabase(sorted); const batch=sorted.map(item=>({stream_id:currentVideoId,author_name:item.authorDetails?.displayName||'مستخدم مجهول',comment_text:item.snippet?.displayMessage||'',published_at:item.snippet?.publishedAt||new Date().toISOString()})); renderCommentBatch(batch,true); } } catch(e) { console.error('Fetch error:', e); }
     }
  
     async function archiveCommentsToSupabase(comments) {
@@ -2554,17 +2588,9 @@
     }
  
     function addCommentToUI(item, countIncrement = false) {
-        const uniqueId = item.stream_id + item.author_name + item.published_at + item.comment_text; if (renderedComments.has(uniqueId)) return; renderedComments.add(uniqueId);
-        const list = document.getElementById('comments-list'); const displayName = item.author_name || 'مستخدم مجهول'; const message = item.comment_text || ''; const color = getAvatarColor(displayName);
-        const card = document.createElement('div'); card.className = 'comment-card'; card.style.setProperty('--c-accent', color);
-        card.innerHTML = `<div class="comment-avatar" style="background: ${color};">${escapeHtml(displayName.charAt(0).toUpperCase())}</div><div style="flex:1; min-width:0;"><div class="flex items-center" style="margin-bottom:2px;"><span class="comment-username" style="color:${color};">${escapeHtml(displayName)}</span><span class="comment-time">${formatTime(item.published_at)}</span></div><div class="comment-text">${escapeHtml(message)}</div></div>`;
-        list.appendChild(card); if (countIncrement) { commentsTotal++; document.getElementById('comments-count').textContent = `${commentsTotal} تعليق`; }
-        document.getElementById('comments-loading').style.display = 'none';
-        document.getElementById('comments-empty').style.display = 'none';
-        document.getElementById('comments-error').style.display = 'none';
-        if (isAtBottom) list.parentElement.scrollTop = list.parentElement.scrollHeight;
+        return renderCommentBatch([item], countIncrement);
     }
- 
+
     function openNotificationsModal() {
         document.getElementById('notif-dot').classList.remove('show');
         document.getElementById('notifications-modal').classList.add('show');
@@ -2699,53 +2725,35 @@
     }
  
     async function loadChatMessages() {
-        const list = document.getElementById('chat-list'); list.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i></div>'; renderedChats.clear();
+        const list = document.getElementById('chat-list');
+        list.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i></div>';
+        renderedChats.clear();
         try {
-            let allMessages = [];
-            let page = 0;
-            let hasMore = true;
-            while (hasMore) {
-                const from = page * 1000;
-                const to = from + 999;
-                const { data, error } = await supabaseClient.from('stream_messages').select('*').eq('stream_id', currentVideoId).order('created_at', { ascending: true }).range(from, to);
-                if (error) throw error;
-                if (!data || data.length === 0) break;
-                allMessages = allMessages.concat(data);
-                if (data.length < 1000) hasMore = false;
-                page++;
-            }
+            const { data, error } = await supabaseClient
+                .from('stream_messages')
+                .select('*')
+                .eq('stream_id', currentVideoId)
+                .order('created_at', { ascending: false })
+                .limit(CHAT_DOM_LIMIT);
+            if (error) throw error;
+            const allMessages = (data || []).reverse();
             list.innerHTML = '';
-            if (allMessages.length === 0) { list.innerHTML = '<div class="empty-state"><i class="fas fa-comment-slash"></i><p style="color: var(--text-muted);">ماكو رسائل لحد هسه. كن أول واحد يبدأ الحچي!</p></div>'; return; }
-            allMessages.forEach(msg => addChatMessageToUI(msg));
-        } catch(e) { console.error('Chat load error:', e); list.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>ما قدرنا نحمّل الـ Chat</p></div>'; }
+            if (!allMessages.length) {
+                list.innerHTML = '<div class="empty-state"><i class="fas fa-comment-slash"></i><p style="color: var(--text-muted);">ماكو رسائل لحد هسه. كن أول واحد يبدأ الحچي!</p></div>';
+                return;
+            }
+            appendChatBatch(allMessages);
+            requestAnimationFrame(() => { list.parentElement.scrollTop = list.parentElement.scrollHeight; });
+        } catch (e) {
+            console.error('Chat load error:', e);
+            list.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>ما قدرنا نحمّل الـ Chat</p></div>';
+        }
     }
- 
+
     function addChatMessageToUI(msg) {
-        const uniqueId = `chat_${msg.id}`; if (renderedChats.has(uniqueId)) return; renderedChats.add(uniqueId);
-        const list = document.getElementById('chat-list'); 
-        const emptyState = list.querySelector('.empty-state');
-        if (emptyState) emptyState.remove();
-        const isMe = currentUser && msg.user_id === currentUser.id; 
-        const color = getAvatarColor(msg.display_name);
-        const initial = msg.display_name.charAt(0).toUpperCase();
-        const wrapper = document.createElement('div'); 
-        wrapper.className = `chat-wrapper ${isMe ? 'me' : 'other'}`;
-        const card = document.createElement('div'); 
-        card.className = `chat-card ${isMe ? 'me' : 'other'}`; 
-        card.style.setProperty('--c-accent', color);
-        card.innerHTML = `
-            <div class="chat-card-header">
-                <div class="chat-avatar" style="background: ${color};">${initial}</div>
-                <span class="chat-username">${escapeHtml(msg.display_name)}</span>
-                <span class="chat-time">${formatTime(msg.created_at)}</span>
-            </div>
-            <div class="chat-text">${escapeHtml(msg.message_text)}</div>
-        `;
-        wrapper.appendChild(card); 
-        list.appendChild(wrapper); 
-        list.parentElement.scrollTop = list.parentElement.scrollHeight;
+        appendChatBatch([msg]);
     }
- 
+
     async function sendChatMessage() {
         const input = document.getElementById('chat-input'); const text = input.value.trim();
         if (!text) return;
