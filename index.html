@@ -927,11 +927,347 @@
             .stream-sidebar { width:min(320px,90vw) !important; }
             .notifications-list { max-height:60vh; }
         }
+        /* ===== VRTICS SESSION V4: PINK + ORANGE PREMIUM ===== */
+        .screen-comments { --session-pink:#f472b6 !important; --session-orange:#f59e0b !important; --session-orange2:#fb923c !important; }
+        .screen-comments .archive-tab.active { background:linear-gradient(135deg,rgba(244,114,182,.10),rgba(245,158,11,.08)) !important; border-color:rgba(244,114,182,.36) !important; color:#f7c5d9 !important; }
+        .screen-comments .archive-tab:hover { border-color:rgba(245,158,11,.28) !important; }
+        .screen-comments .btn-primary { background:linear-gradient(135deg,#f472b6,#f59e0b) !important; border-color:transparent !important; color:#1a0e08 !important; }
+        .stream-sidebar { border-left-color:rgba(245,158,11,.16) !important; }
+        .stream-sidebar-close:hover { border-color:rgba(245,158,11,.45) !important; color:#ffd08a !important; background:rgba(245,158,11,.10) !important; }
+        .stream-nav-item.active::before { background:linear-gradient(180deg,#f472b6,#f59e0b) !important; box-shadow:0 0 12px rgba(245,158,11,.22); }
+        .stream-nav-item:nth-child(3) i,.stream-nav-item:nth-child(4) i { color:#f6a84c !important; }
+        .stream-nav-item.danger { color:#d8a16d !important; }
+        .stream-nav-item.danger i { color:#fb923c !important; }
+        .stream-nav-item.danger:hover { color:#ffd2a3 !important; background:rgba(249,115,22,.08) !important; border-color:rgba(249,115,22,.18) !important; }
+        .stream-exit-footer { padding-top:10px !important; }
+        .stream-exit-footer .stream-nav-item { border-top:1px solid #1b2026 !important; border-radius:13px !important; padding-top:14px !important; }
+        .stream-sidebar-footer:has(.danger) { background:linear-gradient(180deg,#0a0c0f,#0c0d10) !important; }
+        .archive-pane-scroll { display:flex !important; flex-direction:column !important; flex:1 1 auto !important; min-height:0 !important; overflow-y:auto !important; overflow-x:hidden !important; overscroll-behavior:contain; scrollbar-width:thin; scrollbar-color:rgba(244,114,182,.32) transparent; }
+        .archive-pane-scroll::-webkit-scrollbar { width:9px; }
+        .archive-pane-scroll::-webkit-scrollbar-thumb { background:linear-gradient(180deg,rgba(244,114,182,.28),rgba(245,158,11,.24)); border-radius:12px; }
+        .archive-toolbar { flex:0 0 auto !important; }
+        .archive-feed { width:100%; max-width:900px; margin:0 auto; padding:0 16px 28px; }
+        .archive-feed .comment-card { width:100%; max-width:none; }
+        #screen-archive #archive-container { overflow:visible !important; max-width:none !important; width:100% !important; margin:0 !important; padding:0 !important; flex:0 0 auto !important; }
+        #screen-archive #archive-list { width:100%; }
+        #screen-archive #archive-list .comment-card { content-visibility:auto; contain:content; }
+        #monitor-pane.monitor-pane-scroll { scrollbar-color:rgba(245,158,11,.28) transparent; }
+        #monitor-pane.monitor-pane-scroll::-webkit-scrollbar-thumb { background:linear-gradient(180deg,rgba(244,114,182,.26),rgba(245,158,11,.26)); }
+        #mod-status-box .btn-ghost { border-color:rgba(245,158,11,.24) !important; }
+        #mod-status-box .btn-ghost:hover { border-color:rgba(245,158,11,.45) !important; color:#ffd08a !important; background:rgba(245,158,11,.08) !important; }
+        #mod-status-box .btn-primary { background:linear-gradient(135deg,#f472b6,#f59e0b) !important; }
+        #screen-comments .live-dot { background:linear-gradient(135deg,#f472b6,#f59e0b) !important; box-shadow:0 0 0 3px rgba(245,158,11,.08) !important; }
+        #screen-comments .stream-live-title { color:#f7c4d8 !important; }
+        #screen-welcome { justify-content:flex-start !important; overflow-y:auto !important; overflow-x:hidden !important; padding:clamp(28px,6vh,64px) 20px max(36px,env(safe-area-inset-bottom)) !important; }
+        #screen-welcome > .w-full { max-width:900px !important; margin:0 auto; padding-bottom:20px; }
+        #screen-welcome .welcome-info-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:26px; text-align:right; }
+        #screen-welcome .welcome-info-card { display:flex; gap:12px; align-items:flex-start; padding:17px; border-radius:18px; background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.018)); border:1px solid #20262c; scroll-margin-top:22px; }
+        #screen-welcome .welcome-info-card:hover { border-color:rgba(244,114,182,.20); }
+        #screen-welcome .welcome-info-card h3 { color:#f0f2f4; font-size:14px; font-weight:800; margin-bottom:6px; }
+        #screen-welcome .welcome-info-card p { color:#858d95; font-size:12px; line-height:1.9; }
+        #screen-welcome .welcome-info-card.compact { grid-column:1 / -1; }
+        #screen-welcome .welcome-info-icon { width:38px; height:38px; flex:0 0 38px; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#f4a2c4; background:rgba(244,114,182,.09); border:1px solid rgba(244,114,182,.16); }
+        #screen-welcome .welcome-info-icon.orange { color:#ffb45e; background:rgba(245,158,11,.09); border-color:rgba(245,158,11,.16); }
+        #screen-welcome .welcome-footer { margin-top:28px; }
+        #screen-welcome .welcome-footer a:hover { color:#f5a2c8 !important; }
+        @media(max-width:700px){
+            #screen-welcome .welcome-info-grid { grid-template-columns:1fr; }
+            #screen-welcome .welcome-info-card.compact { grid-column:auto; }
+            #screen-welcome { padding-left:14px !important; padding-right:14px !important; }
+            .archive-feed { padding-left:10px; padding-right:10px; }
+        }
+
         @media(prefers-reduced-motion:reduce) {
             .modal-close-x,.glass-card-hover:hover { transform:none !important; }
         }
 
     </style>
+
+<style id="vrtics-archive-fullpage-scroll-fix">
+/* ================================================================
+   VRTICS ARCHIVE UX FIX
+   The ARCHIVE SCREEN is the single primary scroll container.
+   Archived comments must never be trapped inside a narrow nested box.
+   ================================================================ */
+#screen-archive {
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior-y: contain !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 0 !important;
+}
+
+#screen-archive > header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 30 !important;
+    flex: 0 0 auto !important;
+}
+
+#screen-archive > .archive-tabs {
+    position: sticky !important;
+    top: 56px !important;
+    z-index: 29 !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    background: rgba(7,8,10,.96) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+#screen-archive .archive-pane.active,
+#screen-archive .archive-pane.active.archive-pane-scroll,
+#screen-archive #archive-pane {
+    display: block !important;
+    flex: none !important;
+    min-height: auto !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    overflow-y: visible !important;
+    overflow-x: visible !important;
+    overscroll-behavior: auto !important;
+}
+
+#screen-archive .archive-toolbar {
+    position: sticky !important;
+    top: 111px !important;
+    z-index: 20 !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 14px clamp(12px, 3vw, 28px) !important;
+    background: linear-gradient(180deg, rgba(7,8,10,.98), rgba(7,8,10,.92)) !important;
+    border-bottom: 1px solid rgba(255,255,255,.04) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+}
+
+#screen-archive #archive-container,
+#screen-archive .archive-feed,
+#screen-archive #archive-list {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+}
+
+#screen-archive #archive-container {
+    display: block !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    flex: none !important;
+}
+
+#screen-archive .archive-feed {
+    display: block !important;
+    padding: 10px clamp(12px, 3vw, 28px) max(34px, env(safe-area-inset-bottom)) !important;
+}
+
+#screen-archive #archive-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 7px !important;
+}
+
+#screen-archive #archive-list .comment-card {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    content-visibility: auto !important;
+    contain: content !important;
+}
+
+#screen-archive #archive-list .empty-state {
+    width: 100% !important;
+    min-height: 220px !important;
+}
+
+/* Never create an inner scrollbar inside Archive. */
+#screen-archive #archive-pane::-webkit-scrollbar,
+#screen-archive #archive-container::-webkit-scrollbar,
+#screen-archive .archive-feed::-webkit-scrollbar,
+#screen-archive #archive-list::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+}
+
+@media (max-width: 640px) {
+    #screen-archive > .archive-tabs { top: 54px !important; }
+    #screen-archive .archive-toolbar { top: 106px !important; padding: 10px !important; }
+    #screen-archive .archive-feed { padding: 8px 10px max(28px, env(safe-area-inset-bottom)) !important; }
+}
+
+/* === VRTICS FINAL: Archive and Smart Moderator are mutually exclusive === */
+#screen-archive .archive-pane {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+#screen-archive .archive-pane.active:not([hidden]) {
+    display: block !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+#screen-archive .archive-pane[hidden] {
+    display: none !important;
+}
+#screen-archive #archive-pane,
+#screen-archive #monitor-pane {
+    width: 100% !important;
+    max-width: none !important;
+    overflow: visible !important;
+}
+</style>
+
+<style id="vrtics-final-moderator-replay-fix">
+/* ================= FINAL SMART MODERATOR ================= */
+#screen-archive #monitor-pane.active:not([hidden]) {
+    display:block !important;
+    visibility:visible !important;
+    pointer-events:auto !important;
+    width:100% !important;
+    max-width:none !important;
+    height:auto !important;
+    max-height:none !important;
+    min-height:0 !important;
+    overflow:visible !important;
+    margin:0 !important;
+    padding:0 !important;
+}
+#screen-archive #monitor-pane .monitor-pane-inner {
+    width:100% !important;
+    max-width:1180px !important;
+    margin:0 auto !important;
+    padding:16px clamp(12px,2.8vw,28px) 34px !important;
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) !important;
+    align-content:start !important;
+    gap:14px !important;
+}
+#screen-archive #monitor-pane #mod-status-box,
+#screen-archive #monitor-pane #mod-status-box + div,
+#screen-archive #monitor-pane #mod-status-box + div + div {
+    margin:0 !important;
+}
+#screen-archive #monitor-pane .monitor-pane-inner > div {
+    min-width:0 !important;
+}
+#screen-archive #monitor-pane #mod-status-box,
+#screen-archive #monitor-pane .monitor-pane-inner > div:not(#mod-status-box) {
+    background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.018)) !important;
+    border:1px solid #20262d !important;
+    box-shadow:0 10px 30px rgba(0,0,0,.14) !important;
+}
+#screen-archive #monitor-pane #mod-status-box { border-color:rgba(245,158,11,.20) !important; }
+#screen-archive #monitor-pane .monitor-pane-inner h4 { color:#eceff2 !important; }
+#screen-archive #monitor-pane .monitor-pane-inner p { line-height:1.75 !important; }
+#screen-archive #monitor-pane #mod-log-list { max-height:none !important; overflow:visible !important; }
+@media(min-width:920px){
+    #screen-archive #monitor-pane .monitor-pane-inner { grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important; align-items:start !important; }
+    #screen-archive #monitor-pane #mod-status-box { grid-column:1 / -1 !important; }
+    #screen-archive #monitor-pane .monitor-pane-inner > div:nth-of-type(2) { grid-column:1 !important; }
+    #screen-archive #monitor-pane .monitor-pane-inner > div:nth-of-type(3) { grid-column:2 !important; }
+}
+@media(max-width:640px){
+    #screen-archive #monitor-pane .monitor-pane-inner { padding:10px 10px max(28px,env(safe-area-inset-bottom)) !important; gap:10px !important; }
+}
+
+/* ================= FINAL REPLAY ================= */
+#screen-replay-player.replay-screen {
+    background:#07080a !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:stretch !important;
+    justify-content:flex-start !important;
+    height:100dvh !important;
+    min-height:100dvh !important;
+    padding:0 !important;
+    overflow:hidden !important;
+}
+#screen-replay-player .replay-header {
+    flex:0 0 auto !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:space-between !important;
+    gap:12px !important;
+    min-height:62px !important;
+    padding:max(8px,env(safe-area-inset-top)) 14px 10px !important;
+    background:rgba(7,8,10,.96) !important;
+    border-bottom:1px solid #1c2228 !important;
+    box-shadow:0 8px 26px rgba(0,0,0,.24) !important;
+}
+#screen-replay-player .replay-title-wrap { min-width:0; flex:1; text-align:center; }
+#screen-replay-player .replay-title-row { display:flex; align-items:center; justify-content:center; gap:8px; color:#f2f4f6; font-size:14px; }
+#screen-replay-player .replay-title-row .replay-badge-dot { background:linear-gradient(135deg,#f472b6,#f59e0b) !important; }
+#screen-replay-player .replay-subtitle { display:block; margin-top:3px; color:#747d86; font-size:10.5px; }
+#screen-replay-player .replay-meta-bar { flex:0 0 auto; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:9px 16px; background:#0a0d10; border-bottom:1px solid #171d22; }
+#screen-replay-player .replay-meta-left { display:flex; align-items:baseline; gap:8px; min-width:0; color:#f0f2f4; font-variant-numeric:tabular-nums; }
+#screen-replay-player .replay-meta-label { color:#69717a; font-size:10px; }
+#screen-replay-player #replay-clock-text { font-weight:800; font-size:13px; }
+#screen-replay-player #replay-date-text { color:#666f78; font-size:10px; }
+#screen-replay-player .replay-live-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 9px; border-radius:999px; color:#f6c8d9; background:rgba(244,114,182,.08); border:1px solid rgba(244,114,182,.18); font-size:10px; }
+#screen-replay-player .replay-live-badge i { color:#f59e0b; font-size:6px; }
+#screen-replay-player .replay-chat-viewport { flex:1 1 auto !important; min-height:0 !important; width:100% !important; max-width:none !important; overflow-y:auto !important; overflow-x:hidden !important; padding:14px clamp(10px,3vw,40px) 190px !important; overscroll-behavior:contain !important; -webkit-overflow-scrolling:touch !important; background:radial-gradient(circle at 50% 0%,rgba(244,114,182,.035),transparent 32%),#07080a !important; }
+#screen-replay-player .replay-chat-list { width:100%; max-width:940px; margin:0 auto; display:flex; flex-direction:column; gap:7px; }
+#screen-replay-player .replay-chat-list .comment-card { width:100%; max-width:none !important; background:linear-gradient(180deg,rgba(255,255,255,.032),rgba(255,255,255,.018)) !important; border:1px solid #1c2329 !important; border-radius:15px !important; padding:11px 13px !important; box-shadow:none !important; animation:replayMessageIn .18s ease both !important; }
+#screen-replay-player .replay-chat-list .comment-username { color:#f0b4cd !important; }
+#screen-replay-player .replay-chat-list .comment-text { color:#e0e5e9 !important; }
+#screen-replay-player .replay-chat-list .comment-time { color:#626a72 !important; }
+#screen-replay-player .replay-chat-list .comment-avatar { filter:none !important; }
+#screen-replay-player .replay-bottom-dock { position:fixed !important; left:0 !important; right:0 !important; bottom:0 !important; z-index:35 !important; padding:10px 14px max(12px,env(safe-area-inset-bottom)) !important; background:linear-gradient(180deg,rgba(7,8,10,.70),rgba(7,8,10,.98) 20%) !important; border-top:1px solid #1b2228 !important; backdrop-filter:blur(14px) !important; -webkit-backdrop-filter:blur(14px) !important; }
+#screen-replay-player .replay-time-row { max-width:940px; margin:0 auto 7px; display:flex; align-items:center; justify-content:space-between; color:#7b848d; font-size:10px; font-variant-numeric:tabular-nums; }
+#screen-replay-player .replay-scrub-wrap { max-width:940px; height:24px; margin:0 auto; display:flex; align-items:center; cursor:pointer; touch-action:none; user-select:none; }
+#screen-replay-player .replay-scrub-track { position:relative; width:100%; height:6px; border-radius:999px; background:#222930; overflow:visible; }
+#screen-replay-player .replay-scrub-fill { position:absolute; inset:0 auto 0 0; width:0; border-radius:999px; background:linear-gradient(90deg,#f472b6,#f59e0b); }
+#screen-replay-player .replay-scrub-handle { position:absolute; top:50%; right:0; width:14px; height:14px; border-radius:50%; background:#fff2f8; border:2px solid #f59e0b; transform:translate(50%,-50%); box-shadow:0 0 0 4px rgba(244,114,182,.10),0 0 18px rgba(245,158,11,.16); cursor:grab; }
+#screen-replay-player .replay-scrub-handle:active { cursor:grabbing; transform:translate(50%,-50%) scale(1.08); }
+#screen-replay-player .replay-control-row { max-width:940px; margin:7px auto 0; display:flex; align-items:center; gap:9px; }
+#screen-replay-player .replay-play-btn { width:38px !important; height:38px !important; border-radius:12px !important; background:linear-gradient(135deg,rgba(244,114,182,.15),rgba(245,158,11,.11)) !important; border:1px solid rgba(244,114,182,.22) !important; color:#f6dbe7 !important; flex:0 0 38px; }
+#screen-replay-player .replay-control-status { flex:1; min-width:0; color:#737d86; font-size:10px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+#screen-replay-player .replay-speed-group { display:flex; gap:4px; }
+#screen-replay-player .replay-speed-btn { padding:6px 9px !important; border-radius:8px !important; background:#0c1014 !important; border:1px solid #222a31 !important; color:#7f8891 !important; font-size:10px !important; }
+#screen-replay-player .replay-speed-btn.active { background:linear-gradient(135deg,rgba(244,114,182,.18),rgba(245,158,11,.16)) !important; border-color:rgba(244,114,182,.34) !important; color:#f6cfdf !important; }
+#screen-replay-player .replay-empty-state { min-height:42vh !important; }
+@keyframes replayMessageIn { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:translateY(0)} }
+@media(max-width:640px){
+    #screen-replay-player .replay-header { min-height:56px !important; padding-left:10px !important; padding-right:10px !important; }
+    #screen-replay-player .replay-meta-bar { padding:8px 10px; }
+    #screen-replay-player .replay-chat-viewport { padding-left:8px !important; padding-right:8px !important; padding-bottom:205px !important; }
+    #screen-replay-player .replay-control-row { gap:6px; }
+    #screen-replay-player .replay-speed-btn { padding:6px 7px !important; }
+}
+</style>
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+    const wrap = document.getElementById('replay-scrub-wrap');
+    const handle = document.getElementById('replay-scrub-handle');
+    const track = document.getElementById('replay-scrub-track');
+    if (wrap) wrap.addEventListener('pointerdown', handleScrubPointerDown);
+    if (track) track.addEventListener('click', handleScrubClick);
+    if (handle) handle.addEventListener('keydown', (e) => {
+        if (!replayEvents.length) return;
+        if (!['ArrowLeft','ArrowRight','Home','End'].includes(e.key)) return;
+        e.preventDefault();
+        const total = Math.max(1, replayWindowEnd - replayWindowStart);
+        const current = Math.max(0, Math.min(total, getReplayVirtualElapsed()));
+        let next = current;
+        if (e.key === 'ArrowLeft') next -= total / 100;
+        if (e.key === 'ArrowRight') next += total / 100;
+        if (e.key === 'Home') next = 0;
+        if (e.key === 'End') next = total;
+        setReplayFraction(next / total);
+    });
+});
+</script>
+
 </head>
 <body>
  
@@ -963,14 +1299,44 @@
                     <h3 class="font-bold text-lg mb-2">البثوث المحفوظة Saved Streams</h3>
                 </div>
             </div>
+            <div class="welcome-info-grid">
+                <section id="about-vrtics" class="welcome-info-card">
+                    <div class="welcome-info-icon"><i class="fas fa-heart"></i></div>
+                    <div>
+                        <h3>من نحن</h3>
+                        <p>VRTICS سويناه حتى نخلي متابعة البثوث والتعليقات أسهل وأرتب. تگدر تحفظ جلسة البث، تراجع التعليقات، تبحث بيها، وترجع للأحداث اللي صارت بدون ما تضيع عليك التفاصيل.</p>
+                    </div>
+                </section>
+                <section id="terms-vrtics" class="welcome-info-card">
+                    <div class="welcome-info-icon orange"><i class="fas fa-file-signature"></i></div>
+                    <div>
+                        <h3>شروط الاستخدام</h3>
+                        <p>استخدم الموقع بشكل طبيعي وما تحاول تعطل الخدمة أو تستعملها بشي يضر غيرك. أنت مسؤول عن بيانات حسابك وروابط البث اللي تضيفها، ومحتوى YouTube يبقى تابع لصاحبه ومنصته. ممكن نطوّر بعض الخصائص أو نغيّرها بالمستقبل حتى تبقى التجربة أحسن.</p>
+                    </div>
+                </section>
+                <section id="privacy-vrtics" class="welcome-info-card">
+                    <div class="welcome-info-icon"><i class="fas fa-shield-heart"></i></div>
+                    <div>
+                        <h3>سياسة الخصوصية</h3>
+                        <p>نستخدم البيانات اللي تدخلها حتى يشتغل الموقع بشكل صحيح، مثل بيانات الحساب ومعلومات جلسات البث والبيانات المرتبطة بالأرشفة. بعض المعلومات ممكن تنخزن محلياً على جهازك حتى تبقى الجلسة أسهل، وما نستخدم البيانات خارج الغرض المرتبط بتشغيل الخدمة وإدارتها.</p>
+                    </div>
+                </section>
+                <section id="contact-vrtics" class="welcome-info-card compact">
+                    <div class="welcome-info-icon orange"><i class="fas fa-comments"></i></div>
+                    <div>
+                        <h3>تواصل ويانا</h3>
+                        <p>هذا القسم حالياً مجرد مكان مخصص للتواصل، والتفاصيل راح تنضاف بعدين.</p>
+                    </div>
+                </section>
+            </div>
             <div class="welcome-footer">
                 <div class="welcome-footer-brand">VRTICS <span>♡</span></div>
                 <div class="welcome-footer-text">منصة لإدارة وأرشفة جلسات البث والتعليقات.</div>
                 <nav aria-label="روابط الموقع">
-                    <a href="#" onclick="return false;">من نحن</a>
-                    <a href="#" onclick="return false;">سياسة الخصوصية</a>
-                    <a href="#" onclick="return false;">شروط الاستخدام</a>
-                    <a href="#" onclick="return false;">تواصل ويانا</a>
+                    <a href="#about-vrtics">من نحن</a>
+                    <a href="#privacy-vrtics">سياسة الخصوصية</a>
+                    <a href="#terms-vrtics">شروط الاستخدام</a>
+                    <a href="#contact-vrtics">تواصل ويانا</a>
                 </nav>
             </div>
         </div>
@@ -1045,40 +1411,51 @@
     </div>
 
     <!-- شاشة مشغّل إعادة العرض -->
-    <div id="screen-replay-player" class="screen screen-comments" style="z-index: 60;">
-        <header class="w-full flex items-center justify-between px-4 py-3" style="background: var(--hx-bg); border-bottom: 1px solid var(--hx-border);">
-            <button class="back-btn" onclick="exitReplay()" title="خروج"><i class="fas fa-arrow-right"></i></button>
-            <div class="flex items-center gap-2">
-                <span class="replay-badge-dot"></span>
-                <span class="text-xs font-bold" style="color:#a8b0c0; letter-spacing: 0.5px;">إعادة عرض</span>
+    <div id="screen-replay-player" class="screen screen-comments replay-screen" style="z-index: 60;">
+        <header class="replay-header">
+            <button class="icon-btn replay-back-btn" onclick="exitReplay()" title="الرجوع للبث"><i class="fas fa-arrow-right"></i></button>
+            <div class="replay-title-wrap">
+                <div class="replay-title-row"><span class="replay-badge-dot"></span><strong>إعادة العرض ♡</strong></div>
+                <span class="replay-subtitle">دا نشغّل الأحداث مثل ما صارت</span>
             </div>
             <button class="stream-menu-trigger" onclick="openStreamSidebar()" title="قائمة البث"><i class="fas fa-bars"></i></button>
         </header>
-        <div class="replay-topbar">
-            <div class="flex items-center justify-between mb-2">
-                <span class="replay-clock" id="replay-clock-text">--:--:--</span>
-                <span class="replay-clock-sub" id="replay-date-text"></span>
+
+        <div class="replay-meta-bar">
+            <div class="replay-meta-left">
+                <span class="replay-meta-label">وقت العرض</span>
+                <strong id="replay-clock-text">--:--:--</strong>
+                <span id="replay-date-text"></span>
             </div>
-            <div class="replay-scrub-wrap" id="replay-scrub-wrap" onclick="handleScrubClick(event)">
+            <span class="replay-live-badge"><i class="fas fa-circle"></i> Replay</span>
+        </div>
+
+        <div id="replay-comments-container" class="replay-chat-viewport">
+            <div id="replay-empty" class="empty-state replay-empty-state" style="display:none;"><i class="fas fa-comments"></i><p style="margin-top:10px;">ماكو نشاط بهالفترة ♡</p></div>
+            <div id="replay-comments-list" class="replay-chat-list"></div>
+        </div>
+
+        <div class="replay-bottom-dock">
+            <div class="replay-time-row">
+                <span id="replay-elapsed-label">00:00</span>
+                <span id="replay-duration-label">00:00</span>
+            </div>
+            <div class="replay-scrub-wrap" id="replay-scrub-wrap" aria-label="التحكم بوقت إعادة العرض">
                 <div class="replay-scrub-track" id="replay-scrub-track">
                     <div class="replay-scrub-fill" id="replay-scrub-fill"></div>
-                    <div class="replay-scrub-handle" id="replay-scrub-handle"></div>
+                    <div class="replay-scrub-handle" id="replay-scrub-handle" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"></div>
                 </div>
             </div>
-        </div>
-        <div class="replay-controls">
-            <button class="replay-play-btn" id="replay-play-btn" onclick="toggleReplayPlayback()"><i class="fas fa-pause" id="replay-play-icon"></i></button>
-            <span class="text-xs" id="replay-status-text" style="color: var(--hx-fg-mute);">جاري إعادة العرض...</span>
-            <div class="replay-speed-group">
-                <button class="replay-speed-btn active" data-speed="1" onclick="setReplaySpeed(1)">1x</button>
-                <button class="replay-speed-btn" data-speed="2" onclick="setReplaySpeed(2)">2x</button>
-                <button class="replay-speed-btn" data-speed="5" onclick="setReplaySpeed(5)">5x</button>
-                <button class="replay-speed-btn" data-speed="15" onclick="setReplaySpeed(15)">15x</button>
+            <div class="replay-control-row">
+                <button class="replay-play-btn" id="replay-play-btn" onclick="toggleReplayPlayback()" title="تشغيل / إيقاف"><i class="fas fa-pause" id="replay-play-icon"></i></button>
+                <span class="replay-control-status" id="replay-status-text">جاري إعادة العرض...</span>
+                <div class="replay-speed-group" aria-label="سرعة إعادة العرض">
+                    <button class="replay-speed-btn active" data-speed="1" onclick="setReplaySpeed(1)">1x</button>
+                    <button class="replay-speed-btn" data-speed="2" onclick="setReplaySpeed(2)">2x</button>
+                    <button class="replay-speed-btn" data-speed="5" onclick="setReplaySpeed(5)">5x</button>
+                    <button class="replay-speed-btn" data-speed="15" onclick="setReplaySpeed(15)">15x</button>
+                </div>
             </div>
-        </div>
-        <div id="replay-comments-container" class="comments-container">
-            <div id="replay-empty" class="empty-state" style="display:none;"><i class="fas fa-inbox"></i><p style="color: var(--text-muted); margin-top:10px;">ماكو أي نشاط بهذي الفترة.</p></div>
-            <div id="replay-comments-list"></div>
         </div>
     </div>
  
@@ -1133,6 +1510,12 @@
             </button>
         </div>
 
+        <div class="stream-sidebar-footer stream-exit-footer">
+            <button class="stream-nav-item danger" data-stream-section="exit" onclick="navigateStreamSection('exit')" style="margin-bottom:0;">
+                <i class="fas fa-arrow-right-from-bracket"></i>
+                <span class="nav-copy"><strong>الخروج من جلسة البث</strong><span>إنهاء الجلسة والرجوع للقائمة الرئيسية</span></span>
+            </button>
+        </div>
     </aside>
 
     <!-- شاشة التعليقات الحية (واجهة تيرمينال رمادية — بدون موارد شبكة) -->
@@ -1204,27 +1587,27 @@
         </div>
  
         <!-- لوح Archive: بحث + قائمة التعليقات المؤرشفة -->
-        <div id="archive-pane" class="archive-pane active">
-            <div class="w-full p-4 max-w-2xl mx-auto" style="flex-shrink: 0;">
+        <div id="archive-pane" class="archive-pane active archive-pane-scroll">
+            <div class="w-full p-4 max-w-2xl mx-auto archive-toolbar">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <input id="search-archive-input" type="text" class="input-field" placeholder="دوّر بنص التعليق..." oninput="searchArchivedComments()">
                     <input id="search-archive-user" type="text" class="input-field" placeholder="فلترة حسب Username..." oninput="searchArchivedComments()">
                 </div>
                 <div id="archive-status" class="text-xs mt-2" style="color: var(--text-muted);">دا يحمّل الـ Archive...</div>
             </div>
-            <div id="archive-container" class="comments-container"><div id="archive-list"></div></div>
+            <div id="archive-container" class="archive-feed"><div id="archive-list"></div></div>
         </div>
  
         <!-- لوح المراقب الذكي Smart Moderator: إدارة الكلمات المفتاحية -->
         <div id="monitor-pane" class="archive-pane monitor-pane-scroll">
-            <div class="monitor-pane-inner w-full p-4 max-w-2xl mx-auto">
+            <div class="monitor-pane-inner w-full">
                 <div id="mod-status-box" class="mb-4 p-4 rounded-xl" style="background: rgba(0,0,0,0.2); border: 1px solid var(--border);">
                     <h4 class="text-sm font-bold mb-3"><i class="fas fa-user-shield ml-1" style="color: var(--accent);"></i> صلاحية الـ Moderator بهذا البث</h4>
                     <div id="mod-status-content" class="flex items-center justify-between gap-3">
                         <span id="mod-status-text" class="text-xs" style="color: var(--text-muted);">دا يتحقق...</span>
                         <button id="mod-status-btn" class="btn-ghost" style="padding:6px 14px; font-size:12px; white-space:nowrap;" onclick="requestOrCheckModeratorStatus()"><i class="fas fa-sync ml-1"></i> تحقق هسه</button>
                     </div>
-                    <p class="text-xs mt-2" style="color: var(--text-muted);">إذا Account بعده ما عنده صلاحية Moderator، Account الرسمي راح يرسل رسالة فعلية بالـ Chat يطلب من صاحب البث يضيفه Moderator من YouTube Studio. من تمنحه الصلاحية، اضغط "تحقق هسه" مرة ثانية.</p>
+                    <p class="text-xs mt-2" style="color: var(--text-muted);">ما راح تنرسل أي رسالة تلقائياً عند دخول الجلسة. اضغط "تحقق من الصلاحية" بنفسك حتى يبدأ التحقق، وإذا كانت الصلاحية تحتاج طلب من صاحب البث راح تبدأ العملية من هنا فقط.</p>
                     <p id="mod-debug-line" class="text-xs mt-2" style="color: var(--accent); display:none; word-break: break-word;"></p>
                     <div id="mod-log-box" class="mt-3 pt-3" style="display:none; border-top: 1px solid var(--border);">
                         <p class="text-xs font-bold mb-2" style="color: var(--text-muted);"><i class="fas fa-terminal ml-1"></i> Live Server Log — يوضح سبب أي حذف أو تخطي بالتفصيل:</p>
@@ -2045,6 +2428,7 @@
             replayEvents = events;
             replayWindowStart = startDate.getTime();
             replayWindowEnd = events.length ? events[events.length - 1].time + 3000 : replayWindowStart + 3000;
+            renderReplayProgress(replayWindowStart);
 
             if (events.length === 0) {
                 document.getElementById('replay-empty').style.display = 'flex';
@@ -2085,14 +2469,7 @@
             replayNextEventIndex++;
         }
 
-        const totalSpan = Math.max(1, replayWindowEnd - replayWindowStart);
-        const progress = Math.min(1, Math.max(0, (currentVirtualTime - replayWindowStart) / totalSpan));
-        document.getElementById('replay-scrub-fill').style.width = (progress * 100) + '%';
-        document.getElementById('replay-scrub-handle').style.right = (progress * 100) + '%';
-
-        const d = new Date(currentVirtualTime);
-        document.getElementById('replay-clock-text').textContent = d.toLocaleTimeString('ar-EG');
-        document.getElementById('replay-date-text').textContent = d.toLocaleDateString('ar-EG');
+        renderReplayProgress(currentVirtualTime);
 
         if (currentVirtualTime >= replayWindowEnd) {
             pauseReplayInternal();
@@ -2100,7 +2477,7 @@
         }
     }
 
-    function appendReplayComment(item) {
+    function appendReplayComment(item, shouldScroll = true) {
         const list = document.getElementById('replay-comments-list');
         document.getElementById('replay-empty').style.display = 'none';
         const displayName = item.author_name || 'مستخدم مجهول';
@@ -2115,7 +2492,7 @@
         replayRenderedNodes[item._matchId] = card;
         while (list.children.length > SESSION_DOM_LIMIT) { const first=list.firstElementChild; if (!first) break; const id=first.dataset.matchId; if(id) delete replayRenderedNodes[id]; list.removeChild(first); }
         const container = document.getElementById('replay-comments-container');
-        if (container) scheduleScrollToBottom(container,'replayScroll');
+        if (container && shouldScroll) scheduleScrollToBottom(container,'replayScroll');
     }
 
     function markReplayCommentDeleted(matchId, deleteTimeMs) {
@@ -2157,34 +2534,81 @@
         if (replayPlaying && !replayTickTimer) replayTickTimer = setInterval(replayTick, 200);
     }
 
-    function handleScrubClick(evt) {
-        const track = document.getElementById('replay-scrub-track');
-        const rect = track.getBoundingClientRect();
-        let fraction = (rect.right - evt.clientX) / rect.width;
+    function setReplayFraction(fraction) {
+        const totalSpan = Math.max(1, replayWindowEnd - replayWindowStart);
         fraction = Math.min(1, Math.max(0, fraction));
-        const totalSpan = replayWindowEnd - replayWindowStart;
         const targetVirtualTime = replayWindowStart + fraction * totalSpan;
-
-        document.getElementById('replay-comments-list').innerHTML = '';
+        const list = document.getElementById('replay-comments-list');
+        if (list) list.innerHTML = '';
         replayRenderedNodes = {};
         replayNextEventIndex = 0;
         for (let i = 0; i < replayEvents.length; i++) {
             if (replayEvents[i].time > targetVirtualTime) break;
             const ev = replayEvents[i];
-            if (ev.type === 'comment') appendReplayComment(ev.comment);
+            if (ev.type === 'comment') appendReplayComment(ev.comment, false);
             else markReplayCommentDeleted(ev.matchId, ev.time);
             replayNextEventIndex = i + 1;
         }
         replayVirtualElapsedAtLastResume = fraction * totalSpan;
         replayResumeWallClock = Date.now();
+        renderReplayProgress(targetVirtualTime);
+    }
+
+    function renderReplayProgress(currentVirtualTime) {
+        const totalSpan = Math.max(1, replayWindowEnd - replayWindowStart);
+        const elapsed = Math.max(0, Math.min(totalSpan, currentVirtualTime - replayWindowStart));
+        const progress = elapsed / totalSpan;
+        const fill = document.getElementById('replay-scrub-fill');
+        const handle = document.getElementById('replay-scrub-handle');
+        const clock = document.getElementById('replay-clock-text');
+        const date = document.getElementById('replay-date-text');
+        const elapsedLabel = document.getElementById('replay-elapsed-label');
+        const durationLabel = document.getElementById('replay-duration-label');
+        if (fill) fill.style.width = (progress * 100) + '%';
+        if (handle) { handle.style.right = (progress * 100) + '%'; handle.setAttribute('aria-valuenow', String(Math.round(progress * 100))); }
+        if (clock) clock.textContent = new Date(currentVirtualTime).toLocaleTimeString('ar-EG');
+        if (date) date.textContent = new Date(currentVirtualTime).toLocaleDateString('ar-EG');
+        const fmt = (ms) => { const sec = Math.max(0, Math.floor(ms / 1000)); const h = Math.floor(sec/3600); const m = Math.floor((sec%3600)/60); const s = sec%60; return h ? `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}` : `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`; };
+        if (elapsedLabel) elapsedLabel.textContent = fmt(elapsed);
+        if (durationLabel) durationLabel.textContent = fmt(totalSpan);
+    }
+
+    function handleScrubPointerDown(evt) {
+        const track = document.getElementById('replay-scrub-track');
+        if (!track) return;
+        evt.preventDefault();
+        pauseReplayInternal();
+        window.__replayScrubbing = true;
+        handleScrubPointerMove(evt);
+        const move = e => handleScrubPointerMove(e);
+        const up = () => { window.__replayScrubbing = false; window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); };
+        window.addEventListener('pointermove', move);
+        window.addEventListener('pointerup', up, { once: true });
+    }
+
+    function handleScrubPointerMove(evt) {
+        if (!window.__replayScrubbing) return;
+        const track = document.getElementById('replay-scrub-track');
+        if (!track) return;
+        const rect = track.getBoundingClientRect();
+        let fraction = (rect.right - evt.clientX) / Math.max(1, rect.width);
+        fraction = Math.min(1, Math.max(0, fraction));
+        setReplayFraction(fraction);
+    }
+
+    function handleScrubClick(evt) {
+        if (window.__replayScrubbing) return;
+        const track = document.getElementById('replay-scrub-track');
+        if (!track) return;
+        const rect = track.getBoundingClientRect();
+        const fraction = Math.min(1, Math.max(0, (rect.right - evt.clientX) / Math.max(1, rect.width)));
+        setReplayFraction(fraction);
     }
 
     function exitReplay() {
         pauseReplayInternal();
-        replayEvents = []; replayRenderedNodes = {};
-        const returnToLive = currentVideoId;
-        replayVideoId = null;
-        if (returnToLive) showScreen('screen-comments');
+        replayEvents = []; replayRenderedNodes = {}; replayVideoId = null;
+        if (currentVideoId) showScreen('screen-comments');
         else showScreen('screen-list');
     }
  
@@ -2517,10 +2941,9 @@
     }
  
     async function autoCheckModeratorStatusIfNeeded(videoId) {
-        if (currentIsModerator) return;
-        const last = window.__lastModCheckedAt ? new Date(window.__lastModCheckedAt).getTime() : 0;
-        if (Date.now() - last < 5 * 60 * 1000) return;
-        await requestOrCheckModeratorStatus();
+        // Deliberately disabled: moderator permission checks/requests are MANUAL ONLY.
+        // Never send a YouTube chat message or request permission automatically when entering a session.
+        return;
     }
  
     async function loadKeywordsCache(videoId) {
@@ -2704,7 +3127,7 @@
             const newChatId = liveDetails.activeLiveChatId || liveDetails.liveChatId;
             if (!newChatId) throw new Error('ماكو Live Chat ID لهذا البث');
             liveChatId = newChatId; youTubeConnectionOk = true; hideStreamWarning();
-            if (isLeader) { startYouTubePolling(); document.getElementById('status-text').textContent = 'متصل'; autoCheckModeratorStatusIfNeeded(videoId); }
+            if (isLeader) { startYouTubePolling(); document.getElementById('status-text').textContent = 'متصل';  }
             else { document.getElementById('status-text').textContent = 'متصل'; }
         } catch(e) {
             youTubeConnectionOk = false;
@@ -2737,7 +3160,7 @@
                 if (liveChatId && youTubeConnectionOk) {
                     startYouTubePolling();
                     document.getElementById('status-text').textContent = 'متصل';
-                    autoCheckModeratorStatusIfNeeded(currentVideoId);
+                    
                 } else {
                     document.getElementById('status-text').textContent = 'Leader — ننتظر YouTube...';
                 }
@@ -2798,18 +3221,37 @@
  
     function switchArchiveTab(tabName) {
         const tabBtns = document.querySelectorAll('.archive-tab');
-        const panes = document.querySelectorAll('.archive-pane');
+        const panes = document.querySelectorAll('#screen-archive .archive-pane');
+        const showMonitor = tabName === 'monitor';
+        const archivePane = document.getElementById('archive-pane');
+        const monitorPane = document.getElementById('monitor-pane');
+
+        // Hard-separate the two panes: exactly one is visible at a time.
         tabBtns.forEach(b => b.classList.remove('active'));
-        panes.forEach(p => p.classList.remove('active'));
-        if (tabName === 'monitor') {
+        panes.forEach(p => {
+            p.classList.remove('active');
+            p.hidden = true;
+            p.setAttribute('aria-hidden', 'true');
+        });
+
+        if (showMonitor) {
             document.getElementById('monitor-tab-btn').classList.add('active');
-            document.getElementById('monitor-pane').classList.add('active');
+            if (monitorPane) {
+                monitorPane.hidden = false;
+                monitorPane.classList.add('active');
+                monitorPane.setAttribute('aria-hidden', 'false');
+            }
+            // Do not render or append archived comments while Smart Moderator is active.
             renderKeywords();
             renderUsernames();
             renderModStatusUI();
         } else {
             document.getElementById('archive-tab-btn').classList.add('active');
-            document.getElementById('archive-pane').classList.add('active');
+            if (archivePane) {
+                archivePane.hidden = false;
+                archivePane.classList.add('active');
+                archivePane.setAttribute('aria-hidden', 'false');
+            }
             if (!document.getElementById('archive-list').children.length) {
                 loadArchivedComments('', '');
             }
@@ -3068,7 +3510,16 @@
  
     window.addEventListener('popstate', (event) => {
         if (!currentVideoId || !streamHistoryGuardActive) return;
+        const activeId = document.querySelector('.screen.active')?.id;
         history.pushState(streamHistoryMarker || { vrticsStream: true }, '', location.href);
+        if (activeId === 'screen-replay-player') {
+            exitReplay();
+            return;
+        }
+        if (activeId === 'screen-replay-period') {
+            showScreen('screen-comments');
+            return;
+        }
         requestStreamExit();
     });
 
